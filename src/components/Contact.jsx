@@ -398,7 +398,7 @@ export default function Contact() {
                   className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-200 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500 hover:shadow-blue-500/30"
                 >
                   <Send className="h-4 w-4" />
-                  <span>Validate & Prepare Message</span>
+                  <span>Sent Message</span>
                 </button>
 
                 <p className="text-center font-mono text-[11px] text-slate-500">

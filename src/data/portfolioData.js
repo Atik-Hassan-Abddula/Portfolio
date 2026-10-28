@@ -131,12 +131,12 @@ export const skillsData = [
     icon: "Sparkles",
     color: "from-teal-400 to-cyan-500",
   },
-  {
-    name: "DaisyUI",
-    category: "Styling & UI",
-    icon: "Palette",
-    color: "from-purple-500 to-pink-500",
-  },
+  // {
+  //   name: "DaisyUI",
+  //   category: "Styling & UI",
+  //   icon: "Palette",
+  //   color: "from-purple-500 to-pink-500",
+  // },
   {
     name: "Hero UI",
     category: "Styling & UI",
@@ -182,24 +182,24 @@ export const skillsData = [
     icon: "Database",
     color: "from-green-500 to-emerald-600",
   },
-  {
-    name: "PostgreSQL",
-    category: "Database & Backend",
-    icon: "Database",
-    color: "from-blue-500 to-indigo-600",
-  },
-  {
-    name: "SQL",
-    category: "Database & Backend",
-    icon: "Database",
-    color: "from-sky-500 to-blue-600",
-  },
-  {
-    name: "SQLite",
-    category: "Database & Backend",
-    icon: "Database",
-    color: "from-cyan-500 to-blue-500",
-  },
+  // {
+  //   name: "PostgreSQL",
+  //   category: "Database & Backend",
+  //   icon: "Database",
+  //   color: "from-blue-500 to-indigo-600",
+  // },
+  // {
+  //   name: "SQL",
+  //   category: "Database & Backend",
+  //   icon: "Database",
+  //   color: "from-sky-500 to-blue-600",
+  // },
+  // {
+  //   name: "SQLite",
+  //   category: "Database & Backend",
+  //   icon: "Database",
+  //   color: "from-cyan-500 to-blue-500",
+  // },
 ];
 
 export const projectsData = [
@@ -244,8 +244,8 @@ export const projectsData = [
     previewType: "portfolio",
   },
   {
-    id: "project-6",
-    title: "More Projects Coming Soon",
+    id: "bazar-dor",
+    title: "Bazar-Dor",
     subtitle: "Learning & Building New Experiences",
     description:
       "I am continuously learning and building new web applications to improve my development skills and create useful digital experiences.",
@@ -255,10 +255,10 @@ export const projectsData = [
       "JavaScript",
       "Tailwind CSS",
     ],
-    liveUrl: null,
-    githubUrl: null,
+    liveUrl: 'https://bazar-dor-five-neon.vercel.app/',
+    githubUrl: 'https://github.com/Atik-Hassan-Abddula/bazar-dor',
     gradient: "from-slate-600 via-slate-700 to-zinc-900",
-    badge: "Coming Soon",
+    badge: "Bazar-Dor",
     previewType: "portfolio",
   },
 ];
