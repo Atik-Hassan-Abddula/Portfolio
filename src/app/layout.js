@@ -4,6 +4,15 @@ export const metadata = {
   title: "Full Stack Developer | Modern Portfolio",
   description:
     "Portfolio of Full Stack Developer specializing in modern web experiences, Next.js App Router, React, JavaScript, and responsive UI engineering.",
+  icons: {
+    icon: [
+      {
+        url: "/portfolio-favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/portfolio-favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
