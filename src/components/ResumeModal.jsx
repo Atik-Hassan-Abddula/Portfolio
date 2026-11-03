@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect } from "react";
@@ -12,7 +11,7 @@ import {
   Award,
 } from "lucide-react";
 import jsPDF from "jspdf";
-import { personalInfo } from "@/data/portfolioData";
+import { personalInfo, educationData, certificationsData, projectsData } from "@/data/portfolioData";
 
 export default function ResumeModal({ isOpen, onClose }) {
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function ResumeModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const displayName = personalInfo.name || "Developer";
+  const displayName = personalInfo.name || "Atik Hassan";
 
   const handleDownload = () => {
     const doc = new jsPDF({
@@ -98,7 +97,7 @@ export default function ResumeModal({ isOpen, onClose }) {
       y += lines.length * lineHeight + 3;
     };
 
-    // Header
+    // Header Banner
     doc.setFillColor(15, 23, 42);
     doc.rect(0, 0, pageWidth, 48, "F");
 
@@ -115,7 +114,7 @@ export default function ResumeModal({ isOpen, onClose }) {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
     doc.setTextColor(191, 219, 254);
-    doc.text(String(personalInfo.role || "Developer"), margin, 30);
+    doc.text(String(personalInfo.role || "Full Stack Developer"), margin, 30);
 
     doc.setFontSize(9);
     doc.setTextColor(226, 232, 240);
@@ -144,92 +143,53 @@ export default function ResumeModal({ isOpen, onClose }) {
     addSectionTitle("TECHNICAL EXPERTISE");
 
     [
-      "Core: HTML5, CSS3, Modern JavaScript (ES6+)",
-      "Frameworks: React, Next.js (App Router, Server Components)",
-      "Styling: Tailwind CSS, Responsive Design, Utility-First Systems",
-      "Version Control: Git, GitHub, PR Workflows, CI/CD",
-    ].forEach((skill) => {
-      addText(`- ${skill}`, { indent: 2 });
-    });
-
-    // Core competencies
-    addSectionTitle("CORE COMPETENCIES & STACK");
-
-    [
-      "Next.js (App Router, RSC, SSR)",
-      "React 19 & Custom Hooks",
-      "Tailwind CSS & Design Systems",
-      "Modern JavaScript (ES6+)",
-      "Git, GitHub & Branching Strategy",
-      "Semantic HTML5, CSS3 & WCAG AA",
+      "Frontend: HTML5, CSS3, JavaScript ES6+, TypeScript",
+      "Frameworks & Runtime: React, Next.js (App Router, RSC), Node.js, Express.js",
+      "Styling & UI: Tailwind CSS, DaisyUI, Hero UI, shadcn/ui",
+      "Tools & Version Control: Git, GitHub, Visual Studio Code, npm",
     ].forEach((skill) => {
       addText(`- ${skill}`, { indent: 2 });
     });
 
     // Projects
-    addSectionTitle("PROJECTS");
+    addSectionTitle("FEATURED PROJECTS");
 
-    addText(
-      "1. Portfolio Website (Next.js App Router, React, Tailwind CSS)",
-      { bold: true, color: [31, 41, 55] }
-    );
-
-    addText(
-      "Modern, responsive developer portfolio with dark theme, interactive skills filter, dynamic mockups, and client-side validated contact form.",
-      { indent: 3 }
-    );
-
-    addText(
-      "2. Nexus Design & Component System (React, Tailwind CSS)",
-      { bold: true, color: [31, 41, 55] }
-    );
-
-    addText(
-      "Composable UI primitives engineered for accessibility and modular styling.",
-      { indent: 3 }
-    );
-
-    addText(
-      "3. Nova Workspace & Task Matrix (Next.js, React)",
-      { bold: true, color: [31, 41, 55] }
-    );
-
-    addText(
-      "Distraction-free Kanban task pipeline with local storage state management.",
-      { indent: 3 }
-    );
+    projectsData.forEach((project, idx) => {
+      addText(
+        `${idx + 1}. ${project.title} (${project.technologies.join(", ")})`,
+        { bold: true, color: [31, 41, 55] }
+      );
+      addText(project.description, { indent: 3 });
+      if (project.liveUrl) {
+        addText(`Live Demo: ${project.liveUrl}`, { indent: 3, fontSize: 9, color: [37, 99, 235] });
+      }
+    });
 
     // Education
     addSectionTitle("EDUCATION");
 
-    addText("Diploma in Computer Science & Engineering (CSE)", {
-      bold: true,
-      color: [31, 41, 55],
+    educationData.forEach((edu) => {
+      addText(`${edu.degree} — ${edu.institution}`, {
+        bold: true,
+        color: [31, 41, 55],
+      });
+      addText(`Status: ${edu.status} | Period: ${edu.period}`, { indent: 3 });
+      addText(edu.description, { indent: 3 });
     });
 
-    addText("Status: Currently Studying");
-
-    addText("Secondary School Certificate (SSC)", {
-      bold: true,
-      color: [31, 41, 55],
-    });
-
-    addText("Result: Passed");
-
-    // Professional training
+    // Professional Training & Certifications
     addSectionTitle("PROFESSIONAL TRAINING & CERTIFICATIONS");
 
-    addText("Computer Operation — Level 3", {
-      bold: true,
-      color: [31, 41, 55],
+    certificationsData.forEach((cert) => {
+      addText(cert.title, {
+        bold: true,
+        color: [31, 41, 55],
+      });
+      addText(`Level: ${cert.level}`, { indent: 3 });
+      addText(cert.description, { indent: 3 });
     });
 
-    addText("Digital Marketing — Level 3", {
-      bold: true,
-      color: [31, 41, 55],
-    });
-
-    // Footer on every page
+    // Page numbers
     const pageCount = doc.getNumberOfPages();
 
     for (let page = 1; page <= pageCount; page++) {
@@ -281,7 +241,7 @@ export default function ResumeModal({ isOpen, onClose }) {
         className="relative z-10 flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0b1120] shadow-[0_25px_100px_-20px_rgba(0,0,0,0.8)]"
       >
         {/* Decorative Top Accent */}
-        <div className="h-1 w-full shrink-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
+        <div className="h-1.5 w-full shrink-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
 
         {/* Modal Header */}
         <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/[0.08] bg-gradient-to-br from-slate-900/90 via-[#0b1120] to-indigo-950/20 px-5 py-5 sm:px-8 sm:py-6">
@@ -311,7 +271,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-slate-400 transition-all duration-200 hover:border-red-400/20 hover:bg-red-500/10 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-slate-400 transition-all duration-200 hover:border-red-400/20 hover:bg-red-500/10 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             aria-label="Close Resume Modal"
           >
             <X className="h-5 w-5" />
@@ -322,28 +282,24 @@ export default function ResumeModal({ isOpen, onClose }) {
         <div className="min-h-0 flex-1 space-y-7 overflow-y-auto overscroll-contain px-5 py-6 sm:px-8 sm:py-7">
           {/* Professional Overview */}
           <section className="relative overflow-hidden rounded-2xl border border-indigo-400/15 bg-gradient-to-br from-indigo-500/[0.08] via-slate-900/70 to-purple-500/[0.04] p-5 sm:p-6">
-            <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-indigo-500/[0.06] blur-3xl" />
-
-            <div className="relative">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-400/10 text-indigo-400">
-                  <Briefcase className="h-4 w-4" />
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold text-white">
-                    Professional Overview
-                  </h4>
-                  <p className="mt-0.5 text-[10px] uppercase tracking-[0.16em] text-slate-500">
-                    About Me
-                  </p>
-                </div>
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-400/10 text-indigo-400">
+                <Briefcase className="h-4 w-4" />
               </div>
 
-              <p className="text-sm leading-7 text-slate-300">
-                {personalInfo.shortBio}
-              </p>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  Professional Overview
+                </h4>
+                <p className="mt-0.5 text-[10px] uppercase tracking-[0.16em] text-slate-500">
+                  About Me
+                </p>
+              </div>
             </div>
+
+            <p className="text-sm leading-7 text-slate-300">
+              {personalInfo.shortBio}
+            </p>
           </section>
 
           {/* Core Competencies */}
@@ -355,10 +311,10 @@ export default function ResumeModal({ isOpen, onClose }) {
 
               <div>
                 <h4 className="text-sm font-bold text-white">
-                  Core Competencies & Stack
+                  Core Competencies &amp; Stack
                 </h4>
                 <p className="mt-1 text-xs text-slate-500">
-                  Technologies & Development Skills
+                  Organized by Core Categories
                 </p>
               </div>
             </div>
@@ -367,10 +323,10 @@ export default function ResumeModal({ isOpen, onClose }) {
               {[
                 "Next.js (App Router, RSC, SSR)",
                 "React 19 & Custom Hooks",
-                "Tailwind CSS & Design Systems",
-                "Modern JavaScript (ES6+)",
-                "Git, GitHub & Branching Strategy",
-                "Semantic HTML5, CSS3 & WCAG AA",
+                "Node.js & Express.js REST APIs",
+                "Tailwind CSS, DaisyUI, Hero UI & shadcn/ui",
+                "JavaScript (ES6+) & TypeScript",
+                "Git, GitHub & Version Control Flow",
               ].map((skill) => (
                 <div
                   key={skill}
@@ -395,7 +351,7 @@ export default function ResumeModal({ isOpen, onClose }) {
 
               <div>
                 <h4 className="text-sm font-bold text-white">
-                  Education & Qualifications
+                  Education &amp; Qualifications
                 </h4>
                 <p className="mt-1 text-xs text-slate-500">
                   Academic Background
@@ -404,29 +360,25 @@ export default function ResumeModal({ isOpen, onClose }) {
             </div>
 
             <div className="space-y-3">
-              <div className="rounded-2xl border border-blue-400/15 bg-blue-400/[0.04] p-5">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm font-semibold leading-6 text-white">
-                    Diploma in Computer Science & Engineering (CSE)
-                  </span>
+              {educationData.map((edu) => (
+                <div
+                  key={edu.id}
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5"
+                >
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <span className="text-sm font-semibold leading-6 text-white">
+                      {edu.degree}
+                    </span>
 
-                  <span className="w-fit shrink-0 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[10px] font-medium text-emerald-300">
-                    Currently Studying
-                  </span>
+                    <span className={`w-fit shrink-0 rounded-full border px-3 py-1 text-[10px] font-medium ${edu.badgeColor}`}>
+                      {edu.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                    {edu.description}
+                  </p>
                 </div>
-              </div>
-
-              <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm font-semibold leading-6 text-white">
-                    Secondary School Certificate (SSC)
-                  </span>
-
-                  <span className="w-fit shrink-0 rounded-full border border-blue-400/15 bg-blue-400/[0.08] px-3 py-1 text-[10px] font-medium text-blue-300">
-                    Passed
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
@@ -439,48 +391,39 @@ export default function ResumeModal({ isOpen, onClose }) {
 
               <div>
                 <h4 className="text-sm font-bold text-white">
-                  Professional Training & Certifications
+                  Professional Training &amp; Certifications
                 </h4>
                 <p className="mt-1 text-xs text-slate-500">
-                  Skills & Training
+                  National Skill Standards
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-4 transition-colors hover:border-purple-400/20">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
-                  <div>
-                    <h5 className="text-sm font-semibold text-white">
-                      Computer Operation
-                    </h5>
-                    <p className="mt-1 text-xs text-slate-400">
-                      Level 3
-                    </p>
+              {certificationsData.map((cert) => (
+                <div
+                  key={cert.id}
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-4 transition-colors hover:border-purple-400/20"
+                >
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+                    <div>
+                      <h5 className="text-sm font-semibold text-white">
+                        {cert.title}
+                      </h5>
+                      <p className="mt-1 text-xs text-slate-400">
+                        {cert.level}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-4 transition-colors hover:border-purple-400/20">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
-                  <div>
-                    <h5 className="text-sm font-semibold text-white">
-                      Digital Marketing
-                    </h5>
-                    <p className="mt-1 text-xs text-slate-400">
-                      Level 3
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
         </div>
 
         {/* Modal Footer Actions */}
-        <div className="shrink-0 border-t border-white/[0.08] bg-slate-950/50 px-5 py-5 sm:px-8">
+        <div className="shrink-0 border-t border-white/[0.08] bg-slate-950/60 px-5 py-5 sm:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -496,7 +439,7 @@ export default function ResumeModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={handleDownload}
-                className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-950/30 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-500 hover:to-indigo-500 hover:shadow-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1120] sm:flex-initial sm:px-5 sm:text-sm"
+                className="inline-flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-950/30 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-500 hover:to-indigo-500 hover:shadow-blue-500/20 active:translate-y-0 sm:flex-initial sm:px-5 sm:text-sm"
               >
                 <Download className="h-4 w-4 shrink-0" />
                 <span>Download Resume (.pdf)</span>
@@ -505,7 +448,7 @@ export default function ResumeModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-semibold text-slate-300 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 sm:text-sm"
+                className="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-semibold text-slate-300 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08] hover:text-white sm:text-sm"
               >
                 Close
               </button>

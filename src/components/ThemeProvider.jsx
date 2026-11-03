@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useSyncExternalStore } from "react";
 
 const ThemeContext = createContext({
   theme: "dark",
@@ -8,32 +8,31 @@ const ThemeContext = createContext({
   mounted: false,
 });
 
+const emptySubscribe = () => () => {};
+
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("dark");
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
-  useEffect(() => {
-    // Read current theme state from DOM (set by inline script in head to prevent FOUC)
-    const isDark = document.documentElement.classList.contains("dark");
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    } else {
-      setTheme(isDark ? "dark" : "light");
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme =
+        localStorage.getItem("portfolio-theme") || localStorage.getItem("theme");
+      if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+      return document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "dark";
     }
-
-    setMounted(true);
-  }, []);
+    return "dark";
+  });
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
+    localStorage.setItem("portfolio-theme", nextTheme);
     localStorage.setItem("theme", nextTheme);
 
     if (nextTheme === "dark") {
@@ -53,4 +52,3 @@ export function ThemeProvider({ children }) {
 export function useTheme() {
   return useContext(ThemeContext);
 }
-

@@ -16,7 +16,7 @@ export const personalInfo = {
   ],
 
   status: "Available for new opportunities",
-  location: "Gazipur,Kalakair,Bangladesh",
+  location: "Gazipur, Kalakair, Bangladesh",
   email: "atik508030@gmail.com",
 
   socials: {
@@ -38,7 +38,7 @@ export const aboutHighlights = [
   {
     title: "Pixel-Perfect UI/UX",
     description:
-      "Building responsive, intuitive, and accessible user interfaces.",
+      "Building responsive, intuitive, and accessible user interfaces with clean responsive breakpoints.",
     icon: "Palette",
   },
   {
@@ -62,154 +62,13 @@ export const stats = [
   { label: "Design Fidelity", value: "100%" },
 ];
 
-export const skillCategories = [
-  "All",
-  "Frontend",
-  "Core Frameworks & Libraries",
-  "Styling & UI",
-  "Tools & Version Control",
-   "Database & Backend",
-];
-
-export const skillsData = [
-  // Frontend
-  {
-    name: "HTML5",
-    category: "Frontend",
-    icon: "Code",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    name: "CSS3",
-    category: "Frontend",
-    icon: "FileCode",
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
-    name: "JavaScript (ES6+)",
-    category: "Frontend",
-    icon: "Terminal",
-    color: "from-yellow-400 to-amber-500",
-  },
-  {
-    name: "TypeScript",
-    category: "Frontend",
-    icon: "FileCode",
-    color: "from-blue-600 to-indigo-600",
-  },
-
-  // Core Frameworks & Libraries
-  {
-    name: "React",
-    category: "Core Frameworks & Libraries",
-    icon: "Atom",
-    color: "from-cyan-400 to-blue-500",
-  },
-  {
-    name: "Next.js",
-    category: "Core Frameworks & Libraries",
-    icon: "Compass",
-    color: "from-slate-400 to-slate-600",
-  },
-  {
-    name: "Node.js",
-    category: "Core Frameworks & Libraries",
-    icon: "Server",
-    color: "from-emerald-500 to-green-600",
-  },
-  {
-    name: "Express.js",
-    category: "Core Frameworks & Libraries",
-    icon: "Cpu",
-    color: "from-slate-600 to-zinc-700",
-  },
-
-  // Styling & UI
-  {
-    name: "Tailwind CSS",
-    category: "Styling & UI",
-    icon: "Sparkles",
-    color: "from-teal-400 to-cyan-500",
-  },
-  // {
-  //   name: "DaisyUI",
-  //   category: "Styling & UI",
-  //   icon: "Palette",
-  //   color: "from-purple-500 to-pink-500",
-  // },
-  {
-    name: "Hero UI",
-    category: "Styling & UI",
-    icon: "Layers",
-    color: "from-violet-500 to-purple-600",
-  },
-  {
-    name: "shadcn/ui",
-    category: "Styling & UI",
-    icon: "Layout",
-    color: "from-slate-700 to-slate-900",
-  },
-
-  // Tools & Version Control
-  {
-    name: "Git",
-    category: "Tools & Version Control",
-    icon: "GitFork",
-    color: "from-orange-600 to-red-500",
-  },
-  {
-    name: "GitHub",
-    category: "Tools & Version Control",
-    icon: "Code",
-    color: "from-purple-400 to-indigo-500",
-  },
-  {
-    name: "Visual Studio Code",
-    category: "Tools & Version Control",
-    icon: "Code2",
-    color: "from-blue-500 to-indigo-500",
-  },
-  {
-    name: "npm",
-    category: "Tools & Version Control",
-    icon: "Wrench",
-    color: "from-red-600 to-pink-600",
-  },
-   // Database & Backend
-  {
-    name: "MongoDB",
-    category: "Database & Backend",
-    icon: "Database",
-    color: "from-green-500 to-emerald-600",
-  },
-  // {
-  //   name: "PostgreSQL",
-  //   category: "Database & Backend",
-  //   icon: "Database",
-  //   color: "from-blue-500 to-indigo-600",
-  // },
-  // {
-  //   name: "SQL",
-  //   category: "Database & Backend",
-  //   icon: "Database",
-  //   color: "from-sky-500 to-blue-600",
-  // },
-  // {
-  //   name: "SQLite",
-  //   category: "Database & Backend",
-  //   icon: "Database",
-  //   color: "from-cyan-500 to-blue-500",
-  // },
-];
-
 export const projectsData = [
-  
   {
     id: "bangla-news-24",
     title: "Bangla News 24",
     subtitle: "Bangla News & Breaking News Platform",
     description:
-      "A Bengali news platform built with Next.js, featuring news categories, breaking news, most-read articles, article pages, and authentication.",
+      "A modern Bengali news platform built with Next.js, featuring category filtering, breaking news ticker, most-read articles, dynamic article pages, and authentication.",
     technologies: [
       "Next.js",
       "React",
@@ -219,17 +78,17 @@ export const projectsData = [
       "REST API",
     ],
     liveUrl: "https://bangla-news-24-rho-six.vercel.app/",
-    githubUrl: 'https://github.com/Atik-Hassan-Abddula/bangla-news-24-',
+    githubUrl: "https://github.com/Atik-Hassan-Abddula/bangla-news-24-",
     gradient: "from-red-600 via-rose-600 to-orange-500",
     badge: "News Platform",
-    previewType: "portfolio",
+    previewType: "news",
   },
   {
     id: "fit-logs",
     title: "Fit-Logs",
     subtitle: "Fitness & Workout Tracking App",
     description:
-      "A fitness application built with Next.js for exploring exercises, organizing workout plans, and tracking fitness activities.",
+      "A comprehensive fitness tracking web application built with Next.js for exploring targeted exercises, structuring workout routines, and monitoring progress.",
     technologies: [
       "Next.js",
       "React",
@@ -237,28 +96,72 @@ export const projectsData = [
       "JavaScript",
       "REST API",
     ],
-    liveUrl: 'https://book-vibe-resources.vercel.app/',
-    githubUrl: 'https://github.com/Atik-Hassan-Abddula/Fit-Logs',
-    gradient: "from-lime-500 via-green-600 to-emerald-700",
-    badge: "Fitness App",
-    previewType: "portfolio",
+    liveUrl: "https://book-vibe-resources.vercel.app/",
+    githubUrl: "https://github.com/Atik-Hassan-Abddula/Fit-Logs",
+    gradient: "from-emerald-500 via-teal-600 to-cyan-600",
+    badge: "Fitness Tracker",
+    previewType: "fitness",
   },
   {
     id: "bazar-dor",
     title: "Bazar-Dor",
     subtitle: "Learning & Building New Experiences",
     description:
-      "I am continuously learning and building new web applications to improve my development skills and create useful digital experiences.",
+      "An interactive web platform focused on real-time market insights and dynamic price tracking, continuously refined to sharpen full-stack development skills.",
     technologies: [
       "Next.js",
       "React",
       "JavaScript",
       "Tailwind CSS",
     ],
-    liveUrl: 'https://bazar-dor-five-neon.vercel.app/',
-    githubUrl: 'https://github.com/Atik-Hassan-Abddula/bazar-dor',
-    gradient: "from-slate-600 via-slate-700 to-zinc-900",
-    badge: "Bazar-Dor",
-    previewType: "portfolio",
+    liveUrl: "https://bazar-dor-five-neon.vercel.app/",
+    githubUrl: "https://github.com/Atik-Hassan-Abddula/bazar-dor",
+    gradient: "from-indigo-600 via-blue-600 to-cyan-500",
+    badge: "Web Platform",
+    previewType: "bazar",
+  },
+];
+
+export const educationData = [
+  {
+    id: "diploma-cse",
+    degree: "Diploma in Computer Science & Engineering (CSE)",
+    institution: "Computer Science & Engineering",
+    period: "Present",
+    status: "Currently Studying",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:text-emerald-400",
+    description:
+      "Acquiring strong computer science foundations including algorithms, data structures, software engineering methodologies, web development, and database architecture.",
+  },
+  {
+    id: "ssc",
+    degree: "Secondary School Certificate (SSC)",
+    institution: "Secondary Education",
+    period: "Completed",
+    status: "Passed",
+    badgeColor: "bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400",
+    description:
+      "Completed secondary education with focused studies in sciences, analytical reasoning, and mathematics.",
+  },
+];
+
+export const certificationsData = [
+  {
+    id: "computer-operation",
+    title: "Computer Operation — Level 3",
+    type: "Professional Certification",
+    level: "National Skill Standard Level 3",
+    badgeColor: "bg-purple-500/10 text-purple-600 border-purple-500/20 dark:text-purple-400",
+    description:
+      "Certified competency in advanced computer operation, system utilities, digital workflows, and information management.",
+  },
+  {
+    id: "digital-marketing",
+    title: "Digital Marketing — Level 3",
+    type: "Professional Certification",
+    level: "National Skill Standard Level 3",
+    badgeColor: "bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400",
+    description:
+      "Certified knowledge in digital brand positioning, online engagement, web analytics, and content distribution strategies.",
   },
 ];

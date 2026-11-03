@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ResumeModal from "@/components/ResumeModal";
@@ -16,7 +17,7 @@ export default function Home() {
 
   // Stop Lenis background scrolling when modal is open
   useEffect(() => {
-    if (window.__lenis) {
+    if (typeof window !== "undefined" && window.__lenis) {
       if (isResumeOpen) {
         window.__lenis.stop();
       } else {
@@ -27,16 +28,17 @@ export default function Home() {
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen flex flex-col bg-[#030712] text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
-        {/* Top Navbar */}
+      <div className="relative min-h-screen flex flex-col bg-white text-slate-900 transition-colors duration-300 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
+        {/* Top Sticky/Floating Navbar */}
         <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* Main Content Sections */}
         <main className="flex-1 flex flex-col">
-          <Hero />
+          <Hero onOpenResume={() => setIsResumeOpen(true)} />
           <About />
           <Skills />
           <Projects />
+          <Education />
           <Contact />
         </main>
 
