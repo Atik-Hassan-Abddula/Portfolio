@@ -32,13 +32,13 @@ export default function Hero({ onOpenResume }) {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden scroll-mt-20 bg-slate-50 px-0 pb-16 pt-24 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:pt-28 lg:min-h-screen lg:pb-24 lg:pt-32"
+      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden scroll-mt-20 bg-slate-50 px-0 pb-12 pt-24 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:pb-14 sm:pt-28 lg:min-h-screen lg:pb-20 lg:pt-32"
     >
       {/* Background Decorative Gradients */}
       <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
         <div className="absolute -left-40 -top-40 h-[450px] w-[450px] rounded-full bg-blue-500/15 blur-[120px] dark:bg-blue-600/20" />
         <div className="absolute -right-40 top-1/4 h-[450px] w-[450px] rounded-full bg-purple-500/15 blur-[120px] dark:bg-purple-600/20" />
-        <div className="absolute -bottom-24 left-1/2 h-72 w-[650px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[130px] dark:bg-indigo-600/15" />
+        <div className="absolute -bottom-24 left-1/2 h-72 w-[650px] max-w-full -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[130px] dark:bg-indigo-600/15" />
 
         {/* Subtle grid pattern */}
         <div
@@ -52,7 +52,7 @@ export default function Hero({ onOpenResume }) {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8 xl:gap-12">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-12">
           {/* Left Column: Introduction & CTAs */}
           <div className="space-y-6 text-center sm:space-y-7 lg:col-span-7 lg:text-left">
             {/* Status Pill */}
@@ -74,7 +74,7 @@ export default function Hero({ onOpenResume }) {
                 <span>Hello, I&apos;m {personalInfo.name}</span>
               </div>
 
-              <h1 className="text-3xl font-black leading-[1.15] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+              <h1 className="text-[1.75rem] font-black leading-[1.15] tracking-tight text-slate-900 min-[400px]:text-4xl sm:text-5xl lg:text-6xl dark:text-white">
                 Engineering{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-400">
                   Modern Web
@@ -152,15 +152,15 @@ export default function Hero({ onOpenResume }) {
 
               <div className="hidden h-5 w-px bg-slate-300 sm:block dark:bg-slate-800" />
 
-              <div className="inline-flex items-center gap-1.5 font-mono text-[11px] text-slate-600 dark:text-slate-400">
-                <Sparkles className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>Next.js • React • Node.js • Tailwind CSS</span>
+              <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 font-mono text-[11px] text-slate-600 dark:text-slate-400">
+                <Sparkles className="h-3.5 w-3.5 shrink-0 text-indigo-600 dark:text-indigo-400" />
+                <span className="text-center">Next.js • React • Node.js • Tailwind CSS</span>
               </div>
             </div>
           </div>
 
           {/* Right Column: Premium Profile Card */}
-          <div className="flex justify-center lg:col-span-5 lg:justify-end">
+          <div className="flex w-full justify-center lg:col-span-5 lg:justify-end">
             <div className="group relative w-full max-w-sm sm:max-w-md">
               {/* Outer Glow */}
               <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 opacity-20 blur-xl transition duration-700 group-hover:opacity-40 dark:opacity-30" />
@@ -205,13 +205,13 @@ export default function Hero({ onOpenResume }) {
                   </div>
 
                   {/* React 19 Floating Badge */}
-                  <div className="absolute -right-3 -top-1 flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-white/95 px-3 py-1 font-mono text-[11px] font-semibold text-cyan-700 shadow-lg backdrop-blur-md dark:border-cyan-400/30 dark:bg-slate-900/95 dark:text-cyan-300">
+                  <div className="absolute -right-1 -top-1 flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-white/95 px-3 py-1 font-mono text-[11px] font-semibold text-cyan-700 shadow-lg backdrop-blur-md sm:-right-3 dark:border-cyan-400/30 dark:bg-slate-900/95 dark:text-cyan-300">
                     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500 dark:bg-cyan-400" />
                     React 19
                   </div>
 
                   {/* Next.js 16 Floating Badge */}
-                  <div className="absolute -bottom-1 -left-3 flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-white/95 px-3 py-1 font-mono text-[11px] font-semibold text-purple-700 shadow-lg backdrop-blur-md dark:border-purple-400/30 dark:bg-slate-900/95 dark:text-purple-300">
+                  <div className="absolute -bottom-1 -left-1 flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-white/95 px-3 py-1 font-mono text-[11px] font-semibold text-purple-700 shadow-lg backdrop-blur-md sm:-left-3 dark:border-purple-400/30 dark:bg-slate-900/95 dark:text-purple-300">
                     <span className="h-1.5 w-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
                     Next.js 16
                   </div>

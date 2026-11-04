@@ -9,14 +9,14 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative scroll-mt-20 overflow-hidden bg-white py-20 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-24 lg:py-28"
+      className="relative scroll-mt-20 overflow-hidden bg-white py-12 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-16 lg:py-20"
     >
       {/* Decorative Glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[130px] dark:bg-blue-600/10" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[600px] w-[800px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[130px] dark:bg-blue-600/10" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
+        <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
             <FolderGit2 className="h-3.5 w-3.5" />
             <span>Featured Portfolio Work</span>
@@ -35,15 +35,15 @@ export default function Projects() {
         </div>
 
         {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projectsData.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
 
         {/* GitHub Repository Callout */}
-        <div className="mt-16 text-center sm:mt-20">
-          <div className="inline-flex flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50/80 p-6 shadow-sm backdrop-blur-sm sm:flex-row sm:p-8 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="mt-10 text-center sm:mt-12">
+          <div className="inline-flex flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm backdrop-blur-sm sm:flex-row sm:p-6 dark:border-slate-800 dark:bg-slate-900/60">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
               <GithubIcon className="h-6 w-6" />
             </div>

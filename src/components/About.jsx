@@ -29,7 +29,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative scroll-mt-20 overflow-hidden bg-white py-20 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-24 lg:py-28"
+      className="relative scroll-mt-20 overflow-hidden bg-white py-12 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-16 lg:py-20"
     >
       {/* Decorative Background Glow */}
       <div className="pointer-events-none absolute left-0 top-1/2 -z-0 h-96 w-96 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[120px] dark:bg-blue-600/10" />
@@ -37,7 +37,7 @@ export default function About() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
+        <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Discover My Background</span>
@@ -56,11 +56,11 @@ export default function About() {
         </div>
 
         {/* Two-Column Grid */}
-        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 items-start gap-5 sm:gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Column 1: Story & Journey */}
-          <div className="space-y-6 lg:col-span-6 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-6 lg:col-span-6">
             {/* Introduction Card */}
-            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-8 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
+            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <span className="h-2.5 w-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50" />
                 Introduction & Philosophy
@@ -72,7 +72,7 @@ export default function About() {
             </div>
 
             {/* Learning Journey Card */}
-            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-8 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
+            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <BookOpen className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                 Technical Evolution & Foundations
@@ -106,7 +106,7 @@ export default function About() {
             </div>
 
             {/* Career Goals Card */}
-            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-8 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
+            <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <Target className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                 Career Goals & Vision
@@ -119,9 +119,9 @@ export default function About() {
           </div>
 
           {/* Column 2: Highlights, Stats & Quote */}
-          <div className="space-y-6 lg:col-span-6 sm:space-y-8">
+          <div className="space-y-5 sm:space-y-6 lg:col-span-6">
             {/* Feature Highlight Cards */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
               {aboutHighlights.map((item, index) => {
                 const IconComponent =
                   highlightIcons[item.icon] || Sparkles;
@@ -129,7 +129,7 @@ export default function About() {
                 return (
                   <div
                     key={index}
-                    className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/60 hover:shadow-lg hover:shadow-blue-500/5 sm:p-6 dark:border-slate-800/90 dark:bg-slate-900/70 dark:hover:border-blue-500/40"
+                    className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/60 hover:shadow-lg hover:shadow-blue-500/5 dark:border-slate-800/90 dark:bg-slate-900/70 dark:hover:border-blue-500/40"
                   >
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 text-blue-600 transition-all group-hover:scale-110 group-hover:text-purple-600 dark:text-blue-400 dark:group-hover:text-purple-300">
                       <IconComponent className="h-5 w-5" />
@@ -148,7 +148,7 @@ export default function About() {
             </div>
 
             {/* Performance & Quality Stats */}
-            <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/70 via-slate-50 to-purple-50/70 p-6 backdrop-blur-sm sm:p-8 dark:border-slate-800 dark:from-blue-950/20 dark:via-slate-900/60 dark:to-purple-950/20">
+            <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/70 via-slate-50 to-purple-50/70 p-5 backdrop-blur-sm sm:p-6 dark:border-slate-800 dark:from-blue-950/20 dark:via-slate-900/60 dark:to-purple-950/20">
               <h4 className="mb-5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 At-A-Glance Engineering Metrics
               </h4>
@@ -172,7 +172,7 @@ export default function About() {
             </div>
 
             {/* Engineering Values Quote */}
-            <div className="flex items-start gap-4 rounded-3xl border border-dashed border-slate-300 bg-slate-50/80 p-6 sm:p-7 dark:border-slate-800 dark:bg-slate-900/50">
+            <div className="flex items-start gap-4 rounded-3xl border border-dashed border-slate-300 bg-slate-50/80 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-900/50">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
                 <Code2 className="h-5 w-5" />
               </div>

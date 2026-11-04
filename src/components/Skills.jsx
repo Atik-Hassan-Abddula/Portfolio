@@ -428,7 +428,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative isolate scroll-mt-20 overflow-hidden bg-slate-50 px-4 py-20 transition-colors duration-300 dark:bg-[#060a17] sm:px-6 lg:px-8 lg:py-28"
+      className="relative isolate scroll-mt-20 overflow-hidden bg-slate-50 px-4 py-12 transition-colors duration-300 dark:bg-[#060a17] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
       {/* Background Soft Ambient Lighting Effects */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -446,7 +446,7 @@ export default function Skills() {
         {/* ==========================================
             2. SECTION HEADER
         ========================================== */}
-        <div className="mx-auto mb-14 max-w-3xl space-y-4 text-center sm:mb-16">
+        <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
           {/* Small Badge: MY SKILLS */}
           <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5 font-mono text-xs font-bold tracking-widest text-purple-600 shadow-[0_0_15px_rgba(168,85,247,0.15)] dark:border-purple-400/30 dark:bg-purple-500/15 dark:text-purple-300">
             <Sparkles className="h-3.5 w-3.5 text-purple-500 dark:text-purple-300" />
@@ -470,9 +470,9 @@ export default function Skills() {
         {/* ==========================================
             3. CATEGORY FILTER NAVIGATION & SEARCH
         ========================================== */}
-        <div className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-7 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-center lg:justify-between">
           {/* Category Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="-mx-4 flex flex-wrap items-center gap-2 px-4 sm:mx-0 sm:px-0">
             {filterButtons.map((filter) => {
               const Icon = filter.icon;
               const isActive = activeFilter === filter.id;
@@ -529,7 +529,7 @@ export default function Skills() {
             4. SIX PREMIUM CATEGORY CARDS (GRID)
         ========================================== */}
         {visibleCards.length > 0 ? (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
             {visibleCards.map((card) => {
               const CategoryIcon = card.icon;
               const trimmed = search.trim().toLowerCase();
@@ -545,7 +545,7 @@ export default function Skills() {
                   />
 
                   {/* Glassmorphism Inner Card Container */}
-                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[23px] bg-white/95 p-5 shadow-sm backdrop-blur-xl dark:bg-[#090e1c]/95 sm:p-8">
+                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[23px] bg-white/95 p-5 shadow-sm backdrop-blur-xl dark:bg-[#090e1c]/95 sm:p-6">
                     {/* Card Header */}
                     <div>
                       <div className="flex items-start justify-between gap-3 sm:gap-4">
@@ -578,7 +578,7 @@ export default function Skills() {
                       </div>
 
                       {/* Technology Items Displayed as Rounded Glass Pills */}
-                      <div className="mt-8 flex flex-wrap gap-2.5 sm:gap-3">
+                      <div className="mt-6 flex flex-wrap gap-2 sm:gap-2.5">
                         {card.skills.map((skillName) => {
                           const isMatch =
                             trimmed &&
@@ -604,7 +604,7 @@ export default function Skills() {
                     </div>
 
                     {/* Card Footer Status */}
-                    <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-white/[0.06]">
+                    <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-white/[0.06]">
                       <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                         {card.skills.length} Technologies
                       </span>

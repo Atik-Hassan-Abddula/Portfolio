@@ -209,7 +209,7 @@ export default function ProjectCard({ project }) {
           </div>
 
           {/* Interactive Screen Preview */}
-          <div className="relative h-44 overflow-hidden sm:h-48">
+          <div className="relative aspect-[16/9] overflow-hidden">
             {renderPreviewMockup()}
           </div>
         </div>
