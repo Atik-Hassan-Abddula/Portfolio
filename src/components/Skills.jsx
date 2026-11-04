@@ -545,16 +545,16 @@ export default function Skills() {
                   />
 
                   {/* Glassmorphism Inner Card Container */}
-                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[23px] bg-white/95 p-6 shadow-sm backdrop-blur-xl dark:bg-[#090e1c]/95 sm:p-8">
+                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[23px] bg-white/95 p-5 shadow-sm backdrop-blur-xl dark:bg-[#090e1c]/95 sm:p-8">
                     {/* Card Header */}
                     <div>
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex items-center gap-4">
+                      <div className="flex items-start justify-between gap-3 sm:gap-4">
+                        <div className="flex items-center gap-3 min-w-0 sm:gap-4">
                           {/* Prominent Category Icon in Colorful Rounded Square */}
                           <div
-                            className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${card.iconGradient} text-white shadow-lg transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1`}
+                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${card.iconGradient} text-white shadow-lg transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1 sm:h-14 sm:w-14`}
                           >
-                            <CategoryIcon className="h-7 w-7" strokeWidth={2} />
+                            <CategoryIcon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2} />
                           </div>
 
                           {/* Category Title & Short Description */}

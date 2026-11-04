@@ -153,17 +153,17 @@ export default function About() {
                 At-A-Glance Engineering Metrics
               </h4>
 
-              <div className="grid grid-cols-2 gap-3.5 text-center sm:grid-cols-4 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2.5 text-center sm:grid-cols-4 sm:gap-4">
                 {stats.map((stat, index) => (
                   <div
                     key={index}
-                    className="rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur-sm dark:border-slate-800/80 dark:bg-slate-950/70"
+                    className="rounded-2xl border border-slate-200/80 bg-white/90 p-3 shadow-sm backdrop-blur-sm sm:p-4 dark:border-slate-800/80 dark:bg-slate-950/70"
                   >
-                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-black text-transparent sm:text-3xl dark:from-blue-400 dark:to-purple-400">
+                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-xl font-black text-transparent sm:text-2xl lg:text-3xl">
                       {stat.value}
                     </div>
 
-                    <div className="mt-1 text-[11px] font-medium text-slate-600 sm:text-xs dark:text-slate-400">
+                    <div className="mt-1 text-[10px] font-medium text-slate-600 sm:text-xs dark:text-slate-400">
                       {stat.label}
                     </div>
                   </div>

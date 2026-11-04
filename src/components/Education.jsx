@@ -53,11 +53,11 @@ export default function Education() {
               </div>
             </div>
 
-            <div className="relative space-y-6 pl-4 before:absolute before:bottom-3 before:left-[19px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-300 sm:pl-6 dark:before:to-slate-800">
-              {educationData.map((item, index) => (
+            <div className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800">
+              {educationData.map((item) => (
                 <div key={item.id} className="relative group">
                   {/* Timeline Node Icon */}
-                  <div className="absolute -left-[27px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-blue-600 text-white shadow-sm ring-4 ring-blue-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-blue-500 sm:-left-[35px]">
+                  <div className="absolute -left-[28px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-blue-600 text-white shadow-sm ring-4 ring-blue-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-blue-500">
                     <span className="h-2 w-2 rounded-full bg-white" />
                   </div>
 
@@ -108,11 +108,11 @@ export default function Education() {
               </div>
             </div>
 
-            <div className="relative space-y-6 pl-4 before:absolute before:bottom-3 before:left-[19px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-purple-600 before:via-indigo-500 before:to-slate-300 sm:pl-6 dark:before:to-slate-800">
-              {certificationsData.map((item, index) => (
+            <div className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-purple-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800">
+              {certificationsData.map((item) => (
                 <div key={item.id} className="relative group">
                   {/* Timeline Node Icon */}
-                  <div className="absolute -left-[27px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-purple-600 text-white shadow-sm ring-4 ring-purple-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-purple-500 sm:-left-[35px]">
+                  <div className="absolute -left-[28px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-purple-600 text-white shadow-sm ring-4 ring-purple-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-purple-500">
                     <span className="h-2 w-2 rounded-full bg-white" />
                   </div>
 
@@ -146,4 +146,3 @@ export default function Education() {
     </section>
   );
 }
-

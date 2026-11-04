@@ -111,7 +111,7 @@ export default function Navbar({ onOpenResume }) {
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, "#hero")}
-            className="group flex min-w-0 items-center gap-2.5 text-base font-bold tracking-tight transition-transform hover:scale-[1.02] sm:text-lg"
+            className="group flex min-w-0 flex-1 items-center gap-2 text-base font-bold tracking-tight transition-transform hover:scale-[1.02] sm:flex-initial sm:gap-2.5 sm:text-lg"
             aria-label="Home page"
           >
             <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md shadow-blue-500/25">
