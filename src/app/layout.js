@@ -16,10 +16,6 @@ export const metadata = {
     "Portfolio",
   ],
   authors: [{ name: personalInfo.name }],
-  icons: {
-    icon: "/portfolio-favicon.svg",
-    shortcut: "/portfolio-favicon.svg",
-  },
   openGraph: {
     title: `${personalInfo.name} | ${personalInfo.role}`,
     description: personalInfo.shortBio,

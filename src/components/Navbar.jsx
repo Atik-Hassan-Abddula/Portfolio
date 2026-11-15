@@ -5,7 +5,6 @@ import {
   Menu,
   X,
   FileText,
-  Sparkles,
   Sun,
   Moon,
   ArrowRight,
@@ -16,20 +15,17 @@ export default function Navbar({ onOpenResume }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("portfolio-theme");
-      if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
-      return document.documentElement.classList.contains("dark") ? "dark" : "dark";
-    }
-    return "dark";
-  });
+  const [theme, setTheme] = useState("dark");
 
-  // Ensure DOM class matches theme on mount
+  // Hydration-safe theme sync: server and client both render the default
+  // "dark" state first, then the stored preference is applied right after
+  // mount. (Reading localStorage inside useState's initializer would make
+  // the client's first render differ from the SSR HTML → hydration error.)
   useEffect(() => {
     const savedTheme = localStorage.getItem("portfolio-theme");
     const active = savedTheme === "light" ? "light" : "dark";
     document.documentElement.classList.toggle("dark", active === "dark");
+    setTheme(active);
   }, []);
 
   const toggleTheme = () => {
@@ -115,7 +111,10 @@ export default function Navbar({ onOpenResume }) {
             aria-label="Home page"
           >
             <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md shadow-blue-500/25">
-              <Sparkles className="h-4 w-4" />
+              {/* AH monogram — matches the site favicon */}
+              <span className="text-[13px] font-black leading-none tracking-tight">
+                AH
+              </span>
               <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
 

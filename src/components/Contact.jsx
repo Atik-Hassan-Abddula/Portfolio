@@ -14,6 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { Reveal } from "@/components/motion/Reveal";
 import { personalInfo } from "@/data/portfolioData";
 
 export default function Contact() {
@@ -104,7 +105,7 @@ export default function Contact() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
+        <Reveal y={16} className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
             <MessageSquare className="h-3.5 w-3.5" />
             <span>Get in Touch</span>
@@ -120,12 +121,12 @@ export default function Contact() {
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
             Have a project in mind, an exciting role to discuss, or want to collaborate on modern web applications? My inbox is always open.
           </p>
-        </div>
+        </Reveal>
 
         {/* Contact Layout */}
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Left Column: Direct Info & Social Cards */}
-          <div className="space-y-6 lg:col-span-5">
+          <Reveal className="space-y-6 lg:col-span-5">
             <div className="space-y-6 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-6 shadow-sm backdrop-blur-sm sm:p-8 dark:border-slate-800/90 dark:bg-[#0b1120]/90">
               <h3 className="flex items-center gap-2.5 text-xl font-bold text-slate-900 dark:text-white">
                 <span className="h-2.5 w-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50" />
@@ -220,10 +221,10 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Column: Interactive Contact Form */}
-          <div className="lg:col-span-7">
+          <Reveal delay={0.15} className="lg:col-span-7">
             <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-sm transition-colors sm:p-8 lg:p-9 dark:border-slate-800/90 dark:bg-[#0b1120]">
               <h3 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
                 Send a Message
@@ -400,7 +401,7 @@ export default function Contact() {
                 </p>
               </form>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { GraduationCap, Award, Calendar, CheckCircle2, BookOpen } from "lucide-react";
 import { educationData, certificationsData } from "@/data/portfolioData";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 export default function Education() {
   return (
@@ -17,7 +18,7 @@ export default function Education() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
+        <Reveal y={16} className="mx-auto mb-16 max-w-3xl space-y-4 text-center sm:mb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
             <BookOpen className="h-3.5 w-3.5" />
             <span>Academic & Professional Track</span>
@@ -33,7 +34,7 @@ export default function Education() {
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
             Formal technical foundation in Computer Science and Engineering combined with certified professional skill training.
           </p>
-        </div>
+        </Reveal>
 
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
@@ -53,9 +54,13 @@ export default function Education() {
               </div>
             </div>
 
-            <div className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800">
+            <StaggerGroup
+              className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800"
+              stagger={0.15}
+            >
               {educationData.map((item) => (
-                <div key={item.id} className="relative group">
+                <StaggerItem key={item.id}>
+                <div className="relative group">
                   {/* Timeline Node Icon */}
                   <div className="absolute -left-[28px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-blue-600 text-white shadow-sm ring-4 ring-blue-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-blue-500">
                     <span className="h-2 w-2 rounded-full bg-white" />
@@ -88,8 +93,9 @@ export default function Education() {
                     </p>
                   </div>
                 </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
           </div>
 
           {/* Column 2: Professional Training & Certifications */}
@@ -108,9 +114,13 @@ export default function Education() {
               </div>
             </div>
 
-            <div className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-purple-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800">
+            <StaggerGroup
+              className="relative space-y-6 pl-7 before:absolute before:bottom-3 before:left-[11px] before:top-3 before:w-0.5 before:bg-gradient-to-b before:from-purple-600 before:via-indigo-500 before:to-slate-300 sm:pl-8 sm:before:left-[15px] dark:before:to-slate-800"
+              stagger={0.15}
+            >
               {certificationsData.map((item) => (
-                <div key={item.id} className="relative group">
+                <StaggerItem key={item.id}>
+                <div className="relative group">
                   {/* Timeline Node Icon */}
                   <div className="absolute -left-[28px] top-4 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-purple-600 text-white shadow-sm ring-4 ring-purple-500/10 transition-transform duration-300 group-hover:scale-125 dark:border-slate-950 dark:bg-purple-500">
                     <span className="h-2 w-2 rounded-full bg-white" />
@@ -138,8 +148,9 @@ export default function Education() {
                     </p>
                   </div>
                 </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
           </div>
         </div>
       </div>

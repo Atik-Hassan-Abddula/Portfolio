@@ -17,6 +17,7 @@ import {
   aboutHighlights,
   stats,
 } from "@/data/portfolioData";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 export default function About() {
   const highlightIcons = {
@@ -37,7 +38,7 @@ export default function About() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
+        <Reveal y={16} className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Discover My Background</span>
@@ -53,13 +54,14 @@ export default function About() {
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
             Engineering modern web interfaces through the harmony of clean code, thoughtful architecture, and user-centric design.
           </p>
-        </div>
+        </Reveal>
 
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 items-start gap-5 sm:gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Column 1: Story & Journey */}
-          <div className="space-y-5 sm:space-y-6 lg:col-span-6">
+          <StaggerGroup className="space-y-5 sm:space-y-6 lg:col-span-6">
             {/* Introduction Card */}
+            <StaggerItem>
             <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <span className="h-2.5 w-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50" />
@@ -70,8 +72,10 @@ export default function About() {
                 {personalInfo.fullBio[0]}
               </p>
             </div>
+            </StaggerItem>
 
             {/* Learning Journey Card */}
+            <StaggerItem>
             <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <BookOpen className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
@@ -104,8 +108,10 @@ export default function About() {
                 </div>
               </div>
             </div>
+            </StaggerItem>
 
             {/* Career Goals Card */}
+            <StaggerItem>
             <div className="space-y-4 rounded-3xl border border-slate-200/90 bg-slate-50/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-slate-300 sm:p-6 dark:border-slate-800/80 dark:bg-slate-900/60 dark:hover:border-slate-700">
               <h3 className="flex items-center gap-2.5 text-lg font-bold text-slate-900 sm:text-xl dark:text-white">
                 <Target className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -116,11 +122,13 @@ export default function About() {
                 {personalInfo.fullBio[2]}
               </p>
             </div>
-          </div>
+            </StaggerItem>
+          </StaggerGroup>
 
           {/* Column 2: Highlights, Stats & Quote */}
-          <div className="space-y-5 sm:space-y-6 lg:col-span-6">
+          <StaggerGroup className="space-y-5 sm:space-y-6 lg:col-span-6">
             {/* Feature Highlight Cards */}
+            <StaggerItem>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
               {aboutHighlights.map((item, index) => {
                 const IconComponent =
@@ -146,8 +154,10 @@ export default function About() {
                 );
               })}
             </div>
+            </StaggerItem>
 
             {/* Performance & Quality Stats */}
+            <StaggerItem>
             <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-r from-blue-50/70 via-slate-50 to-purple-50/70 p-5 backdrop-blur-sm sm:p-6 dark:border-slate-800 dark:from-blue-950/20 dark:via-slate-900/60 dark:to-purple-950/20">
               <h4 className="mb-5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 At-A-Glance Engineering Metrics
@@ -170,8 +180,10 @@ export default function About() {
                 ))}
               </div>
             </div>
+            </StaggerItem>
 
             {/* Engineering Values Quote */}
+            <StaggerItem>
             <div className="flex items-start gap-4 rounded-3xl border border-dashed border-slate-300 bg-slate-50/80 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-900/50">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400">
                 <Code2 className="h-5 w-5" />
@@ -186,7 +198,8 @@ export default function About() {
                 </p>
               </div>
             </div>
-          </div>
+            </StaggerItem>
+          </StaggerGroup>
         </div>
       </div>
     </section>

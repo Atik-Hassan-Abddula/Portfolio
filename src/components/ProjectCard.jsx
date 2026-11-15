@@ -1,295 +1,287 @@
 "use client";
 
+import Image from "next/image";
 import {
   ExternalLink,
-  Sparkles,
-  Layers,
-  Flame,
-  TrendingUp,
-  Dumbbell,
-  Newspaper,
-  ArrowUpRight,
-  Globe,
-  Radio,
+  Eye,
+  Lock,
+  ChevronRight,
+  CheckCircle2,
 } from "lucide-react";
-
 import { GithubIcon } from "@/components/Icons";
 
-export default function ProjectCard({ project }) {
-  const renderPreviewMockup = () => {
-    switch (project.previewType) {
-      case "news":
-        return (
-          <div className="flex h-full w-full flex-col justify-between bg-slate-50 p-3 font-mono text-[10px] transition-colors duration-300 sm:p-4 sm:text-[11px] dark:bg-slate-950/90">
-            {/* News Bar Header */}
-            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-200 pb-2.5 text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span className="flex items-center gap-1.5 font-bold text-red-600 dark:text-red-400">
-                <Radio className="h-3.5 w-3.5 animate-pulse" />
-                <span>ব্রেকিং নিউজ</span>
-              </span>
-              <span className="rounded-full border border-red-500/20 bg-red-500/10 px-2 py-0.5 font-sans text-[9px] font-semibold text-red-600 dark:text-red-400">
-                Live 24/7
-              </span>
-            </div>
+/* ─────────────────────────────────────────────
+   Accent colour sets rotated per-card
+   ───────────────────────────────────────────── */
+const cardAccents = [
+  {
+    glow: "from-purple-600/20 via-blue-600/15 to-indigo-600/10",
+    border: "hover:border-purple-500/40 dark:hover:border-purple-400/40",
+    dot: "bg-purple-500",
+    number: "text-purple-500/20 dark:text-purple-400/15",
+    badge:
+      "border-purple-500/20 bg-purple-500/10 text-purple-300 dark:border-purple-400/20 dark:bg-purple-400/10 dark:text-purple-300",
+    floatBg: "bg-purple-500/10 border-purple-500/20 text-purple-300",
+  },
+  {
+    glow: "from-cyan-600/20 via-blue-600/15 to-teal-600/10",
+    border: "hover:border-cyan-500/40 dark:hover:border-cyan-400/40",
+    dot: "bg-cyan-500",
+    number: "text-cyan-500/20 dark:text-cyan-400/15",
+    badge:
+      "border-cyan-500/20 bg-cyan-500/10 text-cyan-300 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300",
+    floatBg: "bg-cyan-500/10 border-cyan-500/20 text-cyan-300",
+  },
+  {
+    glow: "from-blue-600/20 via-indigo-600/15 to-violet-600/10",
+    border: "hover:border-blue-500/40 dark:hover:border-blue-400/40",
+    dot: "bg-blue-500",
+    number: "text-blue-500/20 dark:text-blue-400/15",
+    badge:
+      "border-blue-500/20 bg-blue-500/10 text-blue-300 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300",
+    floatBg: "bg-blue-500/10 border-blue-500/20 text-blue-300",
+  },
+  {
+    glow: "from-emerald-600/20 via-teal-600/15 to-cyan-600/10",
+    border: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
+    dot: "bg-emerald-500",
+    number: "text-emerald-500/20 dark:text-emerald-400/15",
+    badge:
+      "border-emerald-500/20 bg-emerald-500/10 text-emerald-300 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300",
+    floatBg: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300",
+  },
+];
 
-            {/* News Mockup Grid */}
-            <div className="space-y-2 py-2">
-              <div className="rounded-lg border border-red-500/20 bg-gradient-to-r from-red-500/10 via-rose-500/5 to-transparent p-2.5 text-slate-800 dark:text-slate-200">
-                <span className="inline-block rounded bg-red-600 px-1.5 py-0.5 text-[8px] font-bold text-white uppercase">
-                  শীর্ষ সংবাদ
-                </span>
-                <p className="mt-1 font-sans text-xs font-bold leading-tight line-clamp-1 text-slate-900 dark:text-white">
-                  জাতীয় ও আন্তর্জাতিক সকল তাজা খবরের নির্ভরযোগ্য প্ল্যাটফর্ম
-                </p>
-              </div>
+/* Badge pill accents for tech pills */
+const techPillClasses = [
+  "border-purple-500/25 bg-purple-500/8 text-purple-400",
+  "border-blue-500/25 bg-blue-500/8 text-blue-400",
+  "border-cyan-500/25 bg-cyan-500/8 text-cyan-400",
+  "border-pink-500/25 bg-pink-500/8 text-pink-400",
+  "border-indigo-500/25 bg-indigo-500/8 text-indigo-400",
+  "border-teal-500/25 bg-teal-500/8 text-teal-400",
+];
 
-              <div className="grid grid-cols-3 gap-1.5 text-center font-sans text-[9px]">
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  বাংলাদেশ
-                </div>
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  আন্তর্জাতিক
-                </div>
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  খেলাধুলা
-                </div>
-              </div>
-            </div>
+/* Floating badge positions – staggered around the browser mockup */
+const floatPositions = [
+  "top-3 -left-3 sm:-left-5 lg:-left-6",
+  "bottom-8 -right-3 sm:-right-5 lg:-right-6",
+  "-bottom-3 left-8 sm:left-12",
+];
 
-            {/* News Bar Footer */}
-            <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-[10px] text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span className="flex items-center gap-1">
-                <Newspaper className="h-3 w-3 text-red-500" />
-                <span>Next.js App Router & MongoDB</span>
-              </span>
-              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                ● Active
-              </span>
-            </div>
-          </div>
-        );
+/* Floating animation delays for variety */
+const floatDelays = ["[animation-delay:0s]", "[animation-delay:1.5s]", "[animation-delay:3s]"];
 
-      case "fitness":
-        return (
-          <div className="flex h-full w-full flex-col justify-between bg-slate-50 p-3 font-mono text-[10px] transition-colors duration-300 sm:p-4 sm:text-[11px] dark:bg-slate-950/90">
-            {/* Fitness Header */}
-            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-200 pb-2.5 text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span className="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
-                <Dumbbell className="h-3.5 w-3.5" />
-                <span>Workout Tracker</span>
-              </span>
-              <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
-                Target: 100%
-              </span>
-            </div>
+/**
+ * ProjectCard — Creative Case Study layout.
+ *
+ * Desktop: Asymmetric horizontal card with browser mockup on one side
+ * and editorial project info on the other, alternating per card.
+ * Mobile: Stacks mockup above details.
+ *
+ * Props:
+ *   project  — from portfolioData.js
+ *   index    — card position (0-based)
+ *   onViewCaseStudy — callback to open the modal
+ */
+export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
+  const imageRight = index % 2 === 1;
+  const accent = cardAccents[index % cardAccents.length];
+  const projectNumber = String(index + 1).padStart(2, "0");
 
-            {/* Fitness Metrics */}
-            <div className="space-y-2 py-2">
-              <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-2 text-center dark:bg-emerald-950/30">
-                  <span className="block text-[9px] text-slate-500 dark:text-slate-400 uppercase">
-                    Exercises Logged
-                  </span>
-                  <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                    18 Sets / 4 Routines
-                  </span>
-                </div>
-                <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/10 p-2 text-center dark:bg-cyan-950/30">
-                  <span className="block text-[9px] text-slate-500 dark:text-slate-400 uppercase">
-                    Burn Activity
-                  </span>
-                  <span className="flex items-center justify-center gap-1 text-sm font-bold text-cyan-600 dark:text-cyan-400">
-                    <Flame className="h-3.5 w-3.5 text-orange-500" />
-                    Active Log
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 dark:border-slate-800 dark:bg-slate-900">
-                <span className="text-[10px] font-sans font-medium text-slate-700 dark:text-slate-300">
-                  Chest &amp; Triceps Routine
-                </span>
-                <span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
-                  Completed
-                </span>
-              </div>
-            </div>
-
-            {/* Fitness Footer */}
-            <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-[10px] text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span>Dynamic Exercise Explorer</span>
-              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                ✓ Synced
-              </span>
-            </div>
-          </div>
-        );
-
-      case "bazar":
-      default:
-        return (
-          <div className="flex h-full w-full flex-col justify-between bg-slate-50 p-3 font-mono text-[10px] transition-colors duration-300 sm:p-4 sm:text-[11px] dark:bg-slate-950/90">
-            {/* Bazar Header */}
-            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-200 pb-2.5 text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span className="flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400">
-                <TrendingUp className="h-3.5 w-3.5" />
-                <span>Market Insights</span>
-              </span>
-              <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-2 py-0.5 text-[9px] font-semibold text-blue-600 dark:text-blue-400">
-                Realtime Updates
-              </span>
-            </div>
-
-            {/* Bazar Price Rows */}
-            <div className="space-y-1.5 py-2 font-sans">
-              <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-1.5 dark:border-slate-800 dark:bg-slate-900">
-                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                  Daily Grocery &amp; Commodity Index
-                </span>
-                <span className="rounded bg-indigo-500/10 px-1.5 py-0.5 font-mono text-[9px] font-bold text-indigo-600 dark:text-indigo-400">
-                  Live Feed
-                </span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-1.5 text-center font-mono text-[9px]">
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  Essential Items
-                </div>
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  Price Trends
-                </div>
-                <div className="rounded border border-slate-200 bg-white p-1 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                  Analytics
-                </div>
-              </div>
-            </div>
-
-            {/* Bazar Footer */}
-            <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-[10px] text-slate-500 dark:border-slate-800 dark:text-slate-400">
-              <span>Full-Stack Web Experience</span>
-              <span className="font-semibold text-blue-600 dark:text-blue-400">
-                ● Live
-              </span>
-            </div>
-          </div>
-        );
-    }
-  };
+  /* Pick 3 floating techs (or fewer if project has <3) */
+  const floatingTechs = (project.technologies || []).slice(0, 3);
 
   return (
-    <article className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/60 hover:shadow-xl hover:shadow-blue-500/10 dark:border-slate-800/90 dark:bg-[#0b1120] dark:hover:border-blue-500/40">
-      {/* Top Gradient Banner */}
+    <article
+      className={`group relative grid min-w-0 overflow-visible rounded-2xl border border-slate-200/60 bg-white/80 shadow-lg shadow-slate-200/50 backdrop-blur-sm transition-all duration-500 dark:border-slate-700/40 dark:bg-[#0d1730]/70 dark:shadow-none dark:backdrop-blur-md ${accent.border} md:grid-cols-2 lg:grid-cols-[1.2fr_1fr]`}
+    >
+      {/* ── Ambient card glow on hover ── */}
       <div
-        className={`h-1.5 w-full shrink-0 bg-gradient-to-r ${
-          project.gradient || "from-blue-600 to-indigo-600"
-        }`}
+        aria-hidden="true"
+        className={`pointer-events-none absolute -inset-px -z-10 rounded-2xl bg-gradient-to-br opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-60 ${accent.glow}`}
       />
 
-      {/* Browser Window Frame & Preview */}
-      <div className="px-4 pt-4 sm:px-6 sm:pt-6">
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm transition-colors group-hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950 dark:group-hover:border-slate-700">
-          {/* Window Header */}
-          <div className="flex min-w-0 items-center justify-between gap-3 border-b border-slate-200 bg-slate-100/90 px-3.5 py-2.5 dark:border-slate-800 dark:bg-slate-900/90">
-            <div className="flex shrink-0 items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/90" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/90" />
+      {/* ═══════════════════════════════════════════
+          BROWSER MOCKUP side
+          ═══════════════════════════════════════════ */}
+      <div
+        className={`relative min-w-0 p-4 sm:p-6 lg:p-8 ${
+          imageRight ? "md:order-2" : "md:order-1"
+        }`}
+      >
+        {/* Browser window frame */}
+        <div className="relative overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-xl shadow-slate-300/40 transition-shadow duration-500 group-hover:shadow-2xl group-hover:shadow-purple-500/10 dark:border-slate-600/40 dark:bg-[#111827] dark:shadow-slate-950/60 dark:group-hover:shadow-purple-500/15">
+          {/* Top browser bar */}
+          <div className="flex items-center gap-2 border-b border-slate-200/70 bg-slate-50/90 px-3 py-2.5 dark:border-slate-700/50 dark:bg-[#1a2332]">
+            {/* Traffic lights */}
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 dark:bg-red-500/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80 dark:bg-yellow-500/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-green-400/80 dark:bg-green-500/60" />
             </div>
 
-            <div className="flex min-w-0 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[10px] text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-400">
-              <Globe className="h-3 w-3 text-slate-400" />
-              <span className="truncate">{project.id}.app</span>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-1">
-              <span className="h-1 w-1 rounded-full bg-slate-400" />
-              <span className="h-1 w-1 rounded-full bg-slate-400" />
-              <span className="h-1 w-1 rounded-full bg-slate-400" />
+            {/* Address bar */}
+            <div className="ml-2 flex flex-1 items-center gap-1.5 rounded-md bg-slate-100/80 px-2.5 py-1 dark:bg-slate-800/60">
+              <Lock className="h-3 w-3 shrink-0 text-green-500/70 dark:text-green-400/60" />
+              <span className="truncate font-mono text-[10px] text-slate-400 dark:text-slate-500">
+                {project.liveUrl
+                  ? project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")
+                  : "localhost:3000"}
+              </span>
             </div>
           </div>
 
-          {/* Interactive Screen Preview */}
-          <div className="relative aspect-[16/9] overflow-hidden">
-            {renderPreviewMockup()}
+          {/* Screenshot viewport with hover zoom */}
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src={project.screenshot}
+              alt={`${project.title} website screenshot`}
+              fill
+              sizes="(min-width: 768px) 55vw, 100vw"
+              className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+            />
+
+            {/* Subtle gradient vignette */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/15 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            />
           </div>
         </div>
+
+        {/* ── Floating Technology Badges ── */}
+        {floatingTechs.map((tech, i) => (
+          <span
+            key={tech}
+            className={`absolute z-20 hidden items-center gap-1.5 rounded-lg border px-2.5 py-1.5 font-mono text-[11px] font-medium shadow-lg backdrop-blur-md motion-safe:animate-[float_6s_ease-in-out_infinite] sm:inline-flex ${floatPositions[i]} ${floatDelays[i]} ${accent.floatBg} bg-white/90 dark:bg-slate-900/80`}
+          >
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${accent.dot}`}
+            />
+            {tech}
+          </span>
+        ))}
       </div>
 
-      {/* Project Information */}
-      <div className="flex flex-1 flex-col p-5 sm:p-6 lg:p-7">
-        <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 font-mono text-xs font-semibold text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
-            <Sparkles className="h-3 w-3" />
-            <span>{project.badge || "Featured Project"}</span>
-          </span>
+      {/* ═══════════════════════════════════════════
+          PROJECT DETAILS side
+          ═══════════════════════════════════════════ */}
+      <div
+        className={`relative flex min-w-0 flex-col p-5 sm:p-6 lg:p-8 ${
+          imageRight ? "md:order-1" : "md:order-2"
+        }`}
+      >
+        {/* Ghost watermark number */}
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute right-4 top-2 select-none font-mono text-7xl font-black leading-none sm:text-8xl lg:text-9xl ${accent.number}`}
+        >
+          {projectNumber}
+        </span>
 
-          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
-            Production Project
+        {/* Case study label + badge */}
+        <div className="relative flex flex-wrap items-center gap-2">
+          <span className="font-mono text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            Case Study / {projectNumber}
           </span>
+          {project.badge && (
+            <span
+              className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-semibold ${accent.badge}`}
+            >
+              {project.badge}
+            </span>
+          )}
         </div>
 
-        <h3 className="text-xl font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
-          {project.title}
-        </h3>
+        {/* Title + Subtitle */}
+        <div className="relative mt-3">
+          <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl lg:text-3xl dark:text-white">
+            {project.title}
+          </h3>
+          {project.subtitle && (
+            <p className="mt-1 font-mono text-xs font-medium text-purple-600 dark:text-purple-400">
+              {project.subtitle}
+            </p>
+          )}
+        </div>
 
-        {project.subtitle && (
-          <p className="mt-1 font-mono text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-            {project.subtitle}
-          </p>
-        )}
-
-        <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        {/* Description */}
+        <p className="relative mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
           {project.description}
         </p>
 
-        {/* Technology Pills */}
-        <div className="mb-6 mt-5 flex flex-wrap gap-1.5">
-          {(project.technologies || []).map((tech) => (
+        {/* Key Features (if available) */}
+        {project.features && project.features.length > 0 && (
+          <ul className="relative mt-4 space-y-1.5">
+            {project.features.slice(0, 4).map((feature) => (
+              <li
+                key={feature}
+                className="flex items-start gap-2 text-xs text-slate-500 dark:text-slate-400"
+              >
+                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-purple-500 dark:text-purple-400" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Technology pills */}
+        <div className="relative mt-4 flex flex-wrap gap-1.5">
+          {(project.technologies || []).map((tech, i) => (
             <span
               key={tech}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] text-slate-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:border-blue-500/40 dark:hover:bg-blue-500/10 dark:hover:text-blue-300"
+              className={`rounded-md border px-2 py-0.5 font-mono text-[10px] font-medium transition-colors ${
+                techPillClasses[(index + i) % techPillClasses.length]
+              }`}
             >
               {tech}
             </span>
           ))}
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-auto grid grid-cols-1 gap-2.5 border-t border-slate-100 pt-4 sm:grid-cols-2 dark:border-slate-800/80">
-          {project.liveUrl ? (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View live demo of ${project.title}`}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-200 hover:from-blue-500 hover:to-indigo-500 hover:shadow-blue-500/30 active:scale-[0.98] sm:text-sm"
-            >
-              <span>Live Website</span>
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          ) : (
-            <span className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-xs font-medium text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-              Demo Coming Soon
-            </span>
-          )}
+        {/* Action buttons — pinned to bottom */}
+        <div className="relative mt-auto pt-5">
+          <div className="h-px bg-gradient-to-r from-transparent via-slate-200/70 to-transparent dark:via-slate-700/50" />
 
-          {project.githubUrl ? (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View GitHub repository of ${project.title}`}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-400 hover:bg-slate-100 active:scale-[0.98] sm:text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+          <div className="flex flex-wrap items-center gap-2.5 pt-4">
+            {/* Live Demo — primary */}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/demo inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 active:translate-y-0 sm:text-sm"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span>Live Demo</span>
+              </a>
+            )}
+
+            {/* GitHub — secondary */}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-400 active:translate-y-0 sm:text-sm dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:border-slate-500"
+              >
+                <GithubIcon className="h-3.5 w-3.5" />
+                <span>GitHub</span>
+              </a>
+            )}
+
+            {/* View Case Study — tertiary */}
+            <button
+              type="button"
+              onClick={() => onViewCaseStudy?.(project)}
+              className="group/cs ml-auto inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-purple-600 transition-all duration-200 hover:bg-purple-500/10 sm:text-sm dark:text-purple-400 dark:hover:bg-purple-400/10"
             >
-              <GithubIcon className="h-4 w-4" />
-              <span>Source Code</span>
-              <ArrowUpRight className="h-3.5 w-3.5 opacity-60" />
-            </a>
-          ) : (
-            <span className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-xs font-medium text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-              Private Repo
-            </span>
-          )}
+              <Eye className="h-3.5 w-3.5" />
+              <span>Case Study</span>
+              <ChevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/cs:translate-x-0.5" />
+            </button>
+          </div>
         </div>
       </div>
     </article>

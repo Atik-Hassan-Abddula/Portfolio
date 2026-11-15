@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="ah-gradient" x1="12" y1="16" x2="60" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark navy background, matches the portfolio's dark theme color -->
+  <rect width="64" height="64" rx="14" fill="#0B1120"/>
+  <!-- A -->
+  <g stroke="url(#ah-gradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M12.5 48 L24.5 16.5 L36.5 48"/>
+    <path d="M18 38.5 H31"/>
+    <!-- H -->
+    <path d="M43.5 16.5 V48"/>
+    <path d="M57.5 16.5 V48"/>
+    <path d="M43.5 32 H57.5"/>
+  </g>
+</svg>

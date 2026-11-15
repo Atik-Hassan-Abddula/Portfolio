@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import ScrollProgress from "@/components/ScrollProgress";
+import BackToTop from "@/components/BackToTop";
+import SocialSidebar from "@/components/SocialSidebar";
 import Hero from "@/components/Hero";
+import TechUniverse from "@/components/sections/TechUniverse";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -29,12 +33,19 @@ export default function Home() {
   return (
     <SmoothScroll>
       <div className="relative min-h-screen w-full overflow-x-clip flex flex-col bg-white text-slate-900 transition-colors duration-300 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
+        {/* Scroll-linked progress bar (top of viewport) */}
+        <ScrollProgress />
+
+        {/* Fixed vertical social rail (left edge, vertically centered) */}
+        <SocialSidebar />
+
         {/* Top Sticky/Floating Navbar */}
         <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* Main Content Sections */}
         <main className="flex-1 flex flex-col">
           <Hero onOpenResume={() => setIsResumeOpen(true)} />
+          <TechUniverse />
           <About />
           <Skills />
           <Projects />
@@ -44,6 +55,9 @@ export default function Home() {
 
         {/* Footer */}
         <Footer />
+
+        {/* Floating Back-to-Top control */}
+        <BackToTop />
 
         {/* Resume Modal */}
         <ResumeModal

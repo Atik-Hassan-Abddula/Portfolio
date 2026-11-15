@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { StaggerGroup, StaggerItem, Reveal } from "@/components/motion/Reveal";
 import { personalInfo } from "@/data/portfolioData";
 
 export default function Hero({ onOpenResume }) {
@@ -54,8 +55,14 @@ export default function Hero({ onOpenResume }) {
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-12">
           {/* Left Column: Introduction & CTAs */}
-          <div className="space-y-6 text-center sm:space-y-7 lg:col-span-7 lg:text-left">
+          <StaggerGroup
+            trigger="load"
+            stagger={0.1}
+            delayChildren={0.05}
+            className="space-y-6 text-center sm:space-y-7 lg:col-span-7 lg:text-left"
+          >
             {/* Status Pill */}
+            <StaggerItem className="flex justify-center lg:justify-start">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-white/90 px-3.5 py-1.5 text-xs text-slate-700 shadow-sm backdrop-blur-md sm:text-sm dark:border-slate-800/90 dark:bg-slate-900/90 dark:text-slate-300">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -66,8 +73,10 @@ export default function Hero({ onOpenResume }) {
                 {personalInfo.status}
               </span>
             </div>
+            </StaggerItem>
 
             {/* Greeting & Headline */}
+            <StaggerItem>
             <div className="space-y-3">
               <div className="flex items-center justify-center gap-2 font-mono text-sm font-semibold tracking-wide text-blue-600 sm:text-base lg:justify-start dark:text-blue-400">
                 <Terminal className="h-4 w-4" />
@@ -82,13 +91,17 @@ export default function Hero({ onOpenResume }) {
                 Experiences.
               </h1>
             </div>
+            </StaggerItem>
 
             {/* Bio */}
+            <StaggerItem>
             <p className="mx-auto max-w-2xl text-base font-normal leading-relaxed text-slate-600 sm:text-lg lg:mx-0 dark:text-slate-300">
               {personalInfo.shortBio}
             </p>
+            </StaggerItem>
 
             {/* CTA Buttons Row */}
+            <StaggerItem>
             <div className="flex flex-col items-center justify-center gap-3 pt-2 sm:flex-row sm:flex-wrap lg:justify-start">
               <button
                 type="button"
@@ -119,8 +132,10 @@ export default function Hero({ onOpenResume }) {
                 </button>
               )}
             </div>
+            </StaggerItem>
 
             {/* Socials & Tech Pill */}
+            <StaggerItem>
             <div className="flex flex-col items-center justify-center gap-4 pt-3 text-xs text-slate-500 sm:flex-row sm:gap-5 lg:justify-start dark:text-slate-400">
               <div className="flex items-center gap-2.5">
                 {personalInfo.socials.github && (
@@ -157,10 +172,12 @@ export default function Hero({ onOpenResume }) {
                 <span className="text-center">Next.js • React • Node.js • Tailwind CSS</span>
               </div>
             </div>
-          </div>
+            </StaggerItem>
+          </StaggerGroup>
 
           {/* Right Column: Premium Profile Card */}
           <div className="flex w-full justify-center lg:col-span-5 lg:justify-end">
+            <Reveal trigger="load" delay={0.45} y={28} className="w-full max-w-sm sm:max-w-md">
             <div className="group relative w-full max-w-sm sm:max-w-md">
               {/* Outer Glow */}
               <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 opacity-20 blur-xl transition duration-700 group-hover:opacity-40 dark:opacity-30" />
@@ -250,7 +267,8 @@ export default function Hero({ onOpenResume }) {
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>

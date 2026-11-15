@@ -15,6 +15,7 @@ import {
   Code2,
   GitBranch,
 } from "lucide-react";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 // ==========================================
 // OFFICIAL TECHNOLOGY SVG ICONS
@@ -446,7 +447,7 @@ export default function Skills() {
         {/* ==========================================
             2. SECTION HEADER
         ========================================== */}
-        <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
+        <Reveal y={16} className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
           {/* Small Badge: MY SKILLS */}
           <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5 font-mono text-xs font-bold tracking-widest text-purple-600 shadow-[0_0_15px_rgba(168,85,247,0.15)] dark:border-purple-400/30 dark:bg-purple-500/15 dark:text-purple-300">
             <Sparkles className="h-3.5 w-3.5 text-purple-500 dark:text-purple-300" />
@@ -465,12 +466,12 @@ export default function Skills() {
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
             Technologies and tools I work with to build amazing digital experiences.
           </p>
-        </div>
+        </Reveal>
 
         {/* ==========================================
             3. CATEGORY FILTER NAVIGATION & SEARCH
         ========================================== */}
-        <div className="mb-7 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-center lg:justify-between">
+        <Reveal y={16} className="mb-7 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-center lg:justify-between">
           {/* Category Filter Buttons */}
           <div className="-mx-4 flex flex-wrap items-center gap-2 px-4 sm:mx-0 sm:px-0">
             {filterButtons.map((filter) => {
@@ -523,18 +524,19 @@ export default function Skills() {
               )}
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* ==========================================
             4. SIX PREMIUM CATEGORY CARDS (GRID)
         ========================================== */}
         {visibleCards.length > 0 ? (
-          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
+          <StaggerGroup className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2" stagger={0.08}>
             {visibleCards.map((card) => {
               const CategoryIcon = card.icon;
               const trimmed = search.trim().toLowerCase();
 
               return (
+                <StaggerItem key={card.id} className="h-full">
                 <article
                   key={card.id}
                   className={`group relative rounded-3xl p-[1px] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${card.borderGradient} ${card.glowShadow}`}
@@ -618,9 +620,10 @@ export default function Skills() {
                     </div>
                   </div>
                 </article>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         ) : (
           /* Empty Search Results */
           <div className="rounded-3xl border border-dashed border-slate-300 p-12 text-center dark:border-white/10">
