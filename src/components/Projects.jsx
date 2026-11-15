@@ -1,16 +1,33 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { FolderGit2, ArrowUpRight } from "lucide-react";
+import { useReducedMotion } from "motion/react";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectModal from "@/components/ProjectModal";
 import { projectsData, personalInfo } from "@/data/portfolioData";
 import { GithubIcon } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";
 
+const clamp01 = (value) => Math.min(1, Math.max(0, value));
+
+/**
+ * Projects — Creative Case Study showcase with a sticky stacking deck.
+ *
+ * Desktop/tablet (md+): each card wrapper is `position: sticky` with a
+ * per-index `top` offset, so incoming cards slide over pinned ones to
+ * form a layered deck. A rAF-throttled scroll handler nudges the pinned
+ * card's scale/brightness based on how far the *next* card has travelled
+ * into the viewport — no React re-renders, no per-frame state.
+ *
+ * Mobile and `prefers-reduced-motion`: plain vertical flow, no sticky,
+ * no transforms.
+ */
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const cardRefs = useRef([]);
+  const reducedMotion = useReducedMotion() === true;
 
   const handleOpenCaseStudy = useCallback((project) => {
     const idx = projectsData.findIndex((p) => p.id === project.id);
@@ -22,10 +39,81 @@ export default function Projects() {
     setSelectedProject(null);
   }, []);
 
+  /* Recede pinned cards as the next card slides over them (md+ only) */
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+
+    const desktop = window.matchMedia("(min-width: 768px)");
+    let rafId = null;
+
+    const resetAll = () => {
+      for (const el of cardRefs.current) {
+        if (!el) continue;
+        el.style.transform = "";
+        el.style.filter = "";
+      }
+    };
+
+    const update = () => {
+      rafId = null;
+      if (!desktop.matches) {
+        resetAll();
+        return;
+      }
+
+      const viewportH = window.innerHeight;
+
+      for (let i = 0; i < cardRefs.current.length - 1; i += 1) {
+        const current = cardRefs.current[i];
+        const next = cardRefs.current[i + 1];
+        if (!current || !next) continue;
+
+        const rect = next.getBoundingClientRect();
+        const targetTop = parseFloat(window.getComputedStyle(next).top) || 0;
+        const range = Math.max(viewportH - targetTop, 1);
+        const progress = clamp01((viewportH - rect.top) / range);
+
+        const scale = 1 - progress * 0.045;
+        const brightness = 1 - progress * 0.16;
+        current.style.transform = `scale(${scale.toFixed(4)})`;
+        current.style.filter = `brightness(${brightness.toFixed(4)})`;
+      }
+
+      // The final card never gets covered — keep it fully present.
+      const last = cardRefs.current[cardRefs.current.length - 1];
+      if (last) {
+        last.style.transform = "";
+        last.style.filter = "";
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    if (desktop.addEventListener) {
+      desktop.addEventListener("change", scheduleUpdate);
+    }
+
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (desktop.removeEventListener) {
+        desktop.removeEventListener("change", scheduleUpdate);
+      }
+      resetAll();
+    };
+  }, [reducedMotion]);
+
   return (
     <section
       id="projects"
-      className="relative scroll-mt-20 overflow-hidden bg-white py-12 text-slate-900 transition-colors duration-300 dark:bg-[#0b1120] dark:text-white sm:py-16 lg:py-20"
+      className="relative scroll-mt-20 overflow-x-clip bg-white py-12 text-slate-900 transition-colors duration-300 dark:bg-[#0b1120] dark:text-white sm:py-16 lg:py-20"
     >
       {/* Ambient Purple / Blue / Pink Glows */}
       <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
@@ -36,7 +124,7 @@ export default function Projects() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <Reveal y={16} className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-9">
+        <Reveal y={16} className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wide text-purple-600 dark:border-purple-400/20 dark:bg-purple-400/10 dark:text-purple-400">
             <FolderGit2 className="h-3.5 w-3.5" />
             <span>Featured Portfolio Work</span>
@@ -54,16 +142,26 @@ export default function Projects() {
           </p>
         </Reveal>
 
-        {/* Horizontal Showcase: alternating large cards */}
-        <div className="flex flex-col gap-8 sm:gap-10 lg:gap-14">
+        {/* Sticky stacking deck — centered, controlled max width; static flow on mobile */}
+        <div className="projects-stack mx-auto flex w-full max-w-6xl flex-col gap-8 md:gap-0">
           {projectsData.map((project, index) => (
-            <Reveal key={project.id} y={36} className="min-w-0">
+            <div
+              key={project.id}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className="project-stack-card min-w-0 md:sticky md:pb-4 lg:pb-5"
+              style={{
+                top: `calc(var(--stack-top) + ${index} * var(--stack-peek))`,
+                zIndex: index + 1,
+              }}
+            >
               <ProjectCard
                 project={project}
                 index={index}
                 onViewCaseStudy={handleOpenCaseStudy}
               />
-            </Reveal>
+            </div>
           ))}
         </div>
 

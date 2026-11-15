@@ -108,6 +108,31 @@ body {
   }
 }
 
+/* Projects sticky card stack — offsets scale up on larger screens */
+.projects-stack {
+  --stack-top: 4.5rem;
+  --stack-peek: 10px;
+}
+
+@media (min-width: 1024px) {
+  .projects-stack {
+    --stack-top: 5.25rem;
+    --stack-peek: 14px;
+  }
+}
+
+.project-stack-card {
+  will-change: transform;
+  transform-origin: center top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-stack-card {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
 /* Floating badge animation for project cards */
 @keyframes float {
   0%,

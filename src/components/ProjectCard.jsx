@@ -9,6 +9,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
+import { TechIcon } from "@/components/TechIcons";
 
 /* ─────────────────────────────────────────────
    Accent colour sets rotated per-card
@@ -94,7 +95,7 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
 
   return (
     <article
-      className={`group relative grid min-w-0 overflow-visible rounded-2xl border border-slate-200/60 bg-white/80 shadow-lg shadow-slate-200/50 backdrop-blur-sm transition-all duration-500 dark:border-slate-700/40 dark:bg-[#0d1730]/70 dark:shadow-none dark:backdrop-blur-md ${accent.border} md:grid-cols-2 lg:grid-cols-[1.2fr_1fr]`}
+      className={`group relative grid h-full min-h-0 min-w-0 grid-cols-1 overflow-visible rounded-2xl border border-slate-200/60 bg-white/95 shadow-lg shadow-slate-200/50 backdrop-blur-sm transition-[border-color,box-shadow] duration-500 md:min-h-[400px] dark:border-white/[0.06] dark:bg-[#0d1730]/95 dark:shadow-[0_24px_60px_-24px_rgba(2,6,23,0.8),inset_0_1px_0_0_rgba(255,255,255,0.04)] dark:backdrop-blur-md ${accent.border} md:grid-cols-2 lg:grid-cols-[1.15fr_1fr]`}
     >
       {/* ── Ambient card glow on hover ── */}
       <div
@@ -106,14 +107,14 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
           BROWSER MOCKUP side
           ═══════════════════════════════════════════ */}
       <div
-        className={`relative min-w-0 p-4 sm:p-6 lg:p-8 ${
+        className={`relative min-w-0 p-4 sm:p-5 lg:p-6 ${
           imageRight ? "md:order-2" : "md:order-1"
         }`}
       >
         {/* Browser window frame */}
         <div className="relative overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-xl shadow-slate-300/40 transition-shadow duration-500 group-hover:shadow-2xl group-hover:shadow-purple-500/10 dark:border-slate-600/40 dark:bg-[#111827] dark:shadow-slate-950/60 dark:group-hover:shadow-purple-500/15">
           {/* Top browser bar */}
-          <div className="flex items-center gap-2 border-b border-slate-200/70 bg-slate-50/90 px-3 py-2.5 dark:border-slate-700/50 dark:bg-[#1a2332]">
+          <div className="flex items-center gap-2 border-b border-slate-200/70 bg-slate-50/90 px-3 py-2 dark:border-slate-700/50 dark:bg-[#1a2332]">
             {/* Traffic lights */}
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 dark:bg-red-500/60" />
@@ -133,13 +134,13 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
           </div>
 
           {/* Screenshot viewport with hover zoom */}
-          <div className="relative aspect-[16/10] overflow-hidden">
+          <div className="relative aspect-[16/9] w-full overflow-hidden">
             <Image
               src={project.screenshot}
               alt={`${project.title} website screenshot`}
               fill
-              sizes="(min-width: 768px) 55vw, 100vw"
-              className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
             />
 
             {/* Subtle gradient vignette */}
@@ -168,14 +169,14 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
           PROJECT DETAILS side
           ═══════════════════════════════════════════ */}
       <div
-        className={`relative flex min-w-0 flex-col p-5 sm:p-6 lg:p-8 ${
+        className={`relative flex min-w-0 flex-col p-4 sm:p-5 lg:p-6 ${
           imageRight ? "md:order-1" : "md:order-2"
         }`}
       >
         {/* Ghost watermark number */}
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute right-4 top-2 select-none font-mono text-7xl font-black leading-none sm:text-8xl lg:text-9xl ${accent.number}`}
+          className={`pointer-events-none absolute right-3 top-1 select-none font-mono text-6xl font-black leading-none sm:text-7xl lg:text-8xl ${accent.number}`}
         >
           {projectNumber}
         </span>
@@ -195,8 +196,8 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
         </div>
 
         {/* Title + Subtitle */}
-        <div className="relative mt-3">
-          <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl lg:text-3xl dark:text-white">
+        <div className="relative mt-2">
+          <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
             {project.title}
           </h3>
           {project.subtitle && (
@@ -207,13 +208,13 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
         </div>
 
         {/* Description */}
-        <p className="relative mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        <p className="relative mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
           {project.description}
         </p>
 
         {/* Key Features (if available) */}
         {project.features && project.features.length > 0 && (
-          <ul className="relative mt-4 space-y-1.5">
+          <ul className="relative mt-3 space-y-1">
             {project.features.slice(0, 4).map((feature) => (
               <li
                 key={feature}
@@ -227,31 +228,32 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
         )}
 
         {/* Technology pills */}
-        <div className="relative mt-4 flex flex-wrap gap-1.5">
+        <div className="relative mt-3 flex flex-wrap gap-1.5">
           {(project.technologies || []).map((tech, i) => (
             <span
               key={tech}
-              className={`rounded-md border px-2 py-0.5 font-mono text-[10px] font-medium transition-colors ${
+              className={`inline-flex h-6 items-center gap-1.5 rounded-md border px-2 font-mono text-[10px] font-medium leading-none transition-colors ${
                 techPillClasses[(index + i) % techPillClasses.length]
               }`}
             >
+              <TechIcon tech={tech} className="h-3 w-3 shrink-0" />
               {tech}
             </span>
           ))}
         </div>
 
         {/* Action buttons — pinned to bottom */}
-        <div className="relative mt-auto pt-5">
+        <div className="relative mt-auto pt-4">
           <div className="h-px bg-gradient-to-r from-transparent via-slate-200/70 to-transparent dark:via-slate-700/50" />
 
-          <div className="flex flex-wrap items-center gap-2.5 pt-4">
+          <div className="flex flex-wrap items-center gap-2 pt-3">
             {/* Live Demo — primary */}
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/demo inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 active:translate-y-0 sm:text-sm"
+                className="group/demo inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 active:translate-y-0 sm:w-auto sm:text-sm"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
                 <span>Live Demo</span>
@@ -264,7 +266,7 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-400 active:translate-y-0 sm:text-sm dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:border-slate-500"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-400 active:translate-y-0 sm:w-auto sm:text-sm dark:border-slate-600 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:border-slate-500"
               >
                 <GithubIcon className="h-3.5 w-3.5" />
                 <span>GitHub</span>
@@ -275,7 +277,7 @@ export default function ProjectCard({ project, index = 0, onViewCaseStudy }) {
             <button
               type="button"
               onClick={() => onViewCaseStudy?.(project)}
-              className="group/cs ml-auto inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-purple-600 transition-all duration-200 hover:bg-purple-500/10 sm:text-sm dark:text-purple-400 dark:hover:bg-purple-400/10"
+              className="group/cs inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold text-purple-600 transition-all duration-200 hover:bg-purple-500/10 sm:w-auto sm:text-sm sm:ml-auto dark:text-purple-400 dark:hover:bg-purple-400/10"
             >
               <Eye className="h-3.5 w-3.5" />
               <span>Case Study</span>
