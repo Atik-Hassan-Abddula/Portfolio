@@ -7,17 +7,17 @@ import { personalInfo } from "@/data/portfolioData";
 // COSMIC IDENTITY PRELOADER
 // Full-screen futuristic opening sequence shown on initial
 // entry and full page refresh (it mounts exactly once — never
-// on internal navigation). Progress reflects real signals:
-//   hydration -> finished resources (Performance API) -> fonts
-//   ready -> window load. No fabricated timer percentage.
-// A short minimum duration (900ms) prevents flash on fast loads;
-// a 5s failsafe guarantees the page is never blocked.
+// on internal navigation).
+// The usable page is the statically rendered DOM itself, so the curtain lifts
+// the moment that DOM is parsed — no minimum hold, no waiting for images,
+// fonts, the `load` event, or decorative animations. Only a short 320ms
+// fade-out remains, putting the whole sequence at ~300-500ms. A brief 800ms
+// failsafe is a pure safety net if a readiness signal ever goes missing.
 // ============================================================
 
-const MIN_VISIBLE_MS = 900;
-const MIN_VISIBLE_REDUCED_MS = 250;
-const FAILSAFE_MS = 5000;
-const EXIT_MS = 750;
+const FAILSAFE_MS = 800;
+const EXIT_MS = 320;
+const EXIT_REDUCED_MS = 120;
 
 function mulberry32(seed) {
   return function () {
@@ -99,17 +99,13 @@ export default function Preloader() {
   const [exiting, setExiting] = useState(false);
   const [gone, setGone] = useState(false);
 
-  const targetRef = useRef(0.18); // hydration complete is a real milestone
   const currentRef = useRef(0.04);
-  const minMsRef = useRef(MIN_VISIBLE_MS);
-  const startedAtRef = useRef(0);
+  const exitMsRef = useRef(EXIT_MS);
   const exitingRef = useRef(false);
 
   useEffect(() => {
-    minMsRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? MIN_VISIBLE_REDUCED_MS
-      : MIN_VISIBLE_MS;
-    startedAtRef.current = performance.now();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    exitMsRef.current = reduced ? EXIT_REDUCED_MS : EXIT_MS;
 
     // --- Lock background scroll while the loader is visible ---
     const html = document.documentElement;
@@ -117,84 +113,64 @@ export default function Preloader() {
     html.style.overflow = "hidden";
     if (window.__lenis) window.__lenis.stop();
 
-    // --- Real loading milestones ---
-    // 1) Finished resources (polled cheaply; monotonic, count-based)
-    const poll = window.setInterval(() => {
-      try {
-        const finished = performance.getEntriesByType("resource").length;
-        targetRef.current = Math.min(0.82, Math.max(targetRef.current, 0.2 + finished * 0.06));
-      } catch {
-        /* Performance API unavailable — fonts/load milestones still apply */
-      }
-    }, 160);
+    let raf = 0;
+    let exitTimer = 0;
+    let lastPct = -1;
 
-    // 2) Web fonts settled
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(() => {
-        targetRef.current = Math.max(targetRef.current, 0.6);
-      }).catch(() => {});
-    }
+    const onDomReady = () => beginExit();
 
-    // 3) Window load — every critical resource (CSS/JS/images) is in
-    const onLoad = () => {
-      targetRef.current = 1;
-    };
-    if (document.readyState === "complete") {
-      targetRef.current = 1;
-    } else {
-      window.addEventListener("load", onLoad);
-    }
-
-    // 4) Failsafe — never block the page behind the loader
-    const failsafe = window.setTimeout(() => {
-      targetRef.current = 1;
-    }, FAILSAFE_MS);
+    // Safety net only — never reached when the normal readiness path works.
+    const failsafe = window.setTimeout(() => beginExit(), FAILSAFE_MS);
 
     const beginExit = () => {
       if (exitingRef.current) return;
       exitingRef.current = true;
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(failsafe);
+      document.removeEventListener("DOMContentLoaded", onDomReady);
+      currentRef.current = 1;
+      setCurrent(1);
       setExiting(true);
       // Release the page as the curtain lifts
       html.style.overflow = previousOverflow;
       if (window.__lenis) window.__lenis.start();
       // Let hash restore / scroll observers re-align once the page is live
       window.dispatchEvent(new Event("portfolio:preloader-done"));
-      window.setTimeout(() => setGone(true), EXIT_MS);
+      exitTimer = window.setTimeout(() => setGone(true), exitMsRef.current);
     };
 
-    // --- Smooth display loop, lerped toward the measured target ---
-    let raf = 0;
-    const tick = () => {
-      const target = targetRef.current;
-      const prev = currentRef.current;
-      const next = prev + (target - prev) * 0.085;
-      const settled = target >= 1 && next > 0.985;
-      currentRef.current = settled ? 1 : next;
-      setCurrent(currentRef.current);
+    // This is a single statically rendered route: by the time this effect
+    // runs, React has hydrated and the real content is already in the DOM.
+    // Reveal it immediately — images, fonts, `load`, and decorative
+    // animations are deliberately not awaited.
+    if (document.readyState !== "loading") {
+      beginExit();
+    } else {
+      document.addEventListener("DOMContentLoaded", onDomReady);
+    }
 
-      const minElapsed = performance.now() - startedAtRef.current >= minMsRef.current;
-      if (target >= 1 && settled && minElapsed) {
-        beginExit();
-        return;
+    // Fast progress sweep while the curtain is up. It never gates the reveal
+    // and is cancelled the moment the exit begins.
+    const tick = () => {
+      if (currentRef.current >= 1) return;
+      currentRef.current = Math.min(1, currentRef.current + 0.14);
+      const pct = Math.round(currentRef.current * 100);
+      if (pct !== lastPct) {
+        lastPct = pct;
+        setCurrent(currentRef.current);
       }
       raf = window.requestAnimationFrame(tick);
     };
-    raf = window.requestAnimationFrame(tick);
-
-    // Background-tab safety: rAF may be throttled; the interval still runs
-    const completionPoll = window.setInterval(() => {
-      const elapsed = performance.now() - startedAtRef.current;
-      if (targetRef.current >= 1 && elapsed >= minMsRef.current) {
-        beginExit();
-      }
-    }, 250);
+    if (!exitingRef.current) raf = window.requestAnimationFrame(tick);
 
     return () => {
       window.cancelAnimationFrame(raf);
-      window.clearInterval(poll);
-      window.clearInterval(completionPoll);
       window.clearTimeout(failsafe);
-      window.removeEventListener("load", onLoad);
+      window.clearTimeout(exitTimer);
+      document.removeEventListener("DOMContentLoaded", onDomReady);
+      // StrictMode re-runs this effect in development; let the second pass
+      // re-arm the exit instead of seeing the guard already tripped.
+      exitingRef.current = false;
       html.style.overflow = previousOverflow;
       if (window.__lenis) window.__lenis.start();
     };
@@ -292,7 +268,7 @@ export default function Preloader() {
         </p>
 
         {/* Divider with orbit node */}
-        <div aria-hidden="true" className="preloader-name-in mt-4 flex items-center gap-2" style={{ animationDelay: "0.48s" }}>
+        <div aria-hidden="true" className="preloader-name-in mt-4 flex items-center gap-2" style={{ animationDelay: "0.18s" }}>
           <span className="h-px w-10 bg-gradient-to-r from-transparent to-sky-400/70" />
           <span className="h-1.5 w-1.5 rotate-45 border border-indigo-300/70 bg-indigo-400/40" />
           <span className="h-px w-10 bg-gradient-to-l from-transparent to-violet-400/70" />

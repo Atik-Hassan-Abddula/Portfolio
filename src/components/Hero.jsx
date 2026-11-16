@@ -85,6 +85,8 @@ function renderWord(word, dropBase, startIndex, { outline = false } = {}) {
 export default function Hero({ onOpenResume }) {
   const sectionRef = useRef(null);
   const glowRef = useRef(null);
+  const nameRef = useRef(null);
+  const shatterRef = useRef(null);
 
   // Hero-local cursor spotlight. Pointer: fine + full motion only.
   useEffect(() => {
@@ -114,6 +116,297 @@ export default function Hero({ onOpenResume }) {
     return () => {
       section.removeEventListener("mousemove", onMove);
       if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // Hero name — hover shatter / reassemble.
+  // The live heading (and all of its entrance + shine animations) is never
+  // replaced: on hover we lazily clone it, slice the clones into tiny
+  // clip-path shards plus a handful of glowing motes, and drift them outward
+  // with a single rAF loop that writes transforms straight to the DOM. No
+  // React state is touched while it runs, and every node is removed once the
+  // name has reassembled.
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const fine = window.matchMedia("(pointer: fine)");
+    const name = nameRef.current;
+    const layer = shatterRef.current;
+    if (!name || !layer || reduced.matches || !fine.matches) return;
+
+    const DURATION = 820;
+    const COLS = 20;
+    const ROWS = 9;
+    const ZERO = { x: 0, y: 0, r: 0, s: 1 };
+    const rand = (min, max) => min + Math.random() * (max - min);
+    const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+    const easeOutBack = (t) => {
+      const c1 = 1.3;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+    };
+
+    const fx = {
+      ready: false,
+      mode: "idle", // "explode" | "assemble"
+      start: 0,
+      raf: null,
+      ease: easeOut,
+      shards: [],
+      sparks: [],
+    };
+
+    const clearLayer = () => {
+      while (layer.firstChild) layer.removeChild(layer.firstChild);
+      fx.shards.length = 0;
+      fx.sparks.length = 0;
+      fx.ready = false;
+    };
+
+    // Each shard is a slightly jittered quad so the pieces read as irregular
+    // fragments rather than a tidy grid of rectangles.
+    const shardPolygon = (c, r) => {
+      const cw = 100 / COLS;
+      const ch = 100 / ROWS;
+      const x0 = c * cw;
+      const y0 = r * ch;
+      const x1 = x0 + cw;
+      const y1 = y0 + ch;
+      const jx = cw * 0.24;
+      const jy = ch * 0.24;
+      const pts = [
+        [x0 + rand(-jx, jx), y0 + rand(-jy, jy)],
+        [x1 + rand(-jx, jx), y0 + rand(-jy, jy)],
+        [x1 + rand(-jx, jx), y1 + rand(-jy, jy)],
+        [x0 + rand(-jx, jx), y1 + rand(-jy, jy)],
+      ];
+      return `polygon(${pts
+        .map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`)
+        .join(",")})`;
+    };
+
+    const build = () => {
+      if (fx.ready) return;
+      const box = name.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      fx.ready = true;
+
+      const cx = box.width / 2;
+      const cy = box.height / 2;
+      const cellW = box.width / COLS;
+
+      // Only the letters overlapping a shard's cell can ever be visible once
+      // its clip-path is applied. Hiding the rest (without removing them, so
+      // the remaining glyphs keep their exact positions) keeps the much
+      // denser 20 × 9 grid cheap to paint.
+      const letterBoxes = Array.from(
+        name.querySelectorAll(".hero-letter"),
+        (el) => {
+          const r = el.getBoundingClientRect();
+          return { left: r.left - box.left, right: r.right - box.left };
+        }
+      );
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const shard = name.cloneNode(true);
+          shard.removeAttribute("id");
+          shard.classList.remove("hero-title-glow", "is-shattering");
+          shard.classList.add("hero-shatter-fragment");
+          shard.setAttribute("aria-hidden", "true");
+          shard.querySelector(".hero-sparkle-field")?.remove();
+          shard.querySelector(".hero-shatter-layer")?.remove();
+          const cellLeft = c * cellW;
+          const pad = cellW * 0.35;
+          shard.querySelectorAll(".hero-letter").forEach((letter, li) => {
+            const b = letterBoxes[li];
+            if (b && (b.right < cellLeft - pad || b.left > cellLeft + cellW + pad)) {
+              letter.style.visibility = "hidden";
+            }
+          });
+          shard.style.position = "absolute";
+          shard.style.inset = "0";
+          shard.style.width = "100%";
+          shard.style.height = "100%";
+          shard.style.clipPath = shardPolygon(c, r);
+          layer.appendChild(shard);
+
+          // Drift gently outward from the centre of the name — a fine
+          // disintegration that stays close to each shard's original spot.
+          const px = (c + 0.5) * (box.width / COLS);
+          const py = (r + 0.5) * (box.height / ROWS);
+          const angle = Math.atan2(py - cy, px - cx) + rand(-0.55, 0.55);
+          const dist = rand(0.02, 0.12) * box.width;
+          fx.shards.push({
+            el: shard,
+            scatter: {
+              x: Math.cos(angle) * dist,
+              y: Math.sin(angle) * dist - rand(0, box.height * 0.05),
+              r: rand(-85, 85),
+              s: rand(0.82, 1.12),
+            },
+            explodeDelay: rand(0, 100),
+            assembleDelay: rand(0, 140),
+            from: { ...ZERO },
+            to: { ...ZERO },
+            cur: { ...ZERO },
+          });
+        }
+      }
+
+      // Subtle blue / violet motes riding the shockwave.
+      const palette = [
+        "rgba(96,165,250,0.95)",
+        "rgba(129,140,248,0.95)",
+        "rgba(167,139,250,0.95)",
+        "rgba(56,189,248,0.95)",
+      ];
+      for (let i = 0; i < 20; i++) {
+        const mote = document.createElement("span");
+        mote.className = "hero-shatter-spark";
+        const color = palette[i % palette.length];
+        const size = rand(2, 5);
+        mote.style.left = `${rand(5, 95)}%`;
+        mote.style.top = `${rand(5, 95)}%`;
+        mote.style.width = `${size}px`;
+        mote.style.height = `${size}px`;
+        mote.style.background = color;
+        mote.style.boxShadow = `0 0 6px 1px ${color}, 0 0 12px 2px ${color}`;
+        layer.appendChild(mote);
+
+        const angle = rand(0, Math.PI * 2);
+        const dist = rand(0.06, 0.24) * box.width;
+        fx.sparks.push({
+          el: mote,
+          scatter: {
+            x: Math.cos(angle) * dist,
+            y: Math.sin(angle) * dist,
+            r: rand(-70, 70),
+            s: rand(0.7, 1.3),
+          },
+          explodeDelay: rand(0, 90),
+          assembleDelay: rand(0, 130),
+          from: { ...ZERO, o: 0 },
+          to: { ...ZERO, o: 0 },
+          cur: { ...ZERO, o: 0 },
+        });
+      }
+    };
+
+    const applyShard = (item) => {
+      const { x, y, r, s } = item.cur;
+      item.el.style.transform =
+        `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) ` +
+        `rotate(${r.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+    };
+    const applySpark = (item) => {
+      const { x, y, r, s, o } = item.cur;
+      item.el.style.transform =
+        `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) ` +
+        `rotate(${r.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+      item.el.style.opacity = o.toFixed(3);
+    };
+
+    const finishAssemble = () => {
+      name.classList.remove("is-shattering");
+      layer.style.visibility = "hidden";
+      clearLayer();
+      fx.mode = "idle";
+    };
+
+    const tick = (now) => {
+      let pending = false;
+      const t = now - fx.start;
+
+      for (const item of fx.shards) {
+        const p = clamp01((t - item.delay) / DURATION);
+        const e = fx.ease(p);
+        const { from, to, cur } = item;
+        cur.x = from.x + (to.x - from.x) * e;
+        cur.y = from.y + (to.y - from.y) * e;
+        cur.r = from.r + (to.r - from.r) * e;
+        cur.s = from.s + (to.s - from.s) * e;
+        applyShard(item);
+        if (p < 1) pending = true;
+      }
+      for (const item of fx.sparks) {
+        const p = clamp01((t - item.delay) / DURATION);
+        const e = fx.ease(p);
+        const { from, to, cur } = item;
+        cur.x = from.x + (to.x - from.x) * e;
+        cur.y = from.y + (to.y - from.y) * e;
+        cur.r = from.r + (to.r - from.r) * e;
+        cur.s = from.s + (to.s - from.s) * e;
+        cur.o = from.o + (to.o - from.o) * e;
+        applySpark(item);
+        if (p < 1) pending = true;
+      }
+
+      if (pending) {
+        fx.raf = requestAnimationFrame(tick);
+      } else {
+        fx.raf = null;
+        if (fx.mode === "assemble") finishAssemble();
+      }
+    };
+
+    const setMode = (mode) => {
+      build();
+      if (!fx.ready) return;
+      fx.mode = mode;
+      fx.start = performance.now();
+      fx.ease = mode === "explode" ? easeOut : easeOutBack;
+      layer.style.visibility = "visible";
+
+      for (const item of fx.shards) {
+        item.from = { ...item.cur };
+        item.to = mode === "explode" ? item.scatter : { ...ZERO };
+        item.delay = mode === "explode" ? item.explodeDelay : item.assembleDelay;
+      }
+      for (const item of fx.sparks) {
+        item.from = { ...item.cur };
+        item.to =
+          mode === "explode" ? { ...item.scatter, o: 0.95 } : { ...ZERO, o: 0 };
+        item.delay = mode === "explode" ? item.explodeDelay : item.assembleDelay;
+      }
+
+      if (mode === "explode") name.classList.add("is-shattering");
+      if (fx.raf === null) fx.raf = requestAnimationFrame(tick);
+    };
+
+    const onEnter = () => {
+      if (reduced.matches || !fine.matches) return;
+      setMode("explode");
+    };
+    const onLeave = () => {
+      if (reduced.matches || !fine.matches) return;
+      if (fx.ready && fx.mode !== "idle") setMode("assemble");
+    };
+    const onChange = () => {
+      if (!reduced.matches && fine.matches) return;
+      if (fx.raf !== null) cancelAnimationFrame(fx.raf);
+      fx.raf = null;
+      fx.mode = "idle";
+      name.classList.remove("is-shattering");
+      layer.style.visibility = "hidden";
+      clearLayer();
+    };
+
+    name.addEventListener("mouseenter", onEnter);
+    name.addEventListener("mouseleave", onLeave);
+    reduced.addEventListener("change", onChange);
+    fine.addEventListener("change", onChange);
+
+    return () => {
+      name.removeEventListener("mouseenter", onEnter);
+      name.removeEventListener("mouseleave", onLeave);
+      reduced.removeEventListener("change", onChange);
+      fine.removeEventListener("change", onChange);
+      if (fx.raf !== null) cancelAnimationFrame(fx.raf);
+      fx.raf = null;
+      name.classList.remove("is-shattering");
+      layer.style.visibility = "hidden";
+      clearLayer();
     };
   }, []);
 
@@ -202,7 +495,10 @@ export default function Hero({ onOpenResume }) {
                 Sparkling star-typography treatment: electric blue → soft violet
                 gradient + shine sweep + twinkle / diamond / star particles. */}
             <StaggerItem>
-              <h1 className="hero-title-glow relative select-none whitespace-nowrap font-black leading-[0.92] tracking-[0.055em]">
+              <h1
+                ref={nameRef}
+                className="hero-title-glow relative select-none whitespace-nowrap font-black leading-[0.92] tracking-[0.055em]"
+              >
                 <span className="block text-[clamp(2.6rem,10vw,8rem)]">
                   {renderWord("ATIK", 0.15, 0)}
                 </span>
@@ -259,6 +555,13 @@ export default function Hero({ onOpenResume }) {
                     </svg>
                   ))}
                 </span>
+
+                {/* Hover shatter overlay — populated lazily by the effect above */}
+                <span
+                  ref={shatterRef}
+                  aria-hidden="true"
+                  className="hero-shatter-layer"
+                />
               </h1>
             </StaggerItem>
 

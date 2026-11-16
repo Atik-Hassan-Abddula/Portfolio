@@ -438,6 +438,58 @@ html.dark .hero-letter-outline {
   }
 }
 
+/* ============================================
+   Hero — hover shatter / reassemble for ATIK HASSAN
+   The live, animated heading is never replaced. This is an overlay of
+   clip-path shards cloned from that heading, shown only while hovering.
+   ============================================ */
+.hero-shatter-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Only the live heading's own children are hidden while shattered. Because
+   this is opacity (not display/visibility), the layout stays byte-for-byte
+   identical and the h1 keeps receiving hover events. */
+.hero-title-glow.is-shattering > span:not(.hero-shatter-layer) {
+  opacity: 0;
+}
+
+.hero-shatter-fragment {
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Frozen copies: keep the exact gradient/typography, but stop the entrance
+   and shine animations so every shard starts from the resting appearance. */
+.hero-shatter-fragment .hero-letter {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  will-change: auto;
+}
+
+.hero-shatter-spark {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shatter-layer,
+  .hero-shatter-fragment,
+  .hero-shatter-spark {
+    display: none !important;
+  }
+}
+
 /* ---- Particle field ---- */
 .hero-sparkle-field {
   position: absolute;
@@ -988,7 +1040,7 @@ html.dark .hero-star-sparkle {
 
 /* Scene entrance — fade the backdrop in */
 .preloader-fade-in {
-  animation: preloader-fade-in 0.55s ease backwards;
+  animation: preloader-fade-in 0.28s ease backwards;
 }
 
 @keyframes preloader-fade-in {
@@ -1002,7 +1054,7 @@ html.dark .hero-star-sparkle {
 
 /* Cube entrance — scale up + deblur */
 .preloader-cube-in {
-  animation: preloader-cube-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
+  animation: preloader-cube-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
 }
 
 @keyframes preloader-cube-in {
@@ -1020,7 +1072,7 @@ html.dark .hero-star-sparkle {
 
 /* Name entrance — rise + deblur */
 .preloader-name-in {
-  animation: preloader-name-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.38s backwards;
+  animation: preloader-name-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.16s backwards;
 }
 
 @keyframes preloader-name-in {
@@ -1188,9 +1240,9 @@ html.dark .hero-star-sparkle {
 /* Content exit — scale down + deblur on reveal */
 .preloader-content {
   transition:
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.24s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .preloader-content--exit {
@@ -1202,9 +1254,9 @@ html.dark .hero-star-sparkle {
 /* Overlay exit — fade + gentle zoom-through */
 .preloader-overlay {
   transition:
-    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.7s;
+    opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.28s;
 }
 
 .preloader-overlay--exit {
@@ -1212,6 +1264,14 @@ html.dark .hero-star-sparkle {
   transform: scale(1.06);
   visibility: hidden;
   pointer-events: none;
+}
+
+/* The curtain lifts immediately on content readiness, so any entrance
+   animation still in flight must not override the exit fade. */
+.preloader-overlay.preloader-overlay--exit,
+.preloader-overlay--exit .preloader-cube-in,
+.preloader-overlay--exit .preloader-name-in {
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1231,7 +1291,7 @@ html.dark .hero-star-sparkle {
 
   .preloader-content,
   .preloader-overlay {
-    transition-duration: 0.25s;
+    transition-duration: 0.12s;
   }
 }
 
