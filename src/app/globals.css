@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* The restored edge rails return to full desktop scale at 1440px. */
+  --breakpoint-wide: 90rem;
+}
+
 :root {
   color-scheme: light;
   --background: #ffffff;
