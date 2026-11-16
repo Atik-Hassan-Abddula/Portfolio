@@ -1,4 +1,37 @@
-test content
+# AGENTS.md
+
+Single-page developer portfolio. Next.js 16 (App Router) + React 19, **JavaScript (no TypeScript)**, Tailwind CSS v4. Deployed on Vercel (project `portfolio`); `.vercel/` is gitignored.
+
+## Commands
+
+- `npm run dev` — dev server (Turbopack)
+- `npm run build` / `npm run start` — production build / serve
+- `npm run lint` — `eslint` with **no path args**; there is no `lint:fix`, no typecheck script, and **no test suite** (don't invent one)
+- Path alias `@/*` → `./src/*` (from `jsconfig.json`, not tsconfig)
+
+## Toolchain quirks (Next 16, not what you know)
+
+- This is Next.js **16.4.2** with breaking changes vs. training data. Read `node_modules/next/dist/docs/` before using Next APIs — see the block below.
+- `next.config.mjs` puts `cacheComponents: true` and `partialPrefetching: true` at the **top level** (not `experimental`), and `reactCompiler: true` with `babel-plugin-react-compiler` installed.
+- Tailwind v4 is wired through `@tailwindcss/turbopack` (CSS `*.css` loader rule in `next.config.mjs`), not PostCSS config. Dark mode uses `@custom-variant dark (&:where(.dark, .dark *))` in `src/app/globals.css`, not the default `prefers-color-scheme` variant.
+- `experimental.agentFeedback: true` is set — keep the auto-managed blocks at the bottom of this file committed.
+
+## Architecture
+
+- `src/app/page.js` is the whole site: a `"use client"` component composing section components (Navbar → Hero → About → Skills → Projects → Education → Contact → Footer). `src/app/layout.js` only sets metadata (from `portfolioData`) and the anti-FOUC theme script.
+- **All editable content lives in `src/data/portfolioData.js`** (name, bio, skills, projects, socials). Edit data there, not in components.
+- Every component in `src/components/` is `"use client"`. Don't introduce server-component-only patterns (async server components, RSC data fetching) without checking the Next 16 docs first.
+- Theme: `dark` class on `<html>`, persisted in `localStorage['portfolio-theme']`, applied by an inline script in `layout.js` (values `light`/`dark`, default dark). `suppressHydrationWarning` on `<html>` is intentional.
+- Smooth scrolling is Lenis, exposed as `window.__lenis`. Any modal/overlay that should block page scroll must call `window.__lenis.stop()` / `.start()` (see `page.js` for ResumeModal).
+- The 3D bits (`components/Hero3D.jsx`, `components/three/HeroScene.jsx`, `TechOrbit.jsx`) use `@react-three/fiber` + `three` and are client-only and heavy; keep them out of any server path.
+- `package.json` `name` is `bazar-dor` (historical) — this repo is the portfolio site; don't rename based on that.
+
+## Gotchas
+
+- `README.md` is partially stale (component list, "Resume modal downloads a sample PDF"); the code is the source of truth. It does list the right data-file workflow.
+- No CI, no tests, no pre-commit hooks — verify changes with `npm run lint` and `npm run build` locally.
+- `.next/` build output and `.vercel/` must stay uncommitted (both are gitignored).
+- `AGENTS.md` contains auto-managed Next blocks (below) that `next dev` rewrites/restores; committing them keeps the tree clean. Keep the `test content` placeholder out — it was scaffolding.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

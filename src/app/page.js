@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import SocialSidebar from "@/components/SocialSidebar";
+import InfoSidebar from "@/components/InfoSidebar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -14,6 +15,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ResumeModal from "@/components/ResumeModal";
 import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader";
 
 export default function Home() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
@@ -32,11 +34,17 @@ export default function Home() {
   return (
     <SmoothScroll>
       <div className="relative min-h-screen w-full overflow-x-clip flex flex-col bg-white text-slate-900 transition-colors duration-300 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
+        {/* Cosmic identity opening sequence (initial load / refresh only) */}
+        <Preloader />
+
         {/* Scroll-linked progress bar (top of viewport) */}
         <ScrollProgress />
 
         {/* Fixed vertical social rail (left edge, vertically centered) */}
         <SocialSidebar />
+
+        {/* Fixed vertical personal-info rail (right edge, vertically centered) */}
+        <InfoSidebar />
 
         {/* Top Sticky/Floating Navbar */}
         <Navbar onOpenResume={() => setIsResumeOpen(true)} />

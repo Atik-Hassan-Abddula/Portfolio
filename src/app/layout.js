@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="dark scroll-smooth h-full antialiased"
+      className="dark h-full antialiased"
       suppressHydrationWarning
     >
       <head>

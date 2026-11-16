@@ -1,106 +1,75 @@
 "use client";
 
-import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import {
+  GithubIcon,
+  LinkedinIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+} from "@/components/Icons";
 import { personalInfo } from "@/data/portfolioData";
 
 // ==========================================
-// AUTHENTIC BRAND ICONS (Simple Icons paths)
+// CENTRALIZED SOCIAL CONFIG
+// All URLs live in `portfolioData.js` → `personalInfo.socials`
+// (GitHub + LinkedIn are real; Facebook + WhatsApp are clearly
+// marked placeholders — swap in your real links there, nowhere else).
 // ==========================================
-export function FacebookIcon({ className = "h-4 w-4", ...props }) {
-  return (
-    <svg
-      role="img"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-    </svg>
-  );
-}
-
-export function GmailIcon({ className = "h-4 w-4", ...props }) {
-  return (
-    <svg
-      role="img"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
-    </svg>
-  );
-}
+const socials = personalInfo.socials ?? {};
 
 /**
- * SocialSidebar — fixed vertical social rail on the LEFT edge of the
- * viewport, perfectly vertically centered (top: 50% + translateY(-50%)).
+ * SocialSidebar — fixed vertical rail on the LEFT edge of the viewport,
+ * perfectly vertically centered.
  *
- * - `fixed` positioning: it never moves while scrolling, with Lenis
- *   smooth scrolling, or during section transitions; it does not take
- *   part in the page flow, so the layout is unaffected.
- * - Only REAL links from portfolioData.js are rendered — nothing invented.
- *   Facebook appears automatically once `socials.facebook` is added.
- * - Hidden on mobile (no content covering / touch interference); compact
- *   on tablet (md) and full size on desktop (lg+).
- * - Brand-colored hover glow + floating tooltip on hover AND keyboard
- *   focus; external links open in a new tab with rel="noopener noreferrer".
+ * - `fixed` positioning: never moves while scrolling or during Lenis
+ *   smooth-scroll transitions; it is out of the page flow.
+ * - Hidden below `md` (mobile) so content and the mobile navbar never
+ *   overlap; compact on tablet (`md`), full size on desktop (`lg+`).
+ * - Brand icons with electric-blue / soft-violet hover glow; tooltips
+ *   reveal on hover AND keyboard focus; links open in a new tab.
  */
 export default function SocialSidebar() {
-  const githubUrl = personalInfo.socials?.github;
-  const linkedinUrl = personalInfo.socials?.linkedin;
-  const facebookUrl = personalInfo.socials?.facebook;
-  const email = personalInfo.email;
-
-  // Brand-colored hover accents per platform
+  // Display order: GitHub → LinkedIn → Facebook → WhatsApp
+  // Alternating electric-blue / soft-violet accent hovers
+  // (light-mode stops are deeper for contrast on white)
   const accent = {
-    facebook:
-      "hover:-translate-y-0.5 hover:scale-110 hover:border-[#1877F2]/60 hover:text-[#1877F2] hover:shadow-[0_0_22px_rgba(24,119,242,0.4)] dark:hover:border-[#1877F2]/70 dark:hover:text-[#4d9fff] dark:hover:shadow-[0_0_24px_rgba(24,119,242,0.45)]",
     github:
-      "hover:-translate-y-0.5 hover:scale-110 hover:border-slate-400/70 hover:text-slate-900 hover:shadow-[0_0_22px_rgba(100,116,139,0.35)] dark:hover:border-slate-500/70 dark:hover:text-white dark:hover:shadow-[0_0_24px_rgba(148,163,184,0.35)]",
-    gmail:
-      "hover:-translate-y-0.5 hover:scale-110 hover:border-[#EA4335]/60 hover:text-[#EA4335] hover:shadow-[0_0_22px_rgba(234,67,53,0.35)] dark:hover:border-[#EA4335]/70 dark:hover:text-[#ff6f61] dark:hover:shadow-[0_0_24px_rgba(234,67,53,0.4)]",
+      "hover:border-sky-500/50 hover:text-sky-600 hover:shadow-[0_0_24px_-4px_rgba(56,189,248,0.35)] focus-visible:ring-sky-500 dark:hover:border-sky-400/50 dark:hover:text-sky-300 dark:hover:shadow-[0_0_26px_-4px_rgba(56,189,248,0.5),inset_0_1px_0_rgba(255,255,255,0.09)]",
     linkedin:
-      "hover:-translate-y-0.5 hover:scale-110 hover:border-[#0A66C2]/60 hover:text-[#0A66C2] hover:shadow-[0_0_22px_rgba(10,102,194,0.4)] dark:hover:border-[#0A66C2]/70 dark:hover:text-[#4da3ff] dark:hover:shadow-[0_0_24px_rgba(10,102,194,0.5)]",
+      "hover:border-violet-500/50 hover:text-violet-600 hover:shadow-[0_0_24px_-4px_rgba(139,92,246,0.35)] focus-visible:ring-violet-500 dark:hover:border-violet-400/50 dark:hover:text-violet-300 dark:hover:shadow-[0_0_26px_-4px_rgba(167,139,250,0.5),inset_0_1px_0_rgba(255,255,255,0.09)]",
+    facebook:
+      "hover:border-sky-500/50 hover:text-sky-600 hover:shadow-[0_0_24px_-4px_rgba(56,189,248,0.35)] focus-visible:ring-sky-500 dark:hover:border-sky-400/50 dark:hover:text-sky-300 dark:hover:shadow-[0_0_26px_-4px_rgba(56,189,248,0.5),inset_0_1px_0_rgba(255,255,255,0.09)]",
+    whatsapp:
+      "hover:border-violet-500/50 hover:text-violet-600 hover:shadow-[0_0_24px_-4px_rgba(139,92,246,0.35)] focus-visible:ring-violet-500 dark:hover:border-violet-400/50 dark:hover:text-violet-300 dark:hover:shadow-[0_0_26px_-4px_rgba(167,139,250,0.5),inset_0_1px_0_rgba(255,255,255,0.09)]",
   };
 
-  // Only entries with a real URL from the data file are shown
   const items = [
-    facebookUrl && {
-      id: "facebook",
-      name: "Facebook",
-      href: facebookUrl,
-      external: true,
-      icon: <FacebookIcon className="h-4 w-4" />,
-      accentClass: accent.facebook,
-    },
-    githubUrl && {
+    socials.github && {
       id: "github",
       name: "GitHub",
-      href: githubUrl,
-      external: true,
-      icon: <GithubIcon className="h-4 w-4" />,
+      href: socials.github,
+      icon: <GithubIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
       accentClass: accent.github,
     },
-    email && {
-      id: "gmail",
-      name: "Gmail",
-      href: `mailto:${email}`,
-      external: false,
-      icon: <GmailIcon className="h-4 w-4" />,
-      accentClass: accent.gmail,
-    },
-    linkedinUrl && {
+    socials.linkedin && {
       id: "linkedin",
       name: "LinkedIn",
-      href: linkedinUrl,
-      external: true,
-      icon: <LinkedinIcon className="h-4 w-4" />,
+      href: socials.linkedin,
+      icon: <LinkedinIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
       accentClass: accent.linkedin,
+    },
+    socials.facebook && {
+      id: "facebook",
+      name: "Facebook",
+      href: socials.facebook,
+      icon: <FacebookIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      accentClass: accent.facebook,
+    },
+    socials.whatsapp && {
+      id: "whatsapp",
+      name: "WhatsApp",
+      href: socials.whatsapp,
+      icon: <WhatsAppIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      accentClass: accent.whatsapp,
     },
   ].filter(Boolean);
 
@@ -109,27 +78,32 @@ export default function SocialSidebar() {
   return (
     <aside
       aria-label="Social media links"
-      className="fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center md:flex lg:left-6"
+      className="fixed left-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center md:flex lg:left-6"
     >
-      {/* Vertical stack of circular glass icon buttons */}
-      <div className="flex flex-col items-center gap-2 lg:gap-3.5">
+      {/* Vertical stack of glass orb buttons */}
+      <div className="flex flex-col items-center gap-2.5 lg:gap-4">
         {items.map((item) => (
           <a
             key={item.id}
             href={item.href}
-            target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noopener noreferrer" : undefined}
-            aria-label={`${item.name}${item.external ? " (opens in new tab)" : ""}`}
-            className={`group relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-200/90 bg-white/80 text-slate-500 shadow-sm backdrop-blur-md transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 lg:h-10 lg:w-10 dark:border-slate-700/70 dark:bg-slate-900/70 dark:text-slate-300 dark:backdrop-blur-md ${item.accentClass}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${item.name} (opens in new tab)`}
+            className={`group relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-200/90 bg-white/80 text-slate-500 shadow-sm backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 lg:h-10 lg:w-10 dark:border-white/[0.08] dark:bg-slate-900/70 dark:text-slate-400 ${item.accentClass}`}
           >
-            <span aria-hidden="true" className="[&>svg]:h-3.5 [&>svg]:w-3.5 lg:[&>svg]:h-4 lg:[&>svg]:w-4">
+            {/* Hairline gradient rim, revealed on hover */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/25 via-transparent to-violet-500/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            />
+            <span aria-hidden="true" className="relative">
               {item.icon}
             </span>
 
             {/* Floating tooltip — reveals on hover and keyboard focus */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-full ml-3 flex translate-x-1 items-center whitespace-nowrap rounded-lg border border-slate-200/90 bg-white/90 px-2.5 py-1 font-mono text-[11px] font-semibold text-slate-700 opacity-0 shadow-md backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 dark:border-slate-700/80 dark:bg-slate-900/90 dark:text-slate-200"
+              className="pointer-events-none absolute left-full top-1/2 ml-3 -translate-y-1/2 translate-x-1.5 whitespace-nowrap rounded-lg border border-white/10 bg-[#0a1128]/95 px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.14em] text-sky-200/90 opacity-0 shadow-[0_8px_24px_-8px_rgba(2,6,23,0.9),0_0_16px_-6px_rgba(99,102,241,0.45)] backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
             >
               {item.name}
             </span>
@@ -137,10 +111,14 @@ export default function SocialSidebar() {
         ))}
       </div>
 
-      {/* Decorative connector line under the icons */}
+      {/* Thin vertical decorative line + glowing terminus dot */}
       <span
         aria-hidden="true"
-        className="mt-4 h-16 w-px bg-gradient-to-b from-blue-500/50 via-purple-500/40 to-transparent lg:h-20"
+        className="mt-4 h-14 w-px bg-gradient-to-b from-sky-400/60 via-violet-400/40 to-transparent lg:mt-5 lg:h-20"
+      />
+      <span
+        aria-hidden="true"
+        className="mt-2 h-1 w-1 rounded-full bg-violet-400 shadow-[0_0_8px_2px_rgba(167,139,250,0.55)] motion-safe:animate-pulse"
       />
     </aside>
   );

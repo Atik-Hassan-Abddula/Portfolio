@@ -11,15 +11,17 @@ export default function SmoothScroll({ children }) {
       return;
     }
 
-    // Initialize Lenis with optimized settings for wheel, trackpad, and touch
+    // Initialize Lenis with optimized settings for wheel, trackpad, and touch.
+    // Tuned for a fluid, weighty-but-responsive feel — no long inertia.
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.05,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1.0,
       touchMultiplier: 1.5,
+      syncTouch: false,
       infinite: false,
     });
 

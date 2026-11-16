@@ -206,12 +206,15 @@ export default function Hero({ onOpenResume }) {
 
             {/* Oversized stacked name — sized to stay inside its column at
                 every breakpoint (HASSAN never reaches the orbit).
-                Sparkling diamond-typography treatment: silver metallic
+                Sparkling star-typography treatment: electric blue → soft violet
                 gradient + shine sweep + twinkle / diamond / star particles. */}
             <StaggerItem>
               <h1
                 className="relative select-none whitespace-nowrap font-black leading-[0.92] tracking-[0.055em]"
-                style={{ filter: "drop-shadow(0 2px 18px rgb(99 102 241 / 0.4))" }}
+                style={{
+                  filter:
+                    "drop-shadow(0 1px 16px rgb(56 189 248 / 0.38)) drop-shadow(0 5px 34px rgb(139 92 246 / 0.45))",
+                }}
               >
                 <span className="block text-[clamp(2.6rem,10vw,8rem)]">
                   {renderWord("ATIK", 0.15, 0)}
@@ -384,7 +387,7 @@ export default function Hero({ onOpenResume }) {
               aria-hidden="true"
               className="absolute left-3 top-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-600 sm:text-[9px]"
             >
-              Scene.Crystal_01
+              Scene.Cube_01
             </span>
             <span
               aria-hidden="true"
@@ -409,7 +412,7 @@ export default function Hero({ onOpenResume }) {
             {/* Orbiting technology rings (from the retired Technology Galaxy) */}
             <TechOrbit />
 
-            {/* The interactive chrome sculpture (or its static fallback) */}
+            {/* The interactive glass cube (or its static fallback) */}
             <Hero3D />
           </div>
         </div>

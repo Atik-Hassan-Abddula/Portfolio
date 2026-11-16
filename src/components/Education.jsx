@@ -8,18 +8,22 @@ import {
   Megaphone,
   ChevronDown,
   CheckCircle2,
+  X,
+  BrainCircuit,
 } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { educationData, certificationsData } from "@/data/portfolioData";
 
 // ============================================================
-// EDUCATION — "KNOWLEDGE CONSTELLATION"
-// A deep-navy 3D constellation: one hub (MY LEARNING JOURNEY)
-// connected to the four real milestones of my education —
-// SSC, Diploma in CSE, Computer Operation L3, Digital Marketing L3.
-// Desktop/laptop: tilted perspective stage with orbiting glow nodes.
-// Tablet: simplified stage. Mobile: vertical connected constellation.
+// EDUCATION — "NEURAL LEARNING DIMENSION"
+// An immersive sci-fi learning universe: one central 3D neural
+// core representing the learning journey, orbited by four
+// floating holographic memory shards — SSC, Diploma in CSE,
+// Computer Operation L3, Digital Marketing L3 — each tethered
+// to the core by animated energy pathways.
+// Desktop/laptop: tilted preserve-3d dimension with CSS-3D core.
+// Tablet: compact chamber. Mobile: vertical interactive sequence.
 // ============================================================
 
 // ---- real data, straight from portfolioData.js (never invented) ----
@@ -28,110 +32,160 @@ const diploma = educationData.find((e) => e.id === "diploma-cse");
 const computerOperation = certificationsData.find((c) => c.id === "computer-operation");
 const digitalMarketing = certificationsData.find((c) => c.id === "digital-marketing");
 
-const NODES = [
+// Memory shards 01–04 — exactly the four records, nothing added.
+// Each shard carries a unique crystal silhouette (clip-path).
+const SHARDS = [
   {
     id: "ssc",
+    num: "01",
     tag: "Academic",
     short: "SSC",
-    title: ssc.degree,
+    record: ssc.degree,
     status: "Completed",
+    statusLine: "Completed",
     tone: "sky",
     icon: BookOpen,
-    x: 11,
+    x: 12.5,
     y: 23,
-    side: "right",
     desc: ssc.description,
     meta: ssc.period,
     floatDelay: "0s",
+    floatDuration: "6.1s",
+    crystal: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+    facets: ["50,1 50,99", "1,50 99,50", "50,1 99,50", "50,1 1,50", "50,99 99,50", "50,99 1,50"],
   },
   {
     id: "diploma",
-    tag: "Academic · Now",
-    short: "Diploma in CSE",
-    title: diploma.degree,
+    num: "02",
+    tag: "Academic",
+    short: "Diploma in Computer Science & Engineering",
+    record: diploma.degree,
     status: diploma.status,
+    statusLine: diploma.status,
     tone: "emerald",
     icon: GraduationCap,
-    x: 89,
+    x: 87.5,
     y: 23,
-    side: "left",
     desc: diploma.description,
     meta: diploma.period,
     current: true,
-    floatDelay: "-1.8s",
+    floatDelay: "-1.9s",
+    floatDuration: "6.7s",
+    crystal: "polygon(25% 1.5%, 75% 1.5%, 100% 50%, 75% 98.5%, 25% 98.5%, 0% 50%)",
+    facets: ["25,2 50,50", "75,2 50,50", "99,50 50,50", "75,98 50,50", "25,98 50,50", "1,50 50,50"],
   },
   {
     id: "computer-operation",
+    num: "03",
     tag: "Certification",
     short: "Computer Operation",
-    title: computerOperation.title,
+    record: computerOperation.title,
     status: "Level 3",
+    statusLine: "Level 3 — National Skill Standard",
     tone: "violet",
     icon: Monitor,
-    x: 87,
-    y: 74,
-    side: "left",
+    x: 87.5,
+    y: 76,
     desc: computerOperation.description,
     meta: computerOperation.level,
-    floatDelay: "-3.1s",
+    floatDelay: "-3.2s",
+    floatDuration: "5.8s",
+    crystal: "polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%)",
+    facets: ["50,1 50,99", "50,1 100,40", "50,1 0,40", "20,99 50,1", "80,99 50,1"],
   },
   {
     id: "digital-marketing",
+    num: "04",
     tag: "Certification",
     short: "Digital Marketing",
-    title: digitalMarketing.title,
+    record: digitalMarketing.title,
     status: "Level 3",
+    statusLine: "Level 3 — National Skill Standard",
     tone: "indigo",
     icon: Megaphone,
-    x: 13,
-    y: 74,
-    side: "right",
+    x: 12.5,
+    y: 76,
     desc: digitalMarketing.description,
     meta: digitalMarketing.level,
-    floatDelay: "-2.4s",
+    floatDelay: "-2.5s",
+    floatDuration: "6.4s",
+    crystal: "polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%)",
+    facets: ["50,1 50,99", "50,1 100,38", "50,1 0,38", "50,1 19,100", "50,1 81,100"],
   },
 ];
 
-// Constellation edges — hub tethers + outer rim
-const EDGES = [
-  { from: [50, 46], to: [11, 23], node: "ssc", photon: true, dur: "5.2s" },
-  { from: [50, 46], to: [89, 23], node: "diploma", photon: true, dur: "6.1s" },
-  { from: [50, 46], to: [87, 74], node: "computer-operation", photon: true, dur: "5.7s" },
-  { from: [50, 46], to: [13, 74], node: "digital-marketing", photon: true, dur: "6.4s" },
-  { from: [11, 23], to: [89, 23], node: null, rim: true },
-  { from: [89, 23], to: [87, 74], node: null, rim: true },
-  { from: [87, 74], to: [13, 74], node: null, rim: true },
-  { from: [13, 74], to: [11, 23], node: null, rim: true },
+// Energy pathways — core to each shard (cubic synapse arcs)
+const PATHWAYS = [
+  { id: "ssc", d: "M 500 285 C 380 255 235 205 125 141", mid: [309, 226], dur: "5.2s" },
+  { id: "diploma", d: "M 500 285 C 620 255 765 205 875 141", mid: [691, 226], dur: "6.1s" },
+  { id: "computer-operation", d: "M 500 285 C 620 315 765 395 875 462", mid: [691, 360], dur: "5.7s" },
+  { id: "digital-marketing", d: "M 500 285 C 380 315 235 395 125 462", mid: [309, 360], dur: "6.4s" },
 ];
 
 const TONE = {
   sky: {
-    ring: "from-sky-400/70 to-blue-500/70",
+    ring: "from-sky-400/80 to-blue-500/80",
     icon: "text-sky-300",
-    halo: "shadow-[0_0_36px_-6px_rgba(56,189,248,0.55)]",
     chip: "border-sky-400/30 bg-sky-400/10 text-sky-300",
     dot: "bg-sky-400",
+    aura: "rgba(56,189,248,0.4)",
+    disc: "border-sky-400/35 bg-sky-400/10",
+    discText: "text-sky-300",
+    discGlow:
+      "shadow-[0_0_18px_-4px_rgba(56,189,248,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(56,189,248,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(56,189,248,0.75)]",
+    glass:
+      "from-sky-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(56,189,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-sky-300/70 via-sky-400/25 to-indigo-400/10",
+    num: "text-sky-400/90",
+    crystalAccent: "#38bdf8",
   },
   emerald: {
     ring: "from-emerald-400/80 to-teal-500/80",
     icon: "text-emerald-300",
-    halo: "shadow-[0_0_44px_-6px_rgba(52,211,153,0.6)]",
     chip: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
     dot: "bg-emerald-400",
+    aura: "rgba(52,211,153,0.4)",
+    disc: "border-emerald-400/35 bg-emerald-400/10",
+    discText: "text-emerald-300",
+    discGlow:
+      "shadow-[0_0_18px_-4px_rgba(52,211,153,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(52,211,153,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(52,211,153,0.75)]",
+    glass:
+      "from-emerald-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(52,211,153,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-emerald-300/70 via-emerald-400/25 to-teal-400/10",
+    num: "text-emerald-400/90",
+    crystalAccent: "#34d399",
   },
   violet: {
     ring: "from-violet-400/70 to-purple-500/70",
     icon: "text-violet-300",
-    halo: "shadow-[0_0_36px_-6px_rgba(167,139,250,0.55)]",
     chip: "border-violet-400/30 bg-violet-400/10 text-violet-300",
     dot: "bg-violet-400",
+    aura: "rgba(167,139,250,0.4)",
+    disc: "border-violet-400/35 bg-violet-400/10",
+    discText: "text-violet-300",
+    discGlow:
+      "shadow-[0_0_18px_-4px_rgba(167,139,250,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(167,139,250,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(167,139,250,0.75)]",
+    glass:
+      "from-violet-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(167,139,250,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-violet-300/70 via-violet-400/25 to-purple-400/10",
+    num: "text-violet-400/90",
+    crystalAccent: "#a78bfa",
   },
   indigo: {
     ring: "from-indigo-400/70 to-blue-500/70",
     icon: "text-indigo-300",
-    halo: "shadow-[0_0_36px_-6px_rgba(129,140,248,0.55)]",
     chip: "border-indigo-400/30 bg-indigo-400/10 text-indigo-300",
     dot: "bg-indigo-400",
+    aura: "rgba(129,140,248,0.4)",
+    disc: "border-indigo-400/35 bg-indigo-400/10",
+    discText: "text-indigo-300",
+    discGlow:
+      "shadow-[0_0_18px_-4px_rgba(129,140,248,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(129,140,248,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(129,140,248,0.75)]",
+    glass:
+      "from-indigo-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(129,140,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-indigo-300/70 via-indigo-400/25 to-blue-400/10",
+    num: "text-indigo-400/90",
+    crystalAccent: "#818cf8",
   },
 };
 
@@ -144,7 +198,8 @@ function mulberry32(seed) {
   };
 }
 
-// Seeded star dust — deterministic, no hydration mismatch
+// Seeded cosmic dust — deterministic, no hydration mismatch.
+// Mostly tiny, dim, slow drifters; a rare brighter spark keeps it alive.
 function useStarDust(count) {
   return useMemo(() => {
     const rand = mulberry32(0xed0ca7);
@@ -152,10 +207,12 @@ function useStarDust(count) {
       id: i,
       left: rand() * 100,
       top: rand() * 100,
-      size: rand() < 0.75 ? 2 : 3,
-      delay: `${(rand() * 5).toFixed(2)}s`,
-      duration: `${(2.6 + rand() * 3.4).toFixed(2)}s`,
-      peak: 0.4 + rand() * 0.55,
+      size: rand() < 0.62 ? 1.5 : rand() < 0.88 ? 2 : 2.75,
+      delay: `${(rand() * 6.5).toFixed(2)}s`,
+      duration: `${(3.6 + rand() * 3.6).toFixed(2)}s`,
+      peak: 0.28 + rand() * 0.42,
+      driftX: `${((rand() - 0.5) * 11).toFixed(1)}px`,
+      driftY: `${((rand() - 0.5) * 11).toFixed(1)}px`,
     }));
   }, [count]);
 }
@@ -167,15 +224,17 @@ function StarDust({ count = 26 }) {
       {stars.map((s) => (
         <span
           key={s.id}
-          className="hero-twinkle absolute rounded-full bg-indigo-100"
+          className="constellation-star"
           style={{
             left: `${s.left}%`,
             top: `${s.top}%`,
             width: `${s.size}px`,
             height: `${s.size}px`,
-            ["--twinkle-delay"]: s.delay,
-            ["--twinkle-duration"]: s.duration,
-            ["--twinkle-peak"]: s.peak,
+            ["--star-delay"]: s.delay,
+            ["--star-duration"]: s.duration,
+            ["--star-peak"]: s.peak,
+            ["--star-drift-x"]: s.driftX,
+            ["--star-drift-y"]: s.driftY,
           }}
         />
       ))}
@@ -183,13 +242,13 @@ function StarDust({ count = 26 }) {
   );
 }
 
-function StatusChip({ node }) {
-  const tone = TONE[node.tone];
+function StatusChip({ shard }) {
+  const tone = TONE[shard.tone];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[7px] font-bold uppercase tracking-[0.18em] sm:text-[8px] ${tone.chip}`}
+      className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[7px] font-bold uppercase tracking-[0.18em] ${tone.chip}`}
     >
-      {node.current ? (
+      {shard.current ? (
         <span className="relative flex h-1.5 w-1.5">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70 motion-reduce:hidden" />
           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -197,20 +256,75 @@ function StatusChip({ node }) {
       ) : (
         <span className={`h-1.5 w-1.5 rounded-full ${tone.dot}`} />
       )}
-      {node.status}
+      {shard.status}
     </span>
   );
 }
 
-function ConstellationStage() {
+// Neural core network — concentric synapse web (rotating ring of neuron nodes)
+function NeuralNetwork({ className }) {
+  const nodes = useMemo(() => {
+    const ring = [];
+    const count = 8;
+    for (let i = 0; i < count; i += 1) {
+      const angle = (Math.PI * 2 * i) / count - Math.PI / 2;
+      ring.push({ x: 50 + Math.cos(angle) * 40, y: 50 + Math.sin(angle) * 40, angle });
+    }
+    return ring;
+  }, []);
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+      {/* Synapse web — outer ring chords */}
+      {nodes.map((a, i) =>
+        nodes.slice(i + 1).map((b, j) => {
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist > 44) return null;
+          return (
+            <line
+              key={`${i}-${j}`}
+              x1={a.x}
+              y1={a.y}
+              x2={b.x}
+              y2={b.y}
+              stroke="#818cf8"
+              strokeOpacity="0.32"
+              strokeWidth="0.55"
+            />
+          );
+        }),
+      )}
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#38bdf8" strokeOpacity="0.45" strokeWidth="0.7" strokeDasharray="3 5" />
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#a78bfa" strokeOpacity="0.4" strokeWidth="0.55" />
+      {nodes.map((n, i) => (
+        <circle
+          key={i}
+          cx={n.x}
+          cy={n.y}
+          r={i % 2 === 0 ? 2.15 : 1.55}
+          fill={i % 2 === 0 ? "#7dd3fc" : "#c4b5fd"}
+          className="synapse-node"
+          style={{ ["--synapse-delay"]: `${(i * 0.35).toFixed(2)}s` }}
+        />
+      ))}
+      <circle cx="50" cy="50" r="1.6" fill="#e0e7ff" />
+    </svg>
+  );
+}
+
+function NeuralStage() {
   const reducedMotion = useReducedMotion() === true;
   const stageRef = useRef(null);
   const tiltRef = useRef(null);
+  const panelRef = useRef(null);
+  const openerRef = useRef(null);
   const target = useRef({ x: 0, y: 0 });
   const current = useRef({ x: 0, y: 0 });
-  const [activeId, setActiveId] = useState(null);
+  const [hoverId, setHoverId] = useState(null);
+  const [panelId, setPanelId] = useState(null);
 
-  // Pointer-parallax tilt — lerped in a rAF loop, writes transform directly
+  // Pointer-parallax tilt — lerped in a rAF loop, writes transform directly.
+  // The loop sleeps once the stage settles on its target; pointermove wakes it.
+  const wakeTiltRef = useRef(() => {});
   useEffect(() => {
     if (reducedMotion) return undefined;
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -222,14 +336,41 @@ function ConstellationStage() {
       const tgt = target.current;
       cur.x += (tgt.x - cur.x) * 0.055;
       cur.y += (tgt.y - cur.y) * 0.055;
-      if (tiltRef.current && (Math.abs(cur.x) > 0.005 || Math.abs(cur.y) > 0.005 || Math.abs(tgt.x) > 0 || Math.abs(tgt.y) > 0)) {
+      const settled = Math.abs(tgt.x - cur.x) < 0.002 && Math.abs(tgt.y - cur.y) < 0.002;
+      if (settled) {
+        cur.x = tgt.x;
+        cur.y = tgt.y;
+      }
+      if (tiltRef.current) {
         tiltRef.current.style.transform = `perspective(1150px) rotateX(${cur.y.toFixed(3)}deg) rotateY(${cur.x.toFixed(3)}deg)`;
       }
-      raf = window.requestAnimationFrame(tick);
+      raf = settled ? 0 : window.requestAnimationFrame(tick);
     };
-    raf = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(raf);
+    const wake = () => {
+      if (raf === 0) raf = window.requestAnimationFrame(tick);
+    };
+    wakeTiltRef.current = wake;
+    wake();
+    return () => {
+      wakeTiltRef.current = () => {};
+      if (raf !== 0) window.cancelAnimationFrame(raf);
+      raf = 0;
+    };
   }, [reducedMotion]);
+
+  // Floating info panel — focus inside on open, Escape closes, restore focus on close
+  useEffect(() => {
+    if (!panelId) return undefined;
+    panelRef.current?.focus();
+    const onKey = (event) => {
+      if (event.key === "Escape") setPanelId(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      openerRef.current?.focus?.();
+    };
+  }, [panelId]);
 
   const handlePointerMove = (event) => {
     const stage = stageRef.current;
@@ -238,103 +379,121 @@ function ConstellationStage() {
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
     target.current = { x: px * 9, y: -py * 7 };
+    wakeTiltRef.current();
   };
 
   const handlePointerLeave = () => {
     target.current = { x: 0, y: 0 };
+    wakeTiltRef.current();
+    setHoverId(null);
   };
 
-  const toggleNode = (id) => setActiveId((prev) => (prev === id ? null : id));
+  const openPanel = (id, event) => {
+    openerRef.current = event.currentTarget;
+    setPanelId(id);
+  };
+
+  const panelShard = SHARDS.find((c) => c.id === panelId) ?? null;
+  const panelTone = panelShard ? TONE[panelShard.tone] : null;
+  const PanelIcon = panelShard?.icon;
 
   return (
     <div
       ref={stageRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative hidden h-[31rem] select-none md:block lg:h-[34rem] xl:h-[36rem]"
+      className="relative hidden h-[32rem] select-none md:block lg:h-[37rem] xl:h-[39rem]"
     >
-      {/* ===== Deep-navy environment ===== */}
+      {/* ===== Cosmic environment ===== */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 overflow-hidden rounded-3xl border border-white/[0.08] bg-[#050a1c] shadow-[0_36px_80px_-32px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.06)]"
+        className="absolute inset-0 overflow-hidden rounded-3xl border border-white/[0.08] bg-[#04081a] shadow-[0_36px_80px_-32px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.06)]"
       >
         {/* Nebula washes — electric blue / soft violet */}
         <div className="absolute -left-32 top-[-20%] h-[26rem] w-[26rem] rounded-full bg-sky-600/[0.16] blur-[130px]" />
         <div className="absolute -right-32 bottom-[-22%] h-[26rem] w-[26rem] rounded-full bg-violet-600/[0.18] blur-[130px]" />
         <div className="absolute left-1/3 top-1/3 h-72 w-72 rounded-full bg-indigo-700/[0.16] blur-[120px]" />
-        <div className="hero-grid absolute inset-0 opacity-50" />
-        <div className="hero-grain absolute inset-0" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(2,6,23,0.6)_100%)]" />
-        <StarDust count={30} />
-        {/* Floating academic glyphs, faint */}
-        <GraduationCap aria-hidden="true" className="node-float absolute left-[38%] top-[6%] h-6 w-6 text-indigo-400/25" style={{ ["--float-delay"]: "-2.2s", ["--float-duration"]: "7s" }} />
-        <BookOpen aria-hidden="true" className="node-float absolute right-[26%] top-[58%] h-5 w-5 text-sky-400/20" style={{ ["--float-delay"]: "-4s", ["--float-duration"]: "8.5s" }} />
-        <Monitor aria-hidden="true" className="node-float absolute left-[27%] top-[58%] h-5 w-5 text-violet-400/20" style={{ ["--float-delay"]: "-1.2s", ["--float-duration"]: "7.6s" }} />
+        {/* Volumetric light beams from above */}
+        <div className="absolute -top-16 left-[27%] h-[125%] w-40 -skew-x-12 bg-gradient-to-b from-sky-400/[0.13] via-indigo-400/[0.05] to-transparent blur-md" />
+        <div className="absolute -top-16 right-[27%] h-[125%] w-40 skew-x-12 bg-gradient-to-b from-violet-400/[0.13] via-indigo-400/[0.05] to-transparent blur-md" />
+        <div className="absolute -top-16 left-1/2 h-[125%] w-28 -translate-x-1/2 bg-gradient-to-b from-indigo-200/[0.12] via-indigo-400/[0.04] to-transparent blur-md" />
+        {/* Spotlight behind the core */}
+        <div className="absolute left-1/2 top-[46%] h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.16] blur-[100px]" />
+        {/* Perspective synapse grid receding into the dimension */}
+        <div className="neural-floor absolute bottom-0 left-0 right-0 h-44 opacity-70" />
+        {/* Scanline texture + one sweeping holographic band */}
+        <div className="neural-scanlines absolute inset-0" />
+        {!reducedMotion && (
+          <div className="neural-scan absolute left-0 h-24 w-full bg-gradient-to-b from-transparent via-sky-300/[0.13] to-transparent blur-[6px]" />
+        )}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_42%,rgba(2,6,23,0.62)_100%)]" />
+        <StarDust count={34} />
+        {/* Corner brackets — dimension framing */}
+        <span className="absolute left-3 top-3 h-5 w-5 border-l-2 border-t-2 border-indigo-300/30" />
+        <span className="absolute right-3 top-3 h-5 w-5 border-r-2 border-t-2 border-indigo-300/30" />
+        <span className="absolute bottom-3 left-3 h-5 w-5 border-b-2 border-l-2 border-indigo-300/30" />
+        <span className="absolute bottom-3 right-3 h-5 w-5 border-b-2 border-r-2 border-indigo-300/30" />
       </div>
 
-      {/* ===== Tilted constellation plane ===== */}
+      {/* ===== Tilted dimension plane ===== */}
       <div
         ref={tiltRef}
-        className="absolute inset-6 will-change-transform lg:inset-8"
-        style={{ transformStyle: "preserve-3d" }}
+        className="absolute inset-6 will-change-transform [transform-style:preserve-3d] lg:inset-8"
       >
-        {/* Connection lines */}
+        {/* Energy pathways with traveling pulses */}
         <svg
           viewBox="0 0 1000 620"
           preserveAspectRatio="none"
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full drop-shadow-[0_0_8px_rgba(99,102,241,0.4)]"
+          className="constellation-enter absolute inset-0 h-full w-full drop-shadow-[0_0_10px_rgba(99,102,241,0.45)]"
+          style={{ animationDelay: "0.1s" }}
         >
           <defs>
-            <linearGradient id="edge-grad" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="neural-edge" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#38bdf8" />
               <stop offset="55%" stopColor="#818cf8" />
               <stop offset="100%" stopColor="#a78bfa" />
             </linearGradient>
+            <radialGradient id="neural-photon-halo">
+              <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.95" />
+              <stop offset="35%" stopColor="#a5b4fc" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#818cf8" stopOpacity="0" />
+            </radialGradient>
+            <filter id="neural-photon-glow" x="-250%" y="-250%" width="600%" height="600%">
+              <feGaussianBlur stdDeviation="3.1" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
-          {/* Rim edges — faint violet scaffold */}
-          {EDGES.filter((e) => e.rim).map((e, i) => (
-            <line
-              key={`rim-${i}`}
-              x1={e.from[0] * 10}
-              y1={e.from[1] * 6.2}
-              x2={e.to[0] * 10}
-              y2={e.to[1] * 6.2}
-              stroke="#8b5cf6"
-              strokeOpacity="0.22"
-              strokeWidth="1.1"
-              strokeDasharray="2 7"
-              strokeLinecap="round"
-              vectorEffect="non-scaling-stroke"
-            />
-          ))}
-
-          {/* Hub tethers — flowing dashed energy */}
-          {EDGES.filter((e) => !e.rim).map((e) => {
-            const lit = activeId === e.node;
-            const x1 = e.from[0] * 10;
-            const y1 = e.from[1] * 6.2;
-            const x2 = e.to[0] * 10;
-            const y2 = e.to[1] * 6.2;
+          {PATHWAYS.map((p, pathwayIndex) => {
+            const lit = hoverId === p.id;
             return (
-              <g key={e.node}>
-                <line
-                  x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="url(#edge-grad)"
-                  strokeOpacity={lit ? 0.4 : 0.2}
-                  strokeWidth="5"
+              <g key={p.id}>
+                {/* Wide soft under-glow */}
+                <path
+                  d={p.d}
+                  fill="none"
+                  stroke="url(#neural-edge)"
+                  strokeOpacity={lit ? 0.5 : 0.18}
+                  strokeWidth="5.5"
                   strokeLinecap="round"
                   vectorEffect="non-scaling-stroke"
+                  style={{ transition: "stroke-opacity 0.45s ease" }}
                 />
-                <line
-                  x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="url(#edge-grad)"
-                  strokeOpacity={lit ? 1 : 0.62}
+                {/* Hairline gradient core, slowly flowing */}
+                <path
+                  d={p.d}
+                  fill="none"
+                  stroke="url(#neural-edge)"
+                  strokeOpacity={lit ? 1 : 0.6}
                   strokeWidth="1.6"
                   strokeDasharray="5 9"
                   strokeLinecap="round"
                   vectorEffect="non-scaling-stroke"
+                  style={{ transition: "stroke-opacity 0.45s ease" }}
                 >
                   {!reducedMotion && (
                     <animate
@@ -345,230 +504,401 @@ function ConstellationStage() {
                       repeatCount="indefinite"
                     />
                   )}
-                </line>
-                {!reducedMotion && e.photon && (
-                  <circle r="3.2" fill="#e0f2fe" opacity="0.95">
-                    <animateMotion
-                      path={`M ${x1} ${y1} L ${x2} ${y2}`}
-                      dur={e.dur}
+                </path>
+                {/* Traveling energy flare */}
+                {!reducedMotion && (
+                  <path
+                    d={p.d}
+                    fill="none"
+                    stroke="#f0f9ff"
+                    strokeOpacity={lit ? 0.95 : 0.65}
+                    strokeWidth="2.3"
+                    strokeLinecap="round"
+                    strokeDasharray="9 91"
+                    pathLength="100"
+                    filter="url(#neural-photon-glow)"
+                    vectorEffect="non-scaling-stroke"
+                    style={{ transition: "stroke-opacity 0.45s ease" }}
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      from="0"
+                      to="-100"
+                      dur={p.dur}
                       repeatCount="indefinite"
                     />
-                  </circle>
+                  </path>
+                )}
+                {/* Mid-synapse node — blinks on the pathway */}
+                <circle
+                  cx={p.mid[0]}
+                  cy={p.mid[1]}
+                  r={lit ? 3.4 : 2.3}
+                  fill="#c7d2fe"
+                  stroke="#818cf8"
+                  strokeOpacity="0.8"
+                  strokeWidth="1"
+                  className="synapse-node"
+                  style={{ transition: "r 0.4s ease", ["--synapse-delay"]: `${(pathwayIndex * 0.7).toFixed(2)}s` }}
+                />
+                {/* Photon comet — layered halo + trailing sparks */}
+                {!reducedMotion && (
+                  <g style={{ transition: "opacity 0.45s ease" }} opacity={lit ? 1 : 0.85}>
+                    <circle r="9" fill="url(#neural-photon-halo)" opacity="0.8">
+                      <animateMotion path={p.d} dur={p.dur} repeatCount="indefinite" />
+                    </circle>
+                    <circle r="1.5" fill="#c7d2fe" opacity="0.35">
+                      <animateMotion path={p.d} dur={p.dur} begin="-0.42s" repeatCount="indefinite" />
+                    </circle>
+                    <circle r="2.1" fill="#e0e7ff" opacity="0.55">
+                      <animateMotion path={p.d} dur={p.dur} begin="-0.21s" repeatCount="indefinite" />
+                    </circle>
+                    <circle r="2.9" fill="#f0f9ff" filter="url(#neural-photon-glow)">
+                      <animateMotion path={p.d} dur={p.dur} repeatCount="indefinite" />
+                    </circle>
+                  </g>
                 )}
               </g>
             );
           })}
         </svg>
 
-        {/* ===== Central hub — MY LEARNING JOURNEY ===== */}
-        <div className="absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2 text-center">
-          <div className="relative mx-auto flex h-28 w-28 items-center justify-center lg:h-32 lg:w-32 xl:h-36 xl:w-36">
-            {/* Rotating dashed orbit rings */}
+        {/* ===== Central Neural Core ===== */}
+        <div
+          className="constellation-enter absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2 text-center [transform-style:preserve-3d]"
+          style={{ animationDelay: "0.22s" }}
+        >
+          <div className="relative mx-auto flex h-32 w-32 items-center justify-center lg:h-40 lg:w-40 xl:h-44 xl:w-44">
+            {/* Ambient nebula glow */}
             <span
               aria-hidden="true"
-              className="orbit-ring absolute inset-0 rounded-full border border-dashed border-sky-400/30"
-              style={{ ["--orbit-duration"]: "38s" }}
+              className="hub-glow absolute -inset-10 rounded-full"
+              style={{ background: "radial-gradient(circle, rgba(129,140,248,0.5) 0%, rgba(56,189,248,0.16) 45%, transparent 72%)", filter: "blur(18px)" }}
             />
-            <span
-              aria-hidden="true"
-              className="orbit-ring-reverse absolute inset-3 rounded-full border border-violet-400/25"
-              style={{ ["--orbit-duration"]: "52s" }}
-            />
-            {/* Glowing core */}
-            <div className="absolute inset-6 flex items-center justify-center rounded-full border border-indigo-300/40 bg-[radial-gradient(circle_at_38%_32%,#c7d2fe_0%,#6366f1_38%,#312e81_72%,#070b21_100%)] shadow-[inset_-6px_-8px_16px_rgba(2,6,23,0.75),inset_3px_4px_10px_rgba(224,231,255,0.35),0_0_55px_-8px_rgba(129,140,248,0.65)] lg:inset-7">
-              <GraduationCap className="h-7 w-7 text-indigo-50 drop-shadow-[0_0_6px_rgba(224,231,255,0.8)] lg:h-8 lg:w-8" />
+            {/* Conic energy shimmer rotating behind the sphere */}
+            {!reducedMotion && (
+              <span
+                aria-hidden="true"
+                className="core-shimmer absolute -inset-4 rounded-full opacity-70"
+                style={{ background: "conic-gradient(from 0deg, transparent 0deg, rgba(125,211,252,0.32) 38deg, transparent 78deg, transparent 180deg, rgba(196,181,253,0.32) 220deg, transparent 262deg)", filter: "blur(6px)" }}
+              />
+            )}
+            {/* Sonar pulse rings */}
+            <span aria-hidden="true" className="hub-pulse absolute inset-2 rounded-full border border-indigo-300/45" />
+            <span aria-hidden="true" className="hub-pulse absolute inset-2 rounded-full border border-sky-300/35" style={{ animationDelay: "1.9s" }} />
+            {/* Rotating synapse network */}
+            <span aria-hidden="true" className="orbit-ring absolute -inset-6 lg:-inset-8" style={{ ["--orbit-duration"]: "38s" }}>
+              <NeuralNetwork className="h-full w-full" />
+            </span>
+            <span aria-hidden="true" className="orbit-ring-reverse absolute -inset-1 lg:-inset-2" style={{ ["--orbit-duration"]: "55s" }}>
+              <svg viewBox="0 0 100 100" className="h-full w-full">
+                <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="none" stroke="#38bdf8" strokeOpacity="0.5" strokeWidth="1" strokeDasharray="4 5" strokeLinejoin="round" />
+                <circle cx="50" cy="2" r="1.6" fill="#7dd3fc" />
+                <circle cx="93" cy="74" r="1.4" fill="#7dd3fc" opacity="0.7" />
+                <circle cx="7" cy="74" r="1.4" fill="#c4b5fd" opacity="0.7" />
+              </svg>
+            </span>
+
+            {/* Floating neural energy sphere */}
+            <div className="node-float relative flex items-center justify-center" style={{ ["--float-delay"]: "-0.8s", ["--float-duration"]: "6.5s" }}>
+              <div className="hub-core relative flex h-16 w-16 items-center justify-center rounded-full border border-indigo-200/55 bg-[radial-gradient(circle_at_36%_30%,#e0f2fe_0%,#7dd3fc_22%,#6366f1_52%,#3730a3_78%,#070b21_100%)] shadow-[inset_-6px_-8px_14px_rgba(2,6,23,0.75),inset_3px_3px_8px_rgba(224,242,254,0.45),0_0_38px_-2px_rgba(99,102,241,0.85)] lg:h-20 lg:w-20 xl:h-24 xl:w-24">
+                {/* Inner molten core */}
+                <span aria-hidden="true" className="absolute inset-[26%] rounded-full bg-[radial-gradient(circle_at_42%_36%,#f0f9ff_0%,#a5f3fc_30%,#818cf8_62%,transparent_82%)] opacity-95" style={{ filter: "blur(1px)" }} />
+                <GraduationCap className="relative h-6 w-6 text-indigo-50 drop-shadow-[0_0_8px_rgba(224,242,254,0.95)] lg:h-7 lg:w-7 xl:h-8 xl:w-8" strokeWidth={1.75} />
+              </div>
             </div>
           </div>
-          <p className="mt-3 font-mono text-[9px] font-bold uppercase leading-relaxed tracking-[0.32em] text-indigo-200 lg:text-[10px]">
-            My Learning<br />Journey
+          {/* Core readout */}
+          <p
+            className="mt-3 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.34em] text-indigo-200 lg:text-[9px]"
+            style={{ textShadow: "0 0 22px rgba(129,140,248,0.75)" }}
+          >
+            Neural Core<br />My Learning Journey
           </p>
         </div>
 
-        {/* ===== Education nodes ===== */}
-        {NODES.map((node) => {
-          const tone = TONE[node.tone];
-          const active = activeId === node.id;
-          const Icon = node.icon;
+        {/* ===== Memory Shards ===== */}
+        {SHARDS.map((shard, shardIndex) => {
+          const tone = TONE[shard.tone];
+          const hovered = hoverId === shard.id;
+          const dimmed = hoverId !== null && !hovered;
+          const Icon = shard.icon;
           return (
             <div
-              key={node.id}
-              className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              key={shard.id}
+              className="constellation-enter absolute z-20 -translate-x-1/2 -translate-y-1/2 [transform-style:preserve-3d]"
+              style={{ left: `${shard.x}%`, top: `${shard.y}%`, animationDelay: `${0.36 + shardIndex * 0.12}s` }}
             >
-              {/* Floating wrapper */}
-              <div
-                className="node-float"
-                style={{ ["--float-delay"]: node.floatDelay, ["--float-duration"]: "6s" }}
-              >
+              <div className="node-float [transform-style:preserve-3d]" style={{ ["--float-delay"]: shard.floatDelay, ["--float-duration"]: shard.floatDuration }}>
                 <button
                   type="button"
-                  onClick={() => toggleNode(node.id)}
-                  onMouseEnter={() => setActiveId(node.id)}
-                  onMouseLeave={() => setActiveId(null)}
-                  onFocus={() => setActiveId(node.id)}
-                  onBlur={() => setActiveId(null)}
-                  onKeyDown={(event) => event.key === "Escape" && setActiveId(null)}
-                  aria-expanded={active}
-                  aria-label={`${node.title} — ${node.status}. ${active ? "Hide" : "Show"} details`}
-                  className="group/node relative flex cursor-pointer flex-col items-center gap-2 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                  onClick={(event) => openPanel(shard.id, event)}
+                  onMouseEnter={() => setHoverId(shard.id)}
+                  onMouseLeave={() => setHoverId(null)}
+                  onFocus={() => setHoverId(shard.id)}
+                  onBlur={() => setHoverId(null)}
+                  aria-haspopup="dialog"
+                  aria-label={`${shard.record} — ${shard.statusLine}. Open details`}
+                  className={`group/shard relative flex h-36 w-36 cursor-pointer items-center justify-center outline-none transition-[transform,opacity,filter] duration-500 ease-out hover:z-30 focus-visible:z-30 focus-visible:ring-2 focus-visible:ring-sky-400 sm:h-40 sm:w-40 lg:h-44 lg:w-44 xl:h-48 xl:w-48 ${dimmed ? "scale-[0.94] opacity-35 saturate-[0.55]" : "opacity-100"} hover:[translate:0_-8px_52px] hover:scale-[1.08] focus-visible:[translate:0_-8px_52px] focus-visible:scale-[1.08]`}
                 >
-                  {/* Orbit ring + orb */}
-                  <span className="relative flex h-16 w-16 items-center justify-center sm:h-[4.25rem] sm:w-[4.25rem] lg:h-[4.75rem] lg:w-[4.75rem]">
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-0 rounded-full bg-gradient-to-br ${tone.ring} p-[1.5px] transition-transform duration-500 group-hover/node:scale-110`}
-                    >
-                      <span className="block h-full w-full rounded-full bg-[#070d24]" />
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-[3px] rounded-full ${tone.halo} transition-shadow duration-500 group-hover/node:shadow-[0_0_52px_-6px_rgba(129,140,248,0.7)]`}
-                      style={{ background: `radial-gradient(circle at 35% 30%, rgba(224,231,255,0.3), transparent 55%), radial-gradient(circle at center, ${tone.dot === "bg-sky-400" ? "rgba(56,189,248,0.28)" : tone.dot === "bg-emerald-400" ? "rgba(52,211,153,0.28)" : tone.dot === "bg-violet-400" ? "rgba(167,139,250,0.28)" : "rgba(129,140,248,0.28)"} 0%, transparent 72%)` }}
+                  {/* Breathing aura */}
+                  <span
+                    aria-hidden="true"
+                    className="node-aura absolute -inset-4 rounded-full"
+                    style={{ ["--aura-delay"]: shard.floatDelay, ["--aura-duration"]: "4.6s", background: `radial-gradient(circle, ${tone.aura} 0%, transparent 68%)`, filter: "blur(12px)" }}
+                  />
+                  {/* Crystal body — unique silhouette */}
+                  <div className="absolute inset-0 transition-all duration-500 ease-out group-hover/shard:brightness-[1.35] group-hover/shard:saturate-[1.15] group-focus-visible/shard:brightness-[1.35]">
+                    {/* Glowing rim */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${tone.glassEdge}`} style={{ clipPath: shard.crystal }} />
+                    {/* Glass facets */}
+                    <div className={`absolute inset-[1.5px] bg-gradient-to-br ${tone.glass}`} style={{ clipPath: shard.crystal }} />
+                    <div
+                      className="absolute inset-[1.5px] bg-[radial-gradient(circle_at_50%_32%,rgba(224,242,254,0.22),rgba(99,102,241,0.1)_46%,rgba(4,8,26,0.9)_88%)]"
+                      style={{ clipPath: shard.crystal }}
                     />
-                    {node.current && (
-                      <span aria-hidden="true" className="absolute -top-2 rounded-full border border-emerald-400/40 bg-emerald-400/15 px-2 py-0.5 font-mono text-[6px] font-bold uppercase tracking-[0.25em] text-emerald-300">
-                        Now
-                      </span>
+                    {/* Facet cut lines */}
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-[1.5px] h-[calc(100%-3px)] w-[calc(100%-3px)]" aria-hidden="true">
+                      {shard.facets.map((pair, i) => {
+                        const [x1, y1, x2, y2] = pair.split(/[ ,]/).map(Number);
+                        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#e0f2fe" strokeOpacity="0.14" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />;
+                      })}
+                    </svg>
+                    {/* Holographic scan band — only while hovered/focused */}
+                    {!reducedMotion && (
+                      <div
+                        aria-hidden="true"
+                        className="shard-scan pointer-events-none absolute left-0 h-16 w-full bg-gradient-to-b from-transparent via-sky-200/[0.32] to-transparent opacity-0 blur-[3px] transition-opacity duration-300 group-hover/shard:opacity-100 group-focus-visible/shard:opacity-100"
+                        style={{ clipPath: shard.crystal }}
+                      />
                     )}
-                    <Icon className={`relative h-6 w-6 transition-transform duration-500 group-hover/node:scale-110 lg:h-7 lg:w-7 ${tone.icon}`} />
-                  </span>
-
-                  {/* Label */}
-                  <span className="flex max-w-[8.5rem] flex-col items-center gap-1 lg:max-w-[10rem]">
-                    <span className="text-center text-[10px] font-bold leading-tight tracking-tight text-slate-100 sm:text-[11px]">
-                      {node.short}
+                  </div>
+                  {/* Shard face content */}
+                  <span className="relative flex max-w-[74%] flex-col items-center gap-1 text-center transition-opacity duration-300 group-hover/shard:opacity-0 group-focus-visible/shard:opacity-0">
+                    <Icon className={`h-4 w-4 ${tone.discText} drop-shadow-[0_0_6px_rgba(148,197,255,0.6)] lg:h-5 lg:w-5`} strokeWidth={1.75} />
+                    <span className={`font-mono text-[6px] font-bold uppercase leading-none tracking-[0.3em] lg:text-[6.5px] ${tone.num}`}>
+                      {shard.num} · {shard.tag}
                     </span>
-                    <StatusChip node={node} />
+                    <span className="text-[8px] font-bold leading-[1.25] tracking-tight text-slate-100 lg:text-[9.5px]">
+                      {shard.short}
+                    </span>
+                    <StatusChip shard={shard} />
+                  </span>
+                  {/* Hover readout — holographic data overlay */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-[11.5rem] -translate-x-1/2 -translate-y-1/2 scale-90 flex-col items-center gap-1.5 rounded-2xl border border-sky-300/25 bg-[#060c22]/85 px-3 py-2.5 opacity-0 blur-[3px] backdrop-blur-md transition-all duration-500 ease-out group-hover/shard:scale-100 group-hover/shard:opacity-100 group-hover/shard:blur-none group-focus-visible/shard:scale-100 group-focus-visible/shard:opacity-100 group-focus-visible/shard:blur-none lg:w-48"
+                  >
+                    <span className={`font-mono text-[6px] font-bold uppercase tracking-[0.35em] ${tone.num}`}>
+                      Memory Shard {shard.num}
+                    </span>
+                    <span className="text-[9px] font-bold leading-snug text-white lg:text-[10px]">
+                      {shard.record}
+                    </span>
+                    <span className="flex items-center gap-1.5 font-mono text-[7px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                      <CheckCircle2 className="h-3 w-3" />
+                      {shard.statusLine}
+                    </span>
+                    <span className="mt-0.5 border-t border-white/10 pt-1.5 font-mono text-[5.5px] uppercase tracking-[0.3em] text-slate-500">
+                      Click — open shard file
+                    </span>
                   </span>
                 </button>
-
-                {/* Detail popover — hover / focus / tap */}
-                <div
-                  role="tooltip"
-                  className={`pointer-events-none absolute top-1/2 z-30 w-60 -translate-y-1/2 rounded-2xl border border-white/10 bg-[#0a1128]/95 p-4 opacity-0 shadow-[0_24px_50px_-20px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.07)] backdrop-blur-xl transition-all duration-300 xl:w-64 ${
-                    node.side === "right" ? "left-[calc(100%+0.6rem)]" : "right-[calc(100%+0.6rem)]"
-                  } ${active ? "translate-x-0 opacity-100" : node.side === "right" ? "-translate-x-2 opacity-0" : "translate-x-2 opacity-0"}`}
-                >
-                  <p className="flex items-center justify-between gap-2 font-mono text-[7px] font-bold uppercase tracking-[0.28em] text-indigo-300/90">
-                    {node.tag}
-                    <span className="text-slate-600">{node.meta}</span>
-                  </p>
-                  <p className="mt-1.5 text-[13px] font-bold leading-snug text-white">
-                    {node.title}
-                  </p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                    <span className="text-[10px] font-semibold text-slate-300">
-                      {node.status}
-                      {node.id.includes("computer") || node.id.includes("digital")
-                        ? " · National Skill Standard Level 3"
-                        : ""}
-                    </span>
-                  </div>
-                  <p className="mt-2 border-t border-white/[0.07] pt-2 text-[10px] leading-relaxed text-slate-400">
-                    {node.desc}
-                  </p>
-                </div>
               </div>
             </div>
           );
         })}
       </div>
 
+      {/* ===== Floating information panel (dialog) ===== */}
+      {panelShard && PanelIcon && (
+        <div className="absolute inset-0 z-40 flex items-center justify-center">
+          {/* Backdrop — click to dismiss */}
+          <button
+            type="button"
+            aria-label="Close details panel"
+            onClick={() => setPanelId(null)}
+            className="neural-fade-in absolute inset-0 cursor-pointer rounded-3xl bg-[#020617]/75 backdrop-blur-[3px]"
+          />
+          <div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="neural-panel-title"
+            tabIndex={-1}
+            className="neural-panel relative max-h-full w-[min(25rem,calc(100%-2.5rem))] overflow-y-auto rounded-2xl border border-indigo-300/25 bg-[#070d22]/95 p-5 shadow-[0_36px_80px_-24px_rgba(2,6,23,1),0_0_60px_-18px_rgba(129,140,248,0.45),inset_0_1px_0_rgba(255,255,255,0.09)] outline-none backdrop-blur-xl lg:p-6"
+          >
+            {/* Top energy filament */}
+            <span aria-hidden="true" className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-sky-300/70 to-transparent" />
+            {/* Scanline texture + corner brackets */}
+            <span aria-hidden="true" className="neural-scanlines pointer-events-none absolute inset-0 rounded-2xl" />
+            <span aria-hidden="true" className="pointer-events-none absolute left-2 top-2 h-4 w-4 border-l border-t border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute right-2 top-2 h-4 w-4 border-r border-t border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-2 h-4 w-4 border-b border-l border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-indigo-300/45" />
+
+            {/* Close */}
+            <button
+              type="button"
+              onClick={() => setPanelId(null)}
+              aria-label="Close details panel"
+              className="absolute right-3 top-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] text-slate-400 outline-none transition-all duration-200 hover:border-sky-400/40 hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-sky-400"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+
+            {/* Kicker */}
+            <p className={`flex items-center justify-between gap-3 pr-9 font-mono text-[7px] font-bold uppercase tracking-[0.3em] ${panelTone.num}`}>
+              Shard {panelShard.num} · {panelShard.tag}
+              <span className="text-slate-600">{panelShard.meta}</span>
+            </p>
+
+            {/* Icon + record title */}
+            <div className="mt-3 flex items-start gap-3.5">
+              <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${panelTone.disc} ${panelTone.discGlow}`}>
+                <PanelIcon className={`h-6 w-6 ${panelTone.discText}`} strokeWidth={1.75} />
+              </span>
+              <h3 id="neural-panel-title" className="text-[15px] font-extrabold leading-snug text-white lg:text-base">
+                {panelShard.record}
+              </h3>
+            </div>
+
+            {/* Status line */}
+            <div className="mt-3.5 flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
+              <span className="text-[11px] font-semibold text-slate-200">{panelShard.statusLine}</span>
+            </div>
+
+            {/* Record description — verbatim from portfolioData.js */}
+            <p className="mt-3 border-t border-white/[0.07] pt-3 text-[10.5px] leading-relaxed text-slate-400">
+              {panelShard.desc}
+            </p>
+
+            {/* Footer */}
+            <p className="mt-3 border-t border-white/[0.07] pt-2.5 font-mono text-[6.5px] uppercase tracking-[0.35em] text-slate-600">
+              Neural Learning Dimension · Shard {panelShard.num}/04
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Corner HUD marks */}
-      <span aria-hidden="true" className="pointer-events-none absolute left-5 top-4 z-10 font-mono text-[8px] uppercase tracking-[0.4em] text-slate-600 lg:left-7 lg:top-5">
-        EDU.MAP
+      <span aria-hidden="true" className="constellation-enter pointer-events-none absolute left-5 top-4 z-10 font-mono text-[8px] uppercase tracking-[0.4em] text-slate-500 lg:left-7 lg:top-5" style={{ animationDelay: "0.72s" }}>
+        Neural.Dim
       </span>
-      <span aria-hidden="true" className="pointer-events-none absolute right-5 top-4 z-10 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.4em] text-slate-600 lg:right-7 lg:top-5">
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse" />
-        4 Nodes
+      <span aria-hidden="true" className="constellation-enter pointer-events-none absolute right-5 top-4 z-10 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.4em] text-slate-500 lg:right-7 lg:top-5" style={{ animationDelay: "0.72s" }}>
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_1px_rgba(52,211,153,0.7)] motion-safe:animate-pulse" />
+        4 Shards Synced
       </span>
     </div>
   );
 }
 
-function MobileConstellation() {
+function MobileNeural() {
   const [openId, setOpenId] = useState("diploma");
+  const reducedMotionMobile = useReducedMotion() === true;
 
   return (
     <div className="relative md:hidden">
-      {/* Hub */}
-      <div className="flex flex-col items-center text-center">
+      {/* Mini neural core */}
+      <div className="constellation-enter flex flex-col items-center text-center" style={{ animationDelay: "0.18s" }}>
         <div className="relative flex h-24 w-24 items-center justify-center">
           <span
             aria-hidden="true"
-            className="orbit-ring absolute inset-0 rounded-full border border-dashed border-sky-400/30"
-            style={{ ["--orbit-duration"]: "30s" }}
+            className="hub-glow absolute -inset-4 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(129,140,248,0.45) 0%, transparent 70%)", filter: "blur(12px)" }}
           />
-          <div className="absolute inset-2 flex items-center justify-center rounded-full border border-indigo-300/40 bg-[radial-gradient(circle_at_38%_32%,#c7d2fe_0%,#6366f1_40%,#312e81_75%,#070b21_100%)] shadow-[inset_-5px_-7px_14px_rgba(2,6,23,0.7),0_0_40px_-6px_rgba(129,140,248,0.6)]">
-            <GraduationCap className="h-8 w-8 text-indigo-50" />
+          <span aria-hidden="true" className="orbit-ring absolute inset-0" style={{ ["--orbit-duration"]: "26s" }}>
+            <svg viewBox="0 0 100 100" className="h-full w-full">
+              <polygon points="50,2 93,26 93,74 50,98 7,74 7,26" fill="none" stroke="#38bdf8" strokeOpacity="0.55" strokeWidth="1.2" strokeDasharray="5 4" strokeLinejoin="round" />
+              <circle cx="50" cy="2" r="2" fill="#7dd3fc" />
+            </svg>
+          </span>
+          {/* Mini neural energy sphere */}
+          <div className="hub-core relative flex h-12 w-12 items-center justify-center rounded-full border border-indigo-200/55 bg-[radial-gradient(circle_at_36%_30%,#e0f2fe_0%,#7dd3fc_24%,#6366f1_55%,#070b21_100%)] shadow-[inset_-3px_-4px_8px_rgba(2,6,23,0.7),inset_2px_2px_5px_rgba(224,242,254,0.4),0_0_24px_-2px_rgba(99,102,241,0.8)]">
+            <GraduationCap className="h-5 w-5 text-indigo-50 drop-shadow-[0_0_5px_rgba(224,242,254,0.9)]" strokeWidth={1.75} />
           </div>
         </div>
-        <p className="mt-3 font-mono text-[9px] font-bold uppercase leading-relaxed tracking-[0.32em] text-indigo-200">
-          My Learning<br />Journey
+        <p
+          className="mt-2.5 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.32em] text-indigo-200"
+          style={{ textShadow: "0 0 18px rgba(129,140,248,0.55)" }}
+        >
+          Neural Core<br />My Learning Journey
         </p>
       </div>
 
-      {/* Spine + nodes */}
-      <ol className="relative mt-8">
+      {/* Vertical shard sequence */}
+      <ol className="relative mt-6 space-y-2.5">
         <span
           aria-hidden="true"
-          className="absolute bottom-6 left-7 top-2 w-px bg-gradient-to-b from-sky-400/60 via-indigo-400/60 to-violet-400/60"
+          className="absolute bottom-6 left-7 top-2 w-px bg-gradient-to-b from-sky-400/70 via-indigo-400/70 to-violet-400/70 shadow-[0_0_8px_0_rgba(129,140,248,0.45)]"
         />
+        {!reducedMotionMobile && (
+          <span aria-hidden="true" className="spine-dot absolute left-7 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-indigo-200 shadow-[0_0_8px_2px_rgba(199,210,254,0.8)]" />
+        )}
 
-        {NODES.map((node) => {
-          const Icon = node.icon;
-          const tone = TONE[node.tone];
-          const open = openId === node.id;
+        {SHARDS.map((shard, shardIndex) => {
+          const Icon = shard.icon;
+          const tone = TONE[shard.tone];
+          const open = openId === shard.id;
           return (
-            <li key={node.id} className="relative flex items-start gap-4 py-2.5">
-              {/* Node orb on the spine */}
-              <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
-                <span aria-hidden="true" className={`absolute inset-0 rounded-full bg-gradient-to-br ${tone.ring} p-[1.5px]`}>
-                  <span className="block h-full w-full rounded-full bg-[#070d24]" />
-                </span>
-                <Icon className={`relative h-5 w-5 ${tone.icon}`} />
+            <li
+              key={shard.id}
+              className="constellation-enter relative flex items-stretch gap-4"
+              style={{ animationDelay: `${0.28 + shardIndex * 0.1}s` }}
+            >
+              {/* Shard node on the spine — same crystal silhouettes */}
+              <span className="relative z-10 flex w-14 shrink-0 items-center justify-center">
+                <span
+                  aria-hidden="true"
+                  className="node-aura absolute -inset-2"
+                  style={{ ["--aura-delay"]: shard.floatDelay, ["--aura-duration"]: "4.8s", background: `radial-gradient(circle, ${tone.aura} 0%, transparent 68%)`, filter: "blur(8px)", clipPath: shard.crystal }}
+                />
+                <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-sky-400/70 via-indigo-400/60 to-violet-500/70" style={{ clipPath: shard.crystal }} />
+                <span aria-hidden="true" className="absolute inset-[1.5px] bg-[#080e26]" style={{ clipPath: shard.crystal }} />
+                <Icon className={`relative h-5 w-5 ${tone.icon}`} strokeWidth={1.75} />
               </span>
 
-              {/* Content */}
+              {/* Shard body */}
               <div className="min-w-0 flex-1">
                 <button
                   type="button"
-                  onClick={() => setOpenId(open ? null : node.id)}
+                  onClick={() => setOpenId(open ? null : shard.id)}
                   aria-expanded={open}
-                  className="flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-4 py-3 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sky-400"
+                  aria-controls={`shard-${shard.id}`}
+                  className="flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] px-4 py-3 text-left outline-none transition-all duration-300 hover:border-indigo-300/25 hover:bg-white/[0.055] focus-visible:ring-2 focus-visible:ring-sky-400"
                 >
                   <span className="min-w-0">
-                    <span className="block font-mono text-[7px] font-bold uppercase tracking-[0.28em] text-indigo-300/80">
-                      {node.tag}
+                    <span className={`block font-mono text-[6px] font-bold uppercase tracking-[0.3em] ${tone.num}`}>
+                      {shard.num} · {shard.tag}
                     </span>
-                    <span className="mt-1 block text-[13px] font-bold leading-snug text-slate-100">
-                      {node.short}
+                    <span className="mt-1 block text-[12px] font-bold leading-snug text-slate-100">
+                      {shard.short}
                     </span>
                     <span className="mt-1.5 block">
-                      <StatusChip node={node} />
+                      <StatusChip shard={shard} />
                     </span>
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                    className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-300 ${open ? "rotate-180 text-indigo-300" : ""}`}
                     aria-hidden="true"
                   />
                 </button>
 
                 {open && (
-                  <div className="mt-2 rounded-2xl border border-white/[0.07] bg-white/[0.04] px-4 py-3">
+                  <div id={`shard-${shard.id}`} className="mobile-detail mt-2 rounded-2xl border border-white/[0.07] bg-white/[0.04] px-4 py-3">
                     <p className="text-[12px] font-semibold leading-snug text-white">
-                      {node.title}
+                      {shard.record}
                     </p>
                     <p className="mt-1.5 flex items-center gap-2 text-[10px] font-semibold text-slate-400">
-                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
-                      {node.status}
-                      {node.id.includes("computer") || node.id.includes("digital")
-                        ? " · National Skill Standard Level 3"
-                        : ""}
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
+                      {shard.statusLine}
                     </p>
                     <p className="mt-2 text-[11px] leading-relaxed text-slate-400">
-                      {node.desc}
+                      {shard.desc}
+                    </p>
+                    <p className="mt-2 font-mono text-[6px] uppercase tracking-[0.3em] text-slate-600">
+                      {shard.meta}
                     </p>
                   </div>
                 )}
@@ -598,43 +928,43 @@ export default function Education() {
         {/* ===== Header ===== */}
         <Reveal y={16} className="mx-auto mb-10 max-w-3xl space-y-4 text-center sm:mb-14">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.25em] text-blue-600 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-400">
-            <BookOpen className="h-3.5 w-3.5" />
-            <span>Education</span>
+            <BrainCircuit className="h-3.5 w-3.5" />
+            <span>Neural Learning Dimension</span>
           </div>
 
           <h2
             id="education-heading"
             className="text-4xl font-black leading-[1.02] tracking-tight text-slate-900 dark:text-white sm:text-6xl"
           >
-            The Knowledge{" "}
+            The{" "}
             <span className="bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-indigo-300 dark:to-violet-400">
-              Constellation
+              Neural Learning Dimension
             </span>
           </h2>
 
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
-            SSC, a diploma in Computer Science &amp; Engineering, and Level 3
-            professional certifications — every star on this map is real. Hover
-            or tap a node to explore.
+            Four memory shards — SSC, a Diploma in Computer Science &amp; Engineering, and
+            Level 3 certifications — gravitate around one neural core. Hover a shard to
+            surface its data; click to open the full memory file.
           </p>
         </Reveal>
 
-        {/* ===== Desktop / laptop / tablet constellation ===== */}
-        <Reveal y={26} delay={0.1}>
-          <ConstellationStage />
+        {/* ===== Desktop / laptop / tablet dimension ===== */}
+        <Reveal y={30} delay={0.08} duration={0.9}>
+          <NeuralStage />
         </Reveal>
 
-        {/* ===== Mobile constellation (vertical) ===== */}
-        <Reveal y={22} delay={0.1} className="md:hidden">
-          <div className="rounded-3xl border border-white/[0.08] bg-[#050a1c] p-5 shadow-[0_28px_60px_-28px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6">
+        {/* ===== Mobile dimension (vertical shard sequence) ===== */}
+        <Reveal y={24} delay={0.08} duration={0.85} className="md:hidden">
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#04081a] p-5 shadow-[0_28px_60px_-28px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6">
             <StarDust count={16} />
-            <MobileConstellation />
+            <MobileNeural />
           </div>
         </Reveal>
 
         <p className="mt-6 text-center font-mono text-[8px] uppercase tracking-[0.4em] text-slate-500 dark:text-slate-600 sm:text-[9px]">
           <span className="text-indigo-500 dark:text-indigo-400">{"//"}</span>{" "}
-          every node is real — the map of my education so far
+          four shards, one neural core — the living circuit of my education
         </p>
 
         {/* Screen-reader summary */}

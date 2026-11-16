@@ -68,38 +68,51 @@ export default function Navbar({ onOpenResume }) {
     window.dispatchEvent(new Event(THEME_EVENT));
   };
 
-  // Scroll listener: pill density + active-section spy
+  // Scroll listener: pill density + active-section spy.
+  // Layout reads are cached (resize-only) and work happens inside one
+  // rAF per frame — no forced layouts, no state churn on hot pixels.
   useEffect(() => {
-    const handleScroll = () => {
+    const SECTION_IDS = ["hero", "about", "skills", "projects", "education", "contact"];
+    let offsets = [];
+    let rafId = null;
+
+    const measure = () => {
+      offsets = SECTION_IDS.map((id) => {
+        const el = document.getElementById(id);
+        return el ? { id, top: el.offsetTop, height: el.offsetHeight } : null;
+      }).filter(Boolean);
+    };
+
+    const update = () => {
       setScrolled(window.scrollY > 24);
-
-      const sections = [
-        "hero",
-        "about",
-        "skills",
-        "projects",
-        "education",
-        "contact",
-      ];
-
       const scrollPosition = window.scrollY + 180;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
+      for (const section of offsets) {
+        if (scrollPosition >= section.top && scrollPosition < section.top + section.height) {
+          setActiveSection(section.id);
+          break;
         }
       }
     };
 
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        update();
+      });
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("load", measure);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    update();
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("load", measure);
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Lock background scroll while the mobile menu is open (+ Escape to close)

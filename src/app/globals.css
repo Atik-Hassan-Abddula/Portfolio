@@ -108,31 +108,6 @@ body {
   }
 }
 
-/* Projects sticky card stack — offsets scale up on larger screens */
-.projects-stack {
-  --stack-top: 4.5rem;
-  --stack-peek: 10px;
-}
-
-@media (min-width: 1024px) {
-  .projects-stack {
-    --stack-top: 5.25rem;
-    --stack-peek: 14px;
-  }
-}
-
-.project-stack-card {
-  will-change: transform;
-  transform-origin: center top;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .project-stack-card {
-    transform: none !important;
-    filter: none !important;
-  }
-}
-
 /* Floating badge animation for project cards */
 @keyframes float {
   0%,
@@ -489,7 +464,8 @@ html.dark .hero-grid {
   display: block;
   fill: #f8fafc;
   filter: drop-shadow(0 0 3px rgb(186 230 253 / 0.9))
-    drop-shadow(0 0 9px rgb(125 211 252 / 0.45));
+    drop-shadow(0 0 9px rgb(125 211 252 / 0.45))
+    drop-shadow(0 0 17px rgb(167 139 250 / 0.35));
   animation: hero-star-pop var(--star-duration, 3.4s) ease-in-out
     var(--star-delay, 0s) infinite;
   opacity: 0;
@@ -601,5 +577,646 @@ html.dark .hero-grid {
   .scroll-line-dot,
   .hero-blink {
     animation: none;
+  }
+}
+
+/* ============================================
+   Education — Knowledge Constellation polish
+   (decorative only; disabled under reduced motion)
+   ============================================ */
+
+/* Entrance: rise + deblur, shared by stage elements */
+@keyframes constellation-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.constellation-enter {
+  animation: constellation-enter 0.95s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Natural, subtle star dust — slow drift while twinkling */
+.constellation-star {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    #f8fafc 0%,
+    rgb(224 231 255 / 0.7) 38%,
+    rgb(165 180 252 / 0) 78%
+  );
+  animation: constellation-star var(--star-duration, 5.5s) ease-in-out
+    var(--star-delay, 0s) infinite;
+  opacity: 0;
+}
+
+@keyframes constellation-star {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.55);
+  }
+  32% {
+    opacity: var(--star-peak, 0.6);
+  }
+  52% {
+    opacity: var(--star-peak, 0.6);
+    transform: translate3d(var(--star-drift-x, 4px), var(--star-drift-y, -5px), 0)
+      scale(1);
+  }
+  76% {
+    opacity: calc(var(--star-peak, 0.6) * 0.55);
+  }
+}
+
+/* Education node — breathing aura behind each orb */
+.node-aura {
+  animation: node-aura var(--aura-duration, 5.2s) ease-in-out
+    var(--aura-delay, 0s) infinite;
+}
+
+@keyframes node-aura {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.16);
+  }
+}
+
+/* Hub — ambient nebula glow behind the core */
+.hub-glow {
+  animation: hub-glow 6.5s ease-in-out infinite;
+}
+
+@keyframes hub-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Hub — slow breathing of the glowing core */
+.hub-core {
+  animation: hub-core 6.5s ease-in-out infinite;
+}
+
+@keyframes hub-core {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.055);
+  }
+}
+
+/* Hub — radar-style sonar pulse ring */
+.hub-pulse {
+  animation: hub-pulse 3.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes hub-pulse {
+  0% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  75%,
+  100% {
+    opacity: 0;
+    transform: scale(1.85);
+  }
+}
+
+/* Mobile constellation — glowing pulse traveling down the spine */
+.spine-dot {
+  top: 0.5rem;
+  animation: spine-travel 7.5s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+@keyframes spine-travel {
+  0% {
+    top: 0.5rem;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 1.75rem);
+    opacity: 0;
+  }
+}
+
+/* Mobile constellation — expanding detail panel */
+.mobile-detail {
+  animation: mobile-detail-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  transform-origin: top center;
+}
+
+@keyframes mobile-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scaleY(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/* ============================================
+   Education — Neural Learning Dimension
+   (decorative only; disabled under reduced motion)
+   ============================================ */
+
+/* Faint scanline texture for the dimension + panels */
+.neural-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgb(147 197 253 / 0.05) 3px 4px
+  );
+}
+
+/* Slow holographic light band sweeping the dimension */
+.neural-scan {
+  animation: neural-scan 9s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+@keyframes neural-scan {
+  0% {
+    top: -18%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  52% {
+    opacity: 0.9;
+  }
+  72%,
+  100% {
+    top: 112%;
+    opacity: 0;
+  }
+}
+
+/* Perspective synapse-grid floor receding into the dimension */
+.neural-floor {
+  background-image:
+    radial-gradient(circle, rgb(125 211 252 / 0.5) 1px, transparent 1.4px),
+    linear-gradient(rgb(129 140 248 / 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(167 139 250 / 0.2) 1px, transparent 1px);
+  background-size: 46px 34px, 46px 34px, 46px 34px;
+  transform: perspective(540px) rotateX(57deg) scale(1.7);
+  transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(to top, black 24%, transparent 86%);
+  mask-image: linear-gradient(to top, black 24%, transparent 86%);
+  animation: neural-floor-pan 7s linear infinite;
+}
+
+@keyframes neural-floor-pan {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0 34px, 0 34px, 0 34px;
+  }
+}
+
+/* Memory shard — holographic light band sweeping the facets on hover/focus */
+.shard-scan {
+  animation: shard-scan 1.7s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+@keyframes shard-scan {
+  0% {
+    transform: translateY(-140%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.85;
+  }
+  62%,
+  100% {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+}
+
+/* Neural core — synapse nodes blinking in sequence */
+.synapse-node {
+  animation: synapse-node 2.8s ease-in-out var(--synapse-delay, 0s) infinite;
+}
+
+@keyframes synapse-node {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Neural core — conic energy shimmer rotating behind the sphere */
+.core-shimmer {
+  animation: core-shimmer 8s linear infinite;
+}
+
+@keyframes core-shimmer {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Floating information panel — scale + deblur entrance */
+.neural-panel {
+  animation: neural-panel-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes neural-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(14px);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Backdrop fade for the information panel */
+.neural-fade-in {
+  animation: neural-fade-in 0.3s ease backwards;
+}
+
+@keyframes neural-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .constellation-enter,
+  .constellation-star,
+  .node-aura,
+  .hub-glow,
+  .hub-core,
+  .hub-pulse,
+  .spine-dot,
+  .mobile-detail,
+  .neural-scan,
+  .neural-floor,
+  .neural-panel,
+  .neural-fade-in,
+  .shard-scan,
+  .synapse-node,
+  .core-shimmer {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Cosmic Identity Preloader
+   (decorative only; disabled under reduced motion)
+   ============================================ */
+
+/* Ambient nebula breathing behind the cube */
+.preloader-nebula {
+  animation: preloader-nebula 7s ease-in-out infinite;
+}
+
+@keyframes preloader-nebula {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+/* Scene entrance — fade the backdrop in */
+.preloader-fade-in {
+  animation: preloader-fade-in 0.55s ease backwards;
+}
+
+@keyframes preloader-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cube entrance — scale up + deblur */
+.preloader-cube-in {
+  animation: preloader-cube-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
+}
+
+@keyframes preloader-cube-in {
+  from {
+    opacity: 0;
+    transform: scale(0.55) translateY(26px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Name entrance — rise + deblur */
+.preloader-name-in {
+  animation: preloader-name-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.38s backwards;
+}
+
+@keyframes preloader-name-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Cube bob — gentle vertical float */
+.preloader-cube-bob {
+  animation: preloader-cube-bob 5.2s ease-in-out infinite;
+}
+
+@keyframes preloader-cube-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Cube X-axis — continuous slow tilt oscillation */
+.preloader-cube-x {
+  animation: preloader-cube-x 6.4s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+@keyframes preloader-cube-x {
+  from {
+    transform: rotateX(-26deg);
+  }
+  to {
+    transform: rotateX(14deg);
+  }
+}
+
+/* Cube Y-axis — continuous full rotation */
+.preloader-cube-y {
+  animation: preloader-cube-y 9.5s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes preloader-cube-y {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.preloader-cube {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  transform-style: preserve-3d;
+}
+
+@media (min-width: 640px) {
+  .preloader-cube {
+    width: 88px;
+    height: 88px;
+  }
+}
+
+/* Glass cube faces — electric blue / soft violet edges */
+.preloader-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(148 197 255 / 0.6);
+  background:
+    linear-gradient(150deg, rgb(125 211 252 / 0.3) 0%, rgb(99 102 241 / 0.2) 52%, rgb(167 139 250 / 0.26) 100%);
+  box-shadow:
+    inset 0 0 22px rgb(99 102 241 / 0.4),
+    inset 0 0 4px rgb(224 242 254 / 0.45),
+    0 0 18px rgb(99 102 241 / 0.35);
+}
+
+.preloader-face--front {
+  transform: translateZ(38px);
+}
+.preloader-face--back {
+  transform: rotateY(180deg) translateZ(38px);
+}
+.preloader-face--right {
+  transform: rotateY(90deg) translateZ(38px);
+}
+.preloader-face--left {
+  transform: rotateY(-90deg) translateZ(38px);
+}
+.preloader-face--top {
+  transform: rotateX(90deg) translateZ(38px);
+}
+.preloader-face--bottom {
+  transform: rotateX(-90deg) translateZ(38px);
+}
+
+@media (min-width: 640px) {
+  .preloader-face--front {
+    transform: translateZ(44px);
+  }
+  .preloader-face--back {
+    transform: rotateY(180deg) translateZ(44px);
+  }
+  .preloader-face--right {
+    transform: rotateY(90deg) translateZ(44px);
+  }
+  .preloader-face--left {
+    transform: rotateY(-90deg) translateZ(44px);
+  }
+  .preloader-face--top {
+    transform: rotateX(90deg) translateZ(44px);
+  }
+  .preloader-face--bottom {
+    transform: rotateX(-90deg) translateZ(44px);
+  }
+}
+
+/* Facet diagonal on each face */
+.preloader-face::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 46%, rgb(224 242 254 / 0.28) 49.5%, rgb(224 242 254 / 0.28) 50.5%, transparent 54%);
+  pointer-events: none;
+}
+
+/* Progress bar sheen — light sweep travelling along the fill */
+.preloader-bar-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+.preloader-bar-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.75), transparent);
+  animation: preloader-sheen 1.7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes preloader-sheen {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
+
+/* Content exit — scale down + deblur on reveal */
+.preloader-content {
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preloader-content--exit {
+  opacity: 0;
+  transform: scale(0.9) translateY(-12px);
+  filter: blur(6px);
+}
+
+/* Overlay exit — fade + gentle zoom-through */
+.preloader-overlay {
+  transition:
+    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.7s;
+}
+
+.preloader-overlay--exit {
+  opacity: 0;
+  transform: scale(1.06);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-nebula,
+  .preloader-cube-in,
+  .preloader-name-in,
+  .preloader-cube-bob,
+  .preloader-cube-x,
+  .preloader-cube-y,
+  .preloader-fade-in {
+    animation: none;
+  }
+
+  .preloader-bar-fill::after {
+    animation: none;
+  }
+
+  .preloader-content,
+  .preloader-overlay {
+    transition-duration: 0.25s;
+  }
+}
+
+/* ============================================
+   Projects — split entrance (image from left,
+   details from right). One stagger per card.
+   Fires once via IntersectionObserver; the only
+   animation properties are opacity/transform/filter
+   (GPU-composited). Disabled under reduced motion.
+   ============================================ */
+
+.split-col {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(var(--split-offset, 0px), 0, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--split-delay, 0s);
+  will-change: transform, opacity, filter;
+}
+
+.split-col--image {
+  --split-offset: -46px;
+}
+
+.split-col--details {
+  --split-offset: 46px;
+}
+
+.split-col.is-inview {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-col {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 }

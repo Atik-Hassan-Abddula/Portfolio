@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Stars, Edges } from "@react-three/drei";
 
-// Quality presets — the crystal core + halo only, never heavy.
+// Quality presets — the cube core + halo only, never heavy.
 // No shadows, no postprocessing, procedural environment only.
 const QUALITY = {
   high: { fov: 38, dpr: [1, 1.75], particles: 220, stars: 900 },
@@ -71,6 +71,45 @@ function makeStudioEnv(renderer) {
   texture.dispose();
   pmrem.dispose();
   return rt.texture;
+}
+
+// ==========================================
+// LIGHT RAYS — hover/click effects for the cube.
+// One procedural beam texture (bright base fading to tip,
+// feathered sides), tinted per beam. Pure additive blending.
+// ==========================================
+const RAY_COUNT = 12;
+const PARTICLES_PER_RAY = 4;
+const BURST_DURATION = 1.15; // seconds
+
+function makeRayTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 128;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+
+  // Length fade: bright at the cube, dissolving outward
+  const alongY = ctx.createLinearGradient(0, 256, 0, 0);
+  alongY.addColorStop(0, "rgba(255,255,255,1)");
+  alongY.addColorStop(0.3, "rgba(255,255,255,0.8)");
+  alongY.addColorStop(0.75, "rgba(255,255,255,0.16)");
+  alongY.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = alongY;
+  ctx.fillRect(0, 0, 128, 256);
+
+  // Lateral feathering so the beam has no hard edges
+  ctx.globalCompositeOperation = "destination-out";
+  const alongX = ctx.createLinearGradient(0, 0, 128, 0);
+  alongX.addColorStop(0, "rgba(0,0,0,1)");
+  alongX.addColorStop(0.4, "rgba(0,0,0,0)");
+  alongX.addColorStop(0.6, "rgba(0,0,0,0)");
+  alongX.addColorStop(1, "rgba(0,0,0,1)");
+  ctx.fillStyle = alongX;
+  ctx.fillRect(0, 0, 128, 256);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
 }
 
 // ==========================================
@@ -144,71 +183,254 @@ function ParticleField({ count }) {
 }
 
 // ==========================================
-// CRYSTAL ENERGY CORE — irregular crystalline sculpture
-// (hexagonal quartz cluster: 3 irregular facets, energy heart)
+// CORE CUBE — futuristic glass cube (electric blue
+// shell, soft violet energy heart, glowing edges).
+// Rotates continuously on X and Y; hover eases the
+// spin speed up, leaving eases it back down.
+// Hover also blooms a fan of light rays from the cube;
+// clicking fires a short expanding light burst.
 // ==========================================
-const crystalMaterialProps = {
-  color: "#dbe4ff",
-  metalness: 0,
-  roughness: 0.05,
-  transmission: 0.92,
-  ior: 1.55,
-  thickness: 1.6,
+const cubeMaterialProps = {
+  color: "#c7d2fe",
+  metalness: 0.08,
+  roughness: 0.04,
+  transmission: 0.9,
+  ior: 1.52,
+  thickness: 1.4,
   clearcoat: 1,
   clearcoatRoughness: 0.05,
-  envMapIntensity: 1.75,
-  flatShading: true,
+  envMapIntensity: 1.65,
+  attenuationColor: "#7dd3fc",
+  attenuationDistance: 2.3,
 };
 
-function Sculpture() {
+function CubeCore({ quality = "high" }) {
   const { gl } = useThree();
-  const knotRef = useRef(null);
-  const crystalMatsRef = useRef([]);
-  const shardRefs = useRef([]);
+  const cubeRef = useRef(null);
+  const glassMatRef = useRef(null);
+  const hoverTargetRef = useRef(false);
+  const hoverAmountRef = useRef(0);
+  const burstAgeRef = useRef(null); // null = idle, otherwise seconds since click
+  const speedRef = useRef(1);
+  const raysGroupRef = useRef(null);
+  const rayRefs = useRef([]);
+  const shellRef = useRef(null);
+  const flashRef = useRef(null);
+  const particleMatRef = useRef(null);
 
-  // Collect every crystal material so the studio env map can be attached once
-  const registerCrystalMaterial = useCallback((m) => {
-    if (m && !crystalMatsRef.current.includes(m)) {
-      crystalMatsRef.current.push(m);
-    }
+  // Scale the cube to the stage so it always stays inside the circle
+  const scale = quality === "low" ? 0.72 : quality === "medium" ? 0.82 : 0.9;
+
+  const rayTexture = useMemo(() => makeRayTexture(), []);
+  const planeGeo = useMemo(() => {
+    const g = new THREE.PlaneGeometry(1, 1);
+    g.translate(0, 0.5, 0); // origin at the beam base so scaling grows outward
+    return g;
   }, []);
 
-  // Generate a procedural PMREM studio map once, assign to the crystal
-  // materials via refs (never mutates hook-returned objects)
+  // Deterministic beam directions (fibonacci sphere), alternating
+  // electric-blue / soft-violet, with per-beam width, length, phase
+  const rayDefs = useMemo(() => {
+    const rand = mulberry32(0x51f15e);
+    const UP = new THREE.Vector3(0, 1, 0);
+    const blue = new THREE.Color("#38bdf8");
+    const violet = new THREE.Color("#a78bfa");
+    return Array.from({ length: RAY_COUNT }, (_, i) => {
+      const y = 1 - (i / (RAY_COUNT - 1)) * 2;
+      const r = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = i * 2.399963; // golden angle
+      const dir = new THREE.Vector3(
+        Math.cos(theta) * r,
+        y,
+        Math.sin(theta) * r
+      ).normalize();
+      const color = i % 2 === 0 ? blue : violet;
+      return {
+        dir,
+        color,
+        phase: rand() * Math.PI * 2,
+        width: 0.22 + rand() * 0.17,
+        length: 2.1 + rand() * 1.1,
+        quaternion: new THREE.Quaternion().setFromUnitVectors(UP, dir),
+        material: new THREE.MeshBasicMaterial({
+          map: rayTexture,
+          color,
+          transparent: true,
+          opacity: 0,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          side: THREE.DoubleSide,
+        }),
+      };
+    });
+  }, [rayTexture]);
+
+  // Glowing motes that travel outward along the beams
+  const particleData = useMemo(() => {
+    const rand = mulberry32(0xc0ffee);
+    return rayDefs.flatMap((ray) =>
+      Array.from({ length: PARTICLES_PER_RAY }, () => ({
+        dir: ray.dir,
+        color: ray.color.clone().lerp(new THREE.Color("#ffffff"), 0.4),
+        offset: rand(),
+        speed: 0.3 + rand() * 0.28,
+      }))
+    );
+  }, [rayDefs]);
+
+  const particleGeo = useMemo(() => {
+    const positions = new Float32Array(particleData.length * 3);
+    const colors = new Float32Array(particleData.length * 3);
+    particleData.forEach((p, i) => {
+      colors[i * 3] = p.color.r;
+      colors[i * 3 + 1] = p.color.g;
+      colors[i * 3 + 2] = p.color.b;
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    return g;
+  }, [particleData]);
+  // Ref-held position attribute so useFrame can stream mote positions
+  // (compiler rules forbid mutating useMemo values directly)
+  const particleAttrRef = useRef(null);
+  useEffect(() => {
+    particleAttrRef.current = particleGeo.getAttribute("position");
+  }, [particleGeo]);
+
+  // Dispose of every procedural resource on unmount
+  useEffect(
+    () => () => {
+      rayTexture.dispose();
+      planeGeo.dispose();
+      particleGeo.dispose();
+      rayDefs.forEach((ray) => ray.material.dispose());
+    },
+    [rayTexture, planeGeo, particleGeo, rayDefs]
+  );
+
+  // Generate a procedural PMREM studio map once, assign to the glass
+  // material via ref (never mutates hook-returned objects)
   useEffect(() => {
     const envTexture = makeStudioEnv(gl);
-    // Capture the material list once for a deterministic cleanup
-    const materials = [...crystalMatsRef.current];
-    materials.forEach((mat) => {
-      mat.envMap = envTexture;
-      mat.needsUpdate = true;
-    });
+    const material = glassMatRef.current;
+    if (material) {
+      material.envMap = envTexture;
+      material.needsUpdate = true;
+    }
     return () => {
-      materials.forEach((mat) => {
-        mat.envMap = null;
-        mat.needsUpdate = true;
-      });
+      if (material) {
+        material.envMap = null;
+        material.needsUpdate = true;
+      }
       envTexture.dispose();
     };
   }, [gl]);
 
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
-    if (knotRef.current) {
-      knotRef.current.rotation.y += dt * 0.22;
-      knotRef.current.rotation.x =
-        Math.sin(state.clock.elapsedTime * 0.28) * 0.16 - 0.12;
+    const t = state.clock.elapsedTime;
+
+    // Smoothly accelerate/decelerate toward the hover target — the base
+    // rotation never stops, hover only multiplies it.
+    const target = hoverTargetRef.current ? 3.15 : 1;
+    speedRef.current = THREE.MathUtils.damp(speedRef.current, target, 3.5, dt);
+    const cube = cubeRef.current;
+    if (cube) {
+      cube.rotation.y += dt * 0.42 * speedRef.current;
+      cube.rotation.x += dt * 0.28 * speedRef.current;
     }
-    shardRefs.current.forEach((shard, i) => {
-      if (!shard) return;
-      shard.rotation.x += dt * (0.25 + i * 0.12);
-      shard.rotation.y += dt * (0.32 + i * 0.09);
+
+    // Hover glow energy (eased so fade-out is gradual)
+    hoverAmountRef.current = THREE.MathUtils.damp(
+      hoverAmountRef.current,
+      hoverTargetRef.current ? 1 : 0,
+      3.1,
+      dt
+    );
+    const h = hoverAmountRef.current;
+
+    // Click burst envelope: fast attack, silky decay (~1.15s)
+    let burst = 0;
+    let burstP = 1;
+    if (burstAgeRef.current !== null) {
+      burstAgeRef.current += dt;
+      burstP = burstAgeRef.current / BURST_DURATION;
+      if (burstP >= 1) {
+        burstAgeRef.current = null;
+      } else {
+        burst = Math.pow(Math.sin(Math.PI * burstP), 1.35) * (1 - burstP * 0.3);
+      }
+    }
+
+    const energy = Math.min(1.7, h + burst * 1.5);
+
+    // Rays: breathe gently in place while hovered, flare hard on burst
+    const raysGroup = raysGroupRef.current;
+    if (raysGroup) raysGroup.visible = energy > 0.02;
+    rayDefs.forEach((ray, i) => {
+      const flicker = 0.62 + 0.38 * Math.sin(t * 1.9 + ray.phase);
+      ray.material.opacity = energy * 0.5 * flicker + burst * 0.28;
+      const mesh = rayRefs.current[i];
+      if (mesh) {
+        const reach = 0.45 + 0.62 * h + burst * 1.15;
+        mesh.scale.set(
+          ray.width * (1 + burst * 0.9),
+          ray.length * reach,
+          1
+        );
+      }
     });
+
+    // Motes ride the beams outward; hidden entirely when idle
+    if (particleMatRef.current) {
+      particleMatRef.current.opacity = Math.min(1, energy) * 0.9;
+    }
+    const attr = particleAttrRef.current;
+    if (attr) {
+      const positions = attr.array;
+      for (let i = 0; i < particleData.length; i++) {
+        const p = particleData[i];
+        const prog = (t * p.speed + p.offset) % 1;
+        const dist = 0.5 + prog * 2.4;
+        positions[i * 3] = p.dir.x * dist;
+        positions[i * 3 + 1] = p.dir.y * dist;
+        positions[i * 3 + 2] = p.dir.z * dist;
+      }
+      attr.needsUpdate = true;
+    }
+
+    // Expanding shockwave shell + light flash on click
+    if (shellRef.current) {
+      const shell = shellRef.current;
+      if (burstAgeRef.current !== null) {
+        shell.visible = true;
+        shell.scale.setScalar(0.55 + burstP * 3.0);
+        shell.material.opacity = Math.max(0, 1 - burstP) * 0.5;
+      } else {
+        shell.visible = false;
+      }
+    }
+    if (flashRef.current) {
+      flashRef.current.intensity = burst * 30;
+    }
   });
+
+  const handlePointerOver = (event) => {
+    event.stopPropagation();
+    hoverTargetRef.current = true;
+  };
+  const handlePointerOut = () => {
+    hoverTargetRef.current = false;
+  };
+  const handleClick = (event) => {
+    event.stopPropagation();
+    burstAgeRef.current = 0;
+  };
 
   return (
     <group>
-      {/* Halo ring behind the sculpture */}
+      {/* Halo ring behind the cube */}
       <mesh position={[0, 0.1, -1.6]} rotation={[0.35, 0, 0]}>
         <torusGeometry args={[2.15, 0.02, 10, 96]} />
         <meshBasicMaterial color="#60a5fa" transparent opacity={0.75} />
@@ -218,166 +440,111 @@ function Sculpture() {
         <meshBasicMaterial color="#8b5cf6" transparent opacity={0.45} />
       </mesh>
 
-      <Float speed={1.35} rotationIntensity={0.28} floatIntensity={1.05}>
-        {/* Crystal Energy Core — irregular quartz cluster */}
-        <group ref={knotRef} rotation={[-0.12, 0.45, 0]} scale={0.9}>
-          {/* Central quartz crystal (hexagonal body + pointed tip) */}
-          <mesh position={[0, 0.05, 0]}>
-            <cylinderGeometry args={[0.44, 0.54, 1.55, 6, 1]} />
-            <meshPhysicalMaterial
-              {...crystalMaterialProps}
-              ref={registerCrystalMaterial}
-              attenuationColor="#818cf8"
-              attenuationDistance={2.3}
-            />
-            <Edges threshold={12} color="#7dd3fc" />
-          </mesh>
-          <mesh position={[0, 1.08, 0]}>
-            <coneGeometry args={[0.44, 0.78, 6, 1]} />
-            <meshPhysicalMaterial
-              {...crystalMaterialProps}
-              ref={registerCrystalMaterial}
-              attenuationColor="#818cf8"
-              attenuationDistance={2.3}
-            />
-            <Edges threshold={12} color="#7dd3fc" />
+      <Float speed={1.35} rotationIntensity={0.18} floatIntensity={1.05}>
+        {/* The glass cube — rotates continuously on X and Y */}
+        <group ref={cubeRef} rotation={[-0.14, 0.5, 0]} scale={scale}>
+          {/* Glass shell with glowing electric-blue edges */}
+          <mesh>
+            <boxGeometry args={[1.62, 1.62, 1.62]} />
+            <meshPhysicalMaterial {...cubeMaterialProps} ref={glassMatRef} />
+            <Edges threshold={20} color="#7dd3fc" />
           </mesh>
 
-          {/* Flanking shard — electric blue, tilted outward */}
-          <group position={[-0.64, -0.44, 0.3]} rotation={[0.1, 0.15, 0.37]}>
-            <mesh position={[0, 0.38, 0]}>
-              <cylinderGeometry args={[0.16, 0.23, 0.8, 6, 1]} />
-              <meshPhysicalMaterial
-                {...crystalMaterialProps}
-                ref={registerCrystalMaterial}
-                attenuationColor="#38bdf8"
-                attenuationDistance={1.6}
-              />
-              <Edges threshold={12} color="#67e8f9" />
-            </mesh>
-            <mesh position={[0, 0.89, 0]}>
-              <coneGeometry args={[0.16, 0.4, 6, 1]} />
-              <meshPhysicalMaterial
-                {...crystalMaterialProps}
-                ref={registerCrystalMaterial}
-                attenuationColor="#38bdf8"
-                attenuationDistance={1.6}
-              />
-              <Edges threshold={12} color="#67e8f9" />
-            </mesh>
-          </group>
-
-          {/* Flanking shard — soft violet, mirrored kick */}
-          <group position={[0.63, -0.47, 0.16]} rotation={[-0.08, -0.12, -0.34]}>
-            <mesh position={[0, 0.34, 0]}>
-              <cylinderGeometry args={[0.14, 0.21, 0.72, 6, 1]} />
-              <meshPhysicalMaterial
-                {...crystalMaterialProps}
-                ref={registerCrystalMaterial}
-                attenuationColor="#a78bfa"
-                attenuationDistance={1.6}
-              />
-              <Edges threshold={12} color="#c4b5fd" />
-            </mesh>
-            <mesh position={[0, 0.81, 0]}>
-              <coneGeometry args={[0.14, 0.36, 6, 1]} />
-              <meshPhysicalMaterial
-                {...crystalMaterialProps}
-                ref={registerCrystalMaterial}
-                attenuationColor="#a78bfa"
-                attenuationDistance={1.6}
-              />
-              <Edges threshold={12} color="#c4b5fd" />
-            </mesh>
-          </group>
-
-          {/* Inner heart of energy: cyan core + violet light spill */}
-          <mesh position={[0, 0.08, 0]}>
-            <octahedronGeometry args={[0.3, 0]} />
+          {/* Inner energy cube — soft violet core */}
+          <mesh>
+            <boxGeometry args={[0.82, 0.82, 0.82]} />
             <meshStandardMaterial
-              color="#0c0a2a"
-              emissive="#22d3ee"
-              emissiveIntensity={2.6}
-              roughness={0.25}
-              metalness={0.1}
-              flatShading
+              color="#120f2e"
+              emissive="#8b5cf6"
+              emissiveIntensity={2.1}
+              roughness={0.3}
+              metalness={0.2}
             />
           </mesh>
-          <mesh position={[0, 0.08, 0]} rotation={[0, Math.PI / 6, 0]}>
-            <octahedronGeometry args={[0.17, 0]} />
+          <mesh rotation={[0, Math.PI / 4, 0]}>
+            <boxGeometry args={[0.42, 0.42, 0.42]} />
             <meshBasicMaterial
-              color="#c4b5fd"
+              color="#a5f3fc"
               transparent
-              opacity={0.85}
+              opacity={0.9}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
             />
           </mesh>
-          <pointLight position={[0, 0.35, 0]} intensity={11} color="#6366f1" distance={3.6} />
-          <pointLight position={[0, 1.2, 0]} intensity={6} color="#22d3ee" distance={2.6} />
+          <pointLight position={[0, 0, 0]} intensity={8} color="#6366f1" distance={3.2} />
+          <pointLight position={[0.9, 1.1, 0.9]} intensity={5} color="#22d3ee" distance={2.6} />
         </group>
 
-        {/* Electric blue orbiting shard */}
-        <mesh
-          ref={(m) => {
-            shardRefs.current[0] = m;
-          }}
-          position={[2.15, 0.9, 0.4]}
-        >
-          <octahedronGeometry args={[0.22, 0]} />
-          <meshStandardMaterial
-            color="#0ea5e9"
-            emissive="#38bdf8"
-            emissiveIntensity={1.6}
-            metalness={0.4}
-            roughness={0.3}
+        {/* Light-ray fan + traveling motes + click burst.
+            Pure additive blending; group hidden entirely when idle. */}
+        <group ref={raysGroupRef} scale={scale} visible={false}>
+          {rayDefs.map((ray, i) => (
+            <mesh
+              key={i}
+              ref={(m) => {
+                rayRefs.current[i] = m;
+              }}
+              geometry={planeGeo}
+              material={ray.material}
+              quaternion={ray.quaternion}
+              renderOrder={20}
+            />
+          ))}
+          <points geometry={particleGeo} renderOrder={21}>
+            <pointsMaterial
+              ref={particleMatRef}
+              size={0.075}
+              vertexColors
+              transparent
+              opacity={0}
+              blending={THREE.AdditiveBlending}
+              depthWrite={false}
+              sizeAttenuation
+            />
+          </points>
+          <mesh ref={shellRef} visible={false} renderOrder={22}>
+            <sphereGeometry args={[1, 24, 24]} />
+            <meshBasicMaterial
+              color="#a5b4fc"
+              transparent
+              opacity={0}
+              blending={THREE.AdditiveBlending}
+              depthWrite={false}
+              side={THREE.BackSide}
+            />
+          </mesh>
+          <pointLight
+            ref={flashRef}
+            position={[0, 0, 0]}
+            intensity={0}
+            color="#7dd3fc"
+            distance={4.4}
           />
-        </mesh>
+        </group>
 
-        {/* Silver shard */}
+        {/* Generous invisible hitbox for hover rays and the click burst */}
         <mesh
-          ref={(m) => {
-            shardRefs.current[1] = m;
-          }}
-          position={[-2.1, -0.75, 0.8]}
+          position={[0, 0, 0]}
+          scale={scale}
+          onPointerOver={handlePointerOver}
+          onPointerOut={handlePointerOut}
+          onClick={handleClick}
         >
-          <icosahedronGeometry args={[0.17, 0]} />
-          <meshStandardMaterial
-            color="#e2e8f0"
-            emissive="#94a3b8"
-            emissiveIntensity={0.5}
-            metalness={1}
-            roughness={0.18}
-          />
-        </mesh>
-
-        {/* Violet shard */}
-        <mesh
-          ref={(m) => {
-            shardRefs.current[2] = m;
-          }}
-          position={[1.35, -1.55, -0.6]}
-        >
-          <tetrahedronGeometry args={[0.2, 0]} />
-          <meshStandardMaterial
-            color="#7c3aed"
-            emissive="#8b5cf6"
-            emissiveIntensity={1.4}
-            metalness={0.5}
-            roughness={0.35}
-          />
+          <boxGeometry args={[2.3, 2.3, 2.3]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
       </Float>
     </group>
   );
 }
 
-export default function HeroScene({ quality = "high" }) {
+export default function HeroScene({ quality = "high", active = true }) {
   const config = QUALITY[quality] ?? QUALITY.high;
 
   return (
     <Canvas
       dpr={config.dpr}
+      frameloop={active ? "always" : "never"}
       camera={{ position: [0, 0.15, 6.4], fov: config.fov }}
       gl={{
         antialias: quality !== "low",
@@ -392,7 +559,7 @@ export default function HeroScene({ quality = "high" }) {
       <pointLight position={[-5, -2, 3]} intensity={16} color="#3b82f6" />
       <pointLight position={[5, 2, -4]} intensity={14} color="#8b5cf6" />
 
-      <Sculpture />
+      <CubeCore quality={quality} />
 
       {config.stars > 0 && (
         <Stars
