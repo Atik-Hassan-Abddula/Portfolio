@@ -38,7 +38,7 @@ const NODES = [
     tone: "sky",
     icon: BookOpen,
     x: 11,
-    y: 20,
+    y: 23,
     side: "right",
     desc: ssc.description,
     meta: ssc.period,
@@ -53,7 +53,7 @@ const NODES = [
     tone: "emerald",
     icon: GraduationCap,
     x: 89,
-    y: 17,
+    y: 23,
     side: "left",
     desc: diploma.description,
     meta: diploma.period,
@@ -69,7 +69,7 @@ const NODES = [
     tone: "violet",
     icon: Monitor,
     x: 87,
-    y: 77,
+    y: 74,
     side: "left",
     desc: computerOperation.description,
     meta: computerOperation.level,
@@ -84,7 +84,7 @@ const NODES = [
     tone: "indigo",
     icon: Megaphone,
     x: 13,
-    y: 77,
+    y: 74,
     side: "right",
     desc: digitalMarketing.description,
     meta: digitalMarketing.level,
@@ -94,14 +94,14 @@ const NODES = [
 
 // Constellation edges — hub tethers + outer rim
 const EDGES = [
-  { from: [50, 46], to: [11, 20], node: "ssc", photon: true, dur: "5.2s" },
-  { from: [50, 46], to: [89, 17], node: "diploma", photon: true, dur: "6.1s" },
-  { from: [50, 46], to: [87, 77], node: "computer-operation", photon: true, dur: "5.7s" },
-  { from: [50, 46], to: [13, 77], node: "digital-marketing", photon: true, dur: "6.4s" },
-  { from: [11, 20], to: [89, 17], node: null, rim: true },
-  { from: [89, 17], to: [87, 77], node: null, rim: true },
-  { from: [87, 77], to: [13, 77], node: null, rim: true },
-  { from: [13, 77], to: [11, 20], node: null, rim: true },
+  { from: [50, 46], to: [11, 23], node: "ssc", photon: true, dur: "5.2s" },
+  { from: [50, 46], to: [89, 23], node: "diploma", photon: true, dur: "6.1s" },
+  { from: [50, 46], to: [87, 74], node: "computer-operation", photon: true, dur: "5.7s" },
+  { from: [50, 46], to: [13, 74], node: "digital-marketing", photon: true, dur: "6.4s" },
+  { from: [11, 23], to: [89, 23], node: null, rim: true },
+  { from: [89, 23], to: [87, 74], node: null, rim: true },
+  { from: [87, 74], to: [13, 74], node: null, rim: true },
+  { from: [13, 74], to: [11, 23], node: null, rim: true },
 ];
 
 const TONE = {
