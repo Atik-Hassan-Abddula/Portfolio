@@ -1,6 +1,6 @@
 // AUTO-GENERATED from Simple Icons (https://simpleicons.org) — do not edit paths by hand.
 // Official brand glyph path data + brand colors for the 3D technology universe.
-// "custom" entries have no brand mark and are hand-drawn in TechScene.
+// "custom" entries have no brand mark and are hand-drawn (see TechOrbit).
 
 export const techIcons = [
   {

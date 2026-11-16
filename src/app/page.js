@@ -6,7 +6,6 @@ import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import SocialSidebar from "@/components/SocialSidebar";
 import Hero from "@/components/Hero";
-import TechUniverse from "@/components/sections/TechUniverse";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -45,7 +44,6 @@ export default function Home() {
         {/* Main Content Sections */}
         <main className="flex-1 flex flex-col">
           <Hero onOpenResume={() => setIsResumeOpen(true)} />
-          <TechUniverse />
           <About />
           <Skills />
           <Projects />
