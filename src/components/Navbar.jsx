@@ -28,7 +28,7 @@ export default function Navbar({ onOpenResume }) {
   const reducedMotion = useReducedMotion() === true;
 
   // One shared theme store — no second provider, no local duplication.
-  const { theme, toggleTheme, mounted } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   // Scroll listener: pill density + active-section spy.
   // Layout reads are cached (resize/load only) and work happens inside one
@@ -232,7 +232,7 @@ export default function Navbar({ onOpenResume }) {
             <FileText className="h-4 w-4" />
           </button>
 
-          {/* Theme toggle — premium icon cross-rotate with blue/violet glow */}
+          {/* Theme toggle — premium glass switch with a glowing sliding thumb */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -242,42 +242,71 @@ export default function Navbar({ onOpenResume }) {
               theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
             }
             title={theme === "dark" ? "Light mode" : "Dark mode"}
-            className="group relative flex h-9 w-9 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-slate-200/80 bg-white/60 text-slate-600 backdrop-blur transition-all duration-500 hover:border-violet-400/60 hover:shadow-[0_0_20px_-4px_rgba(139,92,246,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400 active:scale-90 dark:border-white/[0.09] dark:bg-white/[0.04] dark:text-slate-300 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300 dark:hover:shadow-[0_0_20px_-4px_rgba(129,140,248,0.55)]"
+            className="group relative flex h-9 w-[68px] shrink-0 cursor-pointer items-center overflow-hidden rounded-full border border-slate-200/80 bg-slate-100/70 shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-500 hover:border-violet-400/60 hover:shadow-[0_0_22px_-6px_rgba(139,92,246,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 active:scale-95 dark:border-white/[0.09] dark:bg-[#0a1224] dark:shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)] dark:hover:border-indigo-400/40 dark:hover:shadow-[0_0_22px_-6px_rgba(129,140,248,0.6)]"
           >
-            {mounted ? (
+            {/* Soft blue/violet track light — state aware */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_50%,rgba(251,191,36,0.16),transparent_65%)] dark:bg-[radial-gradient(circle_at_28%_50%,rgba(99,102,241,0.28),transparent_70%)]"
+            />
+
+            {/* Destination hints */}
+            <Sun
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[10px] top-1/2 h-3 w-3 -translate-y-1/2 text-amber-500/45 dark:text-amber-200/25"
+              strokeWidth={2}
+            />
+            <Moon
+              aria-hidden="true"
+              className="pointer-events-none absolute right-[10px] top-1/2 h-3 w-3 -translate-y-1/2 text-slate-400/50 dark:text-indigo-200/45"
+              strokeWidth={2}
+            />
+
+            {/* Sliding thumb — dark = right, light = left */}
+            <motion.span
+              initial={false}
+              animate={{ x: theme === "dark" ? 34 : 0 }}
+              transition={
+                reducedMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 420, damping: 32 }
+              }
+              className="absolute left-[3px] top-[3px] flex h-[28px] w-[28px] items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(15,23,42,0.25)] ring-1 ring-black/5 dark:bg-gradient-to-br dark:from-[#1b2a4a] dark:to-[#0d1730] dark:shadow-[0_0_14px_-2px_rgba(99,102,241,0.85)] dark:ring-white/10"
+            >
               <AnimatePresence initial={false} mode="wait">
                 <motion.span
                   key={theme}
                   initial={
                     reducedMotion
                       ? { opacity: 0 }
-                      : { opacity: 0, rotate: -100, scale: 0.4, y: -4 }
+                      : { opacity: 0, rotate: -100, scale: 0.4 }
                   }
-                  animate={{ opacity: 1, rotate: 0, scale: 1, y: 0 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
                   exit={
                     reducedMotion
                       ? { opacity: 0 }
-                      : { opacity: 0, rotate: 100, scale: 0.4, y: 4 }
+                      : { opacity: 0, rotate: 100, scale: 0.4 }
                   }
-                  transition={{ duration: reducedMotion ? 0.15 : 0.42, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative flex items-center justify-center"
+                  transition={{
+                    duration: reducedMotion ? 0.15 : 0.42,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="flex items-center justify-center"
                 >
                   {theme === "dark" ? (
                     <Moon
-                      className="h-[18px] w-[18px] text-indigo-300 drop-shadow-[0_0_6px_rgba(129,140,248,0.7)]"
+                      className="h-4 w-4 text-indigo-200 drop-shadow-[0_0_6px_rgba(129,140,248,0.9)]"
                       strokeWidth={1.75}
                     />
                   ) : (
                     <Sun
-                      className="h-[18px] w-[18px] text-amber-500 drop-shadow-[0_0_6px_rgba(251,191,36,0.55)]"
+                      className="h-4 w-4 text-amber-500 drop-shadow-[0_0_6px_rgba(251,191,36,0.6)]"
                       strokeWidth={1.75}
                     />
                   )}
                 </motion.span>
               </AnimatePresence>
-            ) : (
-              <span aria-hidden="true" className="h-[18px] w-[18px]" />
-            )}
+            </motion.span>
           </button>
 
           {/* Premium Contact CTA — gradient border, glow on hover (desktop) */}
@@ -336,7 +365,7 @@ export default function Navbar({ onOpenResume }) {
       {isOpen && (
         <div
           id="mobile-navigation"
-          className="pointer-events-auto absolute left-3 right-3 top-[4.75rem] z-40 overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-3 shadow-[0_28px_60px_-20px_rgba(2,6,23,0.45)] backdrop-blur-2xl min-[480px]:left-5 min-[480px]:right-5 sm:top-[5.25rem] md:hidden dark:border-white/[0.09] dark:bg-[#0b1120]/92 dark:shadow-[0_28px_70px_-20px_rgba(2,6,23,0.9)]"
+          className="pointer-events-auto absolute left-3 right-3 top-[4.75rem] z-40 max-h-[calc(100svh-5.5rem)] overflow-y-auto overscroll-contain rounded-3xl border border-slate-200/70 bg-white/90 p-3 shadow-[0_28px_60px_-20px_rgba(2,6,23,0.45)] backdrop-blur-2xl min-[480px]:left-5 min-[480px]:right-5 sm:top-[5.25rem] md:hidden dark:border-white/[0.09] dark:bg-[#0b1120]/92 dark:shadow-[0_28px_70px_-20px_rgba(2,6,23,0.9)]"
         >
           {/* Electric edge accent */}
           <div

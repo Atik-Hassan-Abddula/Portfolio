@@ -390,10 +390,10 @@ export default function Hero({ onOpenResume }) {
             </span>
             <span
               aria-hidden="true"
-              className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
+              className="absolute bottom-3 left-3 z-10 flex max-w-[58%] items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
             >
-              <MapPin className="h-3 w-3 text-violet-500/80 dark:text-violet-400/70" />
-              {personalInfo.location}
+              <MapPin className="h-3 w-3 shrink-0 text-violet-500/80 dark:text-violet-400/70" />
+              <span className="min-w-0 truncate">{personalInfo.location}</span>
             </span>
             <span
               aria-hidden="true"
