@@ -1423,3 +1423,734 @@ html.dark .neural-core-label {
     margin-bottom: clamp(4rem, 13vh, 7.5rem);
   }
 }
+
+/* ============================================
+   Coordinated Eight-Cursor Group
+   One fixed layer, mounted once in app/layout.js.
+   One moving parent; eight tightly packed pointer children.
+   Everything here is decorative and non-interactive.
+   ============================================ */
+
+.mc-cursor-field {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  contain: layout paint;
+}
+
+.mc-cursor-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.mc-cursor-group__slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.mc-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--mc-size, 16px);
+  height: var(--mc-size, 16px);
+  transform: translate3d(-50%, -50%, 0);
+  pointer-events: none;
+}
+
+.mc-cursor__float {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  animation: mc-cursor-float var(--float-duration, 5s) ease-in-out
+    var(--float-delay, 0s) infinite;
+}
+
+@keyframes mc-cursor-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(
+        var(--float-x, 1.4px),
+        var(--float-y, -2.4px),
+        0
+      )
+      rotate(1.4deg);
+  }
+}
+
+.mc-cursor__halo {
+  position: absolute;
+  left: 2%;
+  top: 8%;
+  width: 112%;
+  height: 112%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--mc-glow) 0%, transparent 66%);
+  opacity: 0.26;
+  filter: blur(3px);
+}
+
+.mc-cursor__arrow {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--mc-color);
+  filter: drop-shadow(0 0 2.5px var(--mc-glow))
+    drop-shadow(0 0 7px var(--mc-glow));
+}
+
+@media (max-width: 767px) {
+  .mc-cursor-field {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-cursor-field {
+    display: none;
+    transition: none;
+  }
+
+  .mc-cursor__float {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Cosmic Portal Footer
+   Lightweight CSS atmosphere — no WebGL, no canvas.
+   ============================================ */
+
+.cosmic-footer {
+  --cosmic-grid-line: rgba(79, 70, 229, 0.055);
+  --cosmic-glass-bg: rgba(255, 255, 255, 0.58);
+  --cosmic-glass-border: rgba(99, 102, 241, 0.14);
+  --cosmic-glass-shadow: 0 24px 60px -34px rgba(30, 64, 175, 0.28);
+  border-color: rgba(99, 102, 241, 0.14);
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% 0%,
+      rgba(56, 189, 248, 0.11),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 15% 92%,
+      rgba(139, 92, 246, 0.08),
+      transparent 66%
+    ),
+    linear-gradient(180deg, #f6f8ff 0%, #eef2ff 100%);
+}
+
+html.dark .cosmic-footer {
+  --cosmic-grid-line: rgba(125, 211, 252, 0.045);
+  --cosmic-glass-bg: rgba(8, 15, 36, 0.55);
+  --cosmic-glass-border: rgba(125, 211, 252, 0.1);
+  --cosmic-glass-shadow: 0 28px 80px -42px rgba(0, 0, 0, 0.95);
+  border-color: rgba(125, 211, 252, 0.1);
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% 0%,
+      rgba(56, 189, 248, 0.13),
+      transparent 64%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 85% 82%,
+      rgba(139, 92, 246, 0.11),
+      transparent 66%
+    ),
+    linear-gradient(180deg, #02050f 0%, #030712 55%, #02040d 100%);
+}
+
+.cosmic-footer__grid {
+  background-image:
+    linear-gradient(to right, var(--cosmic-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cosmic-grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 88% 90% at 50% 0%,
+    black 0%,
+    transparent 82%
+  );
+  mask-image: radial-gradient(
+    ellipse 88% 90% at 50% 0%,
+    black 0%,
+    transparent 82%
+  );
+  pointer-events: none;
+}
+
+.cosmic-footer__topline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.6),
+    rgba(167, 139, 250, 0.6),
+    transparent
+  );
+  box-shadow: 0 0 26px rgba(56, 189, 248, 0.25);
+}
+
+.cosmic-star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #60a5fa;
+  box-shadow: 0 0 6px 1px rgba(96, 165, 250, 0.38);
+  opacity: 0.1;
+  animation: cosmic-twinkle var(--star-duration, 5s) ease-in-out
+    var(--star-delay, 0s) infinite;
+  pointer-events: none;
+}
+
+html.dark .cosmic-star {
+  background: #e0f2fe;
+  box-shadow: 0 0 8px 2px rgba(125, 211, 252, 0.5);
+}
+
+@keyframes cosmic-twinkle {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.2);
+  }
+}
+
+.cosmic-glass {
+  border: 1px solid var(--cosmic-glass-border);
+  background: var(--cosmic-glass-bg);
+  box-shadow:
+    var(--cosmic-glass-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+html.dark .cosmic-glass {
+  box-shadow:
+    var(--cosmic-glass-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+/* ---------- Portal shell ---------- */
+
+.cosmic-portal {
+  --portal-tilt-x: 0deg;
+  --portal-tilt-y: 0deg;
+  --portal-light-x: 50%;
+  --portal-light-y: 47%;
+  isolation: isolate;
+  perspective: 1100px;
+}
+
+.cosmic-portal__beacon {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(56, 189, 248, 0.5),
+    rgba(167, 139, 250, 0.8)
+  );
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+  pointer-events: none;
+}
+
+.cosmic-portal__beacon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: #a5f3fc;
+  box-shadow:
+    0 0 10px 2px rgba(34, 211, 238, 0.7),
+    0 0 24px 6px rgba(56, 189, 248, 0.3);
+  animation: cosmic-beacon 2.8s ease-in-out infinite;
+}
+
+@keyframes cosmic-beacon {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+.cosmic-portal__aura {
+  position: absolute;
+  inset: -16%;
+  z-index: 0;
+  border-radius: 9999px;
+  background:
+    radial-gradient(
+      circle at var(--portal-light-x) var(--portal-light-y),
+      rgba(56, 189, 248, 0.34),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(139, 92, 246, 0.22),
+      transparent 68%
+    );
+  filter: blur(30px);
+  opacity: 0.72;
+  pointer-events: none;
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  animation: cosmic-aura-breathe 9s ease-in-out infinite;
+}
+
+.cosmic-portal:hover .cosmic-portal__aura {
+  opacity: 1;
+  filter: blur(30px) brightness(1.25) saturate(1.12);
+}
+
+@keyframes cosmic-aura-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.cosmic-portal__system {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 9999px;
+  transform: perspective(1100px) rotateX(var(--portal-tilt-x))
+    rotateY(var(--portal-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.cosmic-ring {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.cosmic-ring--outer {
+  inset: 0;
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  box-shadow:
+    inset 0 0 32px rgba(56, 189, 248, 0.055),
+    0 0 34px rgba(56, 189, 248, 0.11);
+  animation: cosmic-spin 34s linear infinite;
+}
+
+.cosmic-ring--outer::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  border-top-color: rgba(125, 211, 252, 0.78);
+  border-left-color: rgba(139, 92, 246, 0.36);
+}
+
+.cosmic-portal:hover .cosmic-ring--outer {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow:
+    inset 0 0 44px rgba(56, 189, 248, 0.11),
+    0 0 54px rgba(56, 189, 248, 0.22);
+}
+
+.cosmic-ring--mid {
+  inset: 6.5%;
+  border: 1px dashed rgba(167, 139, 250, 0.3);
+  box-shadow: inset 0 0 26px rgba(139, 92, 246, 0.05);
+  animation: cosmic-spin-reverse 46s linear infinite;
+}
+
+.cosmic-ring--inner {
+  inset: 12.5%;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow:
+    inset 0 0 28px rgba(34, 211, 238, 0.06),
+    0 0 30px rgba(167, 139, 250, 0.08);
+  animation: cosmic-spin 22s linear infinite;
+}
+
+.cosmic-ring--inner::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  border-bottom-color: rgba(34, 211, 238, 0.62);
+  border-right-color: rgba(167, 139, 250, 0.28);
+}
+
+.cosmic-orbit {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.cosmic-orbit::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: #7dd3fc;
+  box-shadow:
+    0 0 10px 2px rgba(56, 189, 248, 0.62),
+    0 0 22px 6px rgba(56, 189, 248, 0.2);
+}
+
+.cosmic-orbit--one {
+  inset: 3%;
+  animation: cosmic-spin 17s linear infinite;
+}
+
+.cosmic-orbit--two {
+  inset: 9%;
+  animation: cosmic-spin-reverse 25s linear infinite;
+}
+
+.cosmic-orbit--two::before {
+  background: #c4b5fd;
+  box-shadow:
+    0 0 10px 2px rgba(167, 139, 250, 0.65),
+    0 0 22px 6px rgba(139, 92, 246, 0.22);
+}
+
+.cosmic-orbit--three {
+  inset: 15%;
+  animation: cosmic-spin 13s linear infinite;
+}
+
+.cosmic-orbit--three::before {
+  width: 4px;
+  height: 4px;
+  background: #67e8f9;
+  box-shadow:
+    0 0 8px 2px rgba(34, 211, 238, 0.65),
+    0 0 18px 5px rgba(34, 211, 238, 0.2);
+}
+
+@keyframes cosmic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cosmic-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* ---------- Portal core ---------- */
+
+.cosmic-portal__disc {
+  position: absolute;
+  inset: 18.5%;
+  z-index: 2;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 9999px;
+  background:
+    radial-gradient(
+      circle at var(--portal-light-x) var(--portal-light-y),
+      rgba(56, 189, 248, 0.16),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 50% 62%,
+      rgba(139, 92, 246, 0.1),
+      transparent 72%
+    ),
+    linear-gradient(
+      150deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(238, 242, 255, 0.72)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -24px 60px rgba(99, 102, 241, 0.1),
+    0 0 50px rgba(56, 189, 248, 0.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  backdrop-filter: blur(18px) saturate(1.1);
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+html.dark .cosmic-portal__disc {
+  border-color: rgba(125, 211, 252, 0.18);
+  background:
+    radial-gradient(
+      circle at var(--portal-light-x) var(--portal-light-y),
+      rgba(56, 189, 248, 0.17),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 62%,
+      rgba(139, 92, 246, 0.14),
+      transparent 72%
+    ),
+    linear-gradient(150deg, rgba(10, 18, 43, 0.92), rgba(4, 8, 24, 0.86));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -24px 60px rgba(56, 189, 248, 0.06),
+    0 0 60px rgba(56, 189, 248, 0.12);
+}
+
+.cosmic-portal:hover .cosmic-portal__disc {
+  border-color: rgba(56, 189, 248, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -24px 60px rgba(99, 102, 241, 0.14),
+    0 0 68px rgba(56, 189, 248, 0.2);
+}
+
+html.dark .cosmic-portal:hover .cosmic-portal__disc {
+  border-color: rgba(125, 211, 252, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -24px 60px rgba(56, 189, 248, 0.1),
+    0 0 82px rgba(56, 189, 248, 0.24);
+}
+
+.cosmic-portal__scan {
+  position: absolute;
+  inset: -38%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 146deg,
+    rgba(56, 189, 248, 0.17) 170deg,
+    transparent 194deg,
+    transparent 250deg,
+    rgba(167, 139, 250, 0.14) 272deg,
+    transparent 296deg
+  );
+  filter: blur(7px);
+  pointer-events: none;
+  animation: cosmic-spin 20s linear infinite;
+}
+
+.cosmic-portal__name {
+  font-size: clamp(0.95rem, 3.9vw, 1.55rem);
+  line-height: 1.15;
+  filter: drop-shadow(0 0 18px rgba(99, 102, 241, 0.18));
+}
+
+html.dark .cosmic-portal__name {
+  filter: drop-shadow(0 0 18px rgba(125, 211, 252, 0.26));
+}
+
+/* ---------- Portal dust ---------- */
+
+.cosmic-portal__dust-field {
+  position: absolute;
+  inset: -10%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cosmic-portal__dust {
+  position: absolute;
+  border-radius: 9999px;
+  background: #67e8f9;
+  box-shadow:
+    0 0 8px 2px rgba(34, 211, 238, 0.45),
+    0 0 16px 4px rgba(56, 189, 248, 0.14);
+  opacity: 0.25;
+  pointer-events: none;
+  animation: cosmic-dust-drift var(--dust-duration, 7s) ease-in-out
+    var(--dust-delay, 0s) infinite;
+}
+
+@keyframes cosmic-dust-drift {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: translate3d(0, 0, 0) scale(0.65);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate3d(var(--dust-x, 8px), var(--dust-y, -12px), 0)
+      scale(1);
+  }
+}
+
+/* ---------- Navigation + social polish ---------- */
+
+.cosmic-nav-link {
+  position: relative;
+}
+
+.cosmic-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: calc(100% - 1.6rem);
+  height: 1px;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  background: linear-gradient(90deg, #38bdf8, #a78bfa);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cosmic-nav-link:hover::after,
+.cosmic-nav-link:focus-visible::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.cosmic-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--cosmic-glass-border);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.42);
+  color: #475569;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+html.dark .cosmic-social {
+  background: rgba(255, 255, 255, 0.035);
+  color: #94a3b8;
+}
+
+.cosmic-social:hover {
+  transform: translateY(-2px);
+  border-color: var(--social-accent, #38bdf8);
+  color: var(--social-accent, #38bdf8);
+  box-shadow: 0 0 26px -8px var(--social-glow, rgba(56, 189, 248, 0.45));
+}
+
+.cosmic-social:focus-visible {
+  outline: 2px solid var(--social-accent, #38bdf8);
+  outline-offset: 3px;
+}
+
+.cosmic-social--placeholder,
+.cosmic-social--placeholder:hover {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  border-color: var(--cosmic-glass-border);
+  color: #64748b;
+  box-shadow: none;
+}
+
+html.dark .cosmic-social--placeholder,
+html.dark .cosmic-social--placeholder:hover {
+  color: #64748b;
+}
+
+.cosmic-email {
+  border-radius: 0.85rem;
+}
+
+.cosmic-email:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 4px;
+}
+
+/* ---------- Responsive simplification ---------- */
+
+@media (max-width: 1023px) {
+  .cosmic-portal__dust:nth-child(n + 6) {
+    display: none;
+  }
+
+  .cosmic-ring--mid {
+    animation-duration: 58s;
+  }
+
+  .cosmic-ring--inner {
+    animation-duration: 30s;
+  }
+}
+
+@media (max-width: 767px) {
+  .cosmic-portal__dust:nth-child(n + 4) {
+    display: none;
+  }
+
+  .cosmic-portal__beacon {
+    height: 14%;
+  }
+
+  .cosmic-portal__aura {
+    filter: blur(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-star,
+  .cosmic-portal__beacon::before,
+  .cosmic-portal__aura,
+  .cosmic-ring,
+  .cosmic-orbit,
+  .cosmic-portal__scan,
+  .cosmic-portal__dust {
+    animation: none;
+  }
+
+  .cosmic-portal__system,
+  .cosmic-portal__aura,
+  .cosmic-ring,
+  .cosmic-portal__disc,
+  .cosmic-social,
+  .cosmic-nav-link::after {
+    transition: none;
+  }
+}

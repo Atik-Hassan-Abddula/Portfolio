@@ -1,6 +1,7 @@
 import "./globals.css";
 import { personalInfo } from "@/data/portfolioData";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import MultiCursorField from "@/components/MultiCursorField";
 
 export const metadata = {
   title: `${personalInfo.name} | ${personalInfo.role}`,
@@ -50,6 +51,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col bg-white text-slate-900 transition-colors duration-500 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
         <ThemeProvider>{children}</ThemeProvider>
+
+        {/* One fixed, decorative layer for the whole app. Pointer-events are
+            disabled in CSS, so it never blocks navigation, forms or the
+            cosmic portal beneath it. */}
+        <MultiCursorField />
       </body>
     </html>
   );
