@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen w-full overflow-x-clip flex flex-col bg-white text-slate-900 transition-colors duration-300 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
+      <div className="relative min-h-screen w-full overflow-x-clip flex flex-col bg-white text-slate-900 transition-colors duration-500 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
         {/* Cosmic identity opening sequence (initial load / refresh only) */}
         <Preloader />
 

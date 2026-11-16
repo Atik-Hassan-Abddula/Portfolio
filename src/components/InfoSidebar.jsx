@@ -5,7 +5,8 @@ import { personalInfo } from "@/data/portfolioData";
 
 /**
  * InfoSidebar — fixed vertical rail on the RIGHT edge of the viewport,
- * mirroring <SocialSidebar /> (edge offsets, viewport centering, terminus dot).
+ * centered slightly below the vertical midpoint and mirroring
+ * <SocialSidebar /> (edge offsets, terminus dot).
  *
  * Text is rotated 90° with `writing-mode: vertical-rl` + `rotate-180`,
  * which makes it read bottom-to-top. Layout top → bottom:
@@ -16,7 +17,9 @@ import { personalInfo } from "@/data/portfolioData";
  *   │                      (thin vertical gradient line, like the left rail)
  *   ●                      (glowing terminus dot)
  *
- * - Pure CSS, no images. `fixed` + vertically centered; hidden below `md`.
+ * - Pure CSS, no images. `fixed`; compact in the tablet/laptop gutter
+ *   from 768px, stepping to full size on wide laptops (1280px) and
+ *   above; hidden on mobile.
  * - Email comes straight from `personalInfo.email` — never retyped or invented.
  */
 export default function InfoSidebar() {
@@ -30,13 +33,13 @@ export default function InfoSidebar() {
   return (
     <aside
       aria-label="Personal information"
-      className="fixed right-3 top-1/2 z-40 hidden w-max -translate-y-1/2 md:flex lg:right-6"
+      className="fixed right-0 top-[56%] z-40 hidden w-max -translate-y-1/2 md:flex xl:right-6"
     >
       <div className="group flex flex-col items-center">
         {/* Name — vertical display type, gradient clipped, subtle glow on rail hover */}
         <h2
           aria-label={personalInfo.name ?? "Atik Hassan"}
-          className={`${vertical} bg-gradient-to-t from-sky-500 via-indigo-500 to-violet-600 bg-clip-text text-[13px] font-black uppercase leading-none tracking-[0.34em] text-transparent drop-shadow-[0_0_14px_rgba(99,102,241,0)] transition-all duration-500 group-hover:from-sky-400 group-hover:via-indigo-400 group-hover:to-violet-400 group-hover:drop-shadow-[0_0_14px_rgba(129,140,248,0.45)] lg:text-[15px] dark:from-sky-300 dark:via-indigo-300 dark:to-violet-400`}
+          className={`${vertical} bg-gradient-to-t from-sky-500 via-indigo-500 to-violet-600 bg-clip-text text-[12px] font-black uppercase leading-none tracking-[0.28em] text-transparent drop-shadow-[0_0_14px_rgba(99,102,241,0)] transition-all duration-500 group-hover:from-sky-400 group-hover:via-indigo-400 group-hover:to-violet-400 group-hover:drop-shadow-[0_0_14px_rgba(129,140,248,0.45)] lg:text-[13px] lg:tracking-[0.3em] xl:text-[15px] xl:tracking-[0.34em] dark:from-sky-300 dark:via-indigo-300 dark:to-violet-400`}
         >
           <span aria-hidden="true">{name}</span>
         </h2>
@@ -44,7 +47,7 @@ export default function InfoSidebar() {
         {/* Separator dot */}
         <span
           aria-hidden="true"
-          className="my-3 h-1 w-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500 shadow-[0_0_8px_1px_rgba(139,92,246,0.6)] lg:my-4"
+          className="my-2.5 h-1 w-1 rounded-full bg-gradient-to-r from-sky-400 to-violet-500 shadow-[0_0_8px_1px_rgba(139,92,246,0.6)] lg:my-3 xl:my-4"
         />
 
         {/* Email — vertical mailto link, glows on hover/focus */}
@@ -55,10 +58,10 @@ export default function InfoSidebar() {
         >
           <span
             aria-hidden="true"
-            className={`${vertical} flex items-center gap-2 font-mono text-[8px] font-medium tracking-[0.18em] text-slate-500 transition-all duration-300 group-hover/mail:text-sky-600 group-hover/mail:drop-shadow-[0_0_10px_rgba(56,189,248,0.5)] group-focus-visible/mail:text-sky-600 lg:text-[9px] dark:text-slate-400 dark:group-hover/mail:text-sky-300 dark:group-hover/mail:text-sky-200`}
+            className={`${vertical} flex items-center gap-1.5 font-mono text-[8px] font-medium tracking-[0.14em] text-slate-600 transition-all duration-300 group-hover/mail:text-sky-600 group-hover/mail:drop-shadow-[0_0_10px_rgba(56,189,248,0.5)] group-focus-visible/mail:text-sky-600 lg:text-[9px] lg:tracking-[0.16em] xl:gap-2 xl:text-[10px] xl:tracking-[0.18em] dark:text-slate-400 dark:group-hover/mail:text-sky-300 dark:group-hover/mail:text-sky-200`}
           >
             <Mail
-              className="h-3 w-3 shrink-0 rotate-180 text-slate-400 transition-all duration-300 group-hover/mail:-translate-y-0.5 group-hover/mail:text-sky-500 dark:text-slate-500 dark:group-hover/mail:text-sky-400"
+              className="h-2.5 w-2.5 shrink-0 rotate-180 text-slate-500 transition-all duration-300 motion-safe:group-hover/mail:-translate-y-0.5 group-hover/mail:text-sky-500 lg:h-3 lg:w-3 dark:text-slate-500 dark:group-hover/mail:text-sky-400"
               strokeWidth={1.75}
             />
             {email}
@@ -68,7 +71,7 @@ export default function InfoSidebar() {
         {/* Thin vertical decorative line — same gradient language as the left rail */}
         <span
           aria-hidden="true"
-          className="mt-3 h-14 w-px bg-gradient-to-b from-violet-400/60 via-sky-400/40 to-transparent lg:mt-4 lg:h-20"
+          className="mt-2.5 h-10 w-px bg-gradient-to-b from-violet-400/60 via-sky-400/40 to-transparent lg:mt-3 lg:h-12 xl:mt-4 xl:h-20"
         />
         {/* Glowing terminus dot */}
         <span

@@ -429,7 +429,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative isolate scroll-mt-20 overflow-hidden bg-slate-50 px-4 py-12 transition-colors duration-300 dark:bg-[#060a17] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      className="relative isolate scroll-mt-20 overflow-hidden bg-slate-50 px-4 py-12 transition-colors duration-500 dark:bg-[#060a17] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
       {/* Background Soft Ambient Lighting Effects */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">

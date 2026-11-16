@@ -9,12 +9,15 @@ import { GithubIcon } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
- * Projects — horizontal split cards in a natural vertical flow.
+ * Projects — horizontal split cards in an overlapping sticky stack.
  *
- * Cards scroll freely through the document (no sticky pinning, no
- * overlap, no scroll-linked transforms). The split-entrance and hover
- * animations live inside each card and stay fully independent of
- * scrolling.
+ * From 768px up each card is a direct child of one tall `.project-stack`
+ * and is pinned with position: sticky, using a slightly deeper top offset
+ * per card. As the next card scrolls up it covers the previous one while
+ * leaving a thin top strip visible, then the whole stack releases into
+ * normal flow. Below 768px the cards fall back to a plain vertical list.
+ * No scroll listeners, transforms, or duplicate Lenis instances are used
+ * for the effect — only CSS sticky positioning.
  */
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -34,7 +37,7 @@ export default function Projects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="relative scroll-mt-20 overflow-x-clip bg-white py-12 text-slate-900 transition-colors duration-300 dark:bg-[#0b1120] dark:text-white sm:py-16 lg:py-20"
+      className="relative scroll-mt-20 overflow-x-clip bg-white py-12 text-slate-900 transition-colors duration-500 dark:bg-[#0b1120] dark:text-white sm:py-16 lg:py-20"
     >
       {/* Ambient Purple / Blue / Pink Glows */}
       <div className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
@@ -66,16 +69,15 @@ export default function Projects() {
           </p>
         </Reveal>
 
-        {/* Natural vertical flow — no pinning, no overlap */}
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 md:gap-10 lg:gap-12">
+        {/* Overlapping sticky stack (tablet up) / normal flow (mobile) */}
+        <div className="project-stack mx-auto flex w-full max-w-6xl flex-col gap-8 md:block">
           {projectsData.map((project, index) => (
-            <div key={project.id} className="min-w-0">
-              <ProjectCard
-                project={project}
-                index={index}
-                onViewCaseStudy={handleOpenCaseStudy}
-              />
-            </div>
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              onViewCaseStudy={handleOpenCaseStudy}
+            />
           ))}
         </div>
 

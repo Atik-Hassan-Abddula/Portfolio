@@ -12,6 +12,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import Hero3D from "@/components/Hero3D";
 import TechOrbit from "@/components/TechOrbit";
 import { personalInfo, projectsData } from "@/data/portfolioData";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 const TICKER_WORDS = ["DESIGN", "DEVELOP", "DEPLOY", "REPEAT"];
 
@@ -117,15 +118,7 @@ export default function Hero({ onOpenResume }) {
   }, []);
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    if (typeof window !== "undefined" && window.__lenis) {
-      window.__lenis.scrollTo(el, { offset: -70 });
-    } else {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-    window.history.pushState(null, "", `#${id}`);
+    scrollToSection(id);
   };
 
   const latestProject = projectsData?.[0];
@@ -134,7 +127,7 @@ export default function Hero({ onOpenResume }) {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative flex min-h-[100svh] scroll-mt-20 flex-col overflow-hidden bg-[#04060f] text-slate-100"
+      className="relative flex min-h-[100svh] scroll-mt-20 flex-col overflow-hidden bg-[#f7f9ff] text-slate-900 transition-colors duration-500 dark:bg-[#04060f] dark:text-slate-100"
     >
       {/* ===== Atmospheric backdrop ===== */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -142,9 +135,9 @@ export default function Hero({ onOpenResume }) {
         <div className="hero-grid absolute inset-0 opacity-80" />
 
         {/* Ambient light: cool key left, violet rim right, floor glow */}
-        <div className="absolute -left-48 top-1/4 h-[30rem] w-[30rem] rounded-full bg-sky-500/10 blur-[150px]" />
-        <div className="absolute -right-48 top-16 h-[30rem] w-[30rem] rounded-full bg-violet-600/10 blur-[160px]" />
-        <div className="absolute -bottom-44 left-1/2 h-96 w-[70rem] max-w-none -translate-x-1/2 rounded-full bg-indigo-600/10 blur-[170px]" />
+        <div className="absolute -left-48 top-1/4 h-[30rem] w-[30rem] rounded-full bg-sky-400/15 blur-[150px] dark:bg-sky-500/10" />
+        <div className="absolute -right-48 top-16 h-[30rem] w-[30rem] rounded-full bg-violet-400/15 blur-[160px] dark:bg-violet-600/10" />
+        <div className="absolute -bottom-44 left-1/2 h-96 w-[70rem] max-w-none -translate-x-1/2 rounded-full bg-indigo-400/10 blur-[170px] dark:bg-indigo-600/10" />
 
         {/* Giant cropped background word */}
         <div className="hero-ghost-word absolute -bottom-[4vw] left-[-1vw] whitespace-nowrap font-black leading-none tracking-tighter text-[24vw] lg:text-[20rem]">
@@ -161,7 +154,7 @@ export default function Hero({ onOpenResume }) {
       {/* ===== Vertical micro-label: coordinates — far left ===== */}
       <div
         aria-hidden="true"
-        className="vertical-text pointer-events-none absolute left-5 top-1/2 hidden -translate-y-1/2 select-none items-center font-mono text-[9px] tracking-[0.5em] text-slate-600 xl:flex"
+        className="vertical-text pointer-events-none absolute left-[4.25rem] top-1/2 hidden -translate-y-1/2 select-none items-center font-mono text-[9px] tracking-[0.5em] text-slate-500 xl:flex dark:text-slate-600"
       >
         GAZIPUR&nbsp;·&nbsp;BD&nbsp;&nbsp;—&nbsp;&nbsp;23.99°&nbsp;N&nbsp;/&nbsp;90.40°&nbsp;E
       </div>
@@ -171,13 +164,13 @@ export default function Hero({ onOpenResume }) {
         type="button"
         onClick={() => scrollTo("about")}
         aria-label="Scroll to next section"
-        className="group absolute right-5 top-1/2 z-20 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-400 xl:flex"
+        className="group absolute right-5 top-1/2 z-20 hidden -translate-y-1/2 cursor-pointer flex-col items-center gap-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-400 xl:flex min-[1440px]:right-[4.25rem]"
       >
-        <span className="vertical-text font-mono text-[9px] tracking-[0.55em] text-slate-500 transition-colors duration-300 group-hover:text-sky-300">
+        <span className="vertical-text font-mono text-[9px] tracking-[0.55em] text-slate-500 transition-colors duration-300 group-hover:text-sky-600 dark:text-slate-500 dark:group-hover:text-sky-300">
           SCROLL
         </span>
-        <span className="relative h-24 w-px bg-slate-700/80 transition-colors duration-300 group-hover:bg-slate-600">
-          <span className="scroll-line-dot absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-sky-400 shadow-[0_0_8px_2px_rgba(56,189,248,0.6)]" />
+        <span className="relative h-24 w-px bg-slate-300 transition-colors duration-300 group-hover:bg-slate-400 dark:bg-slate-700/80 dark:group-hover:bg-slate-600">
+          <span className="scroll-line-dot absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-sky-500 shadow-[0_0_8px_2px_rgba(56,189,248,0.6)] dark:bg-sky-400" />
         </span>
       </button>
 
@@ -193,13 +186,13 @@ export default function Hero({ onOpenResume }) {
           {/* Eyebrow readout */}
           <StaggerItem>
             <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-[9px] font-medium uppercase tracking-[0.4em] text-slate-500 sm:mb-8 sm:text-[10px]">
-              <span className="flex items-center gap-2 text-sky-400">
-                <span className="hero-blink h-1.5 w-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_1px_rgba(56,189,248,0.7)]" />
+              <span className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
+                <span className="hero-blink h-1.5 w-1.5 rounded-full bg-sky-500 shadow-[0_0_6px_1px_rgba(56,189,248,0.7)] dark:bg-sky-400" />
                 Available for work
               </span>
-              <span aria-hidden="true" className="text-slate-700">/</span>
+              <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">/</span>
               <span>Full Stack Web Developer</span>
-              <span aria-hidden="true" className="hidden text-slate-700 sm:inline">/</span>
+              <span aria-hidden="true" className="hidden text-slate-300 sm:inline dark:text-slate-700">/</span>
               <span className="hidden sm:inline">Portfolio — 001</span>
             </div>
           </StaggerItem>
@@ -209,13 +202,7 @@ export default function Hero({ onOpenResume }) {
                 Sparkling star-typography treatment: electric blue → soft violet
                 gradient + shine sweep + twinkle / diamond / star particles. */}
             <StaggerItem>
-              <h1
-                className="relative select-none whitespace-nowrap font-black leading-[0.92] tracking-[0.055em]"
-                style={{
-                  filter:
-                    "drop-shadow(0 1px 16px rgb(56 189 248 / 0.38)) drop-shadow(0 5px 34px rgb(139 92 246 / 0.45))",
-                }}
-              >
+              <h1 className="hero-title-glow relative select-none whitespace-nowrap font-black leading-[0.92] tracking-[0.055em]">
                 <span className="block text-[clamp(2.6rem,10vw,8rem)]">
                   {renderWord("ATIK", 0.15, 0)}
                 </span>
@@ -277,9 +264,9 @@ export default function Hero({ onOpenResume }) {
 
           {/* Headline */}
           <StaggerItem>
-            <p className="mt-6 max-w-2xl text-2xl font-semibold leading-tight tracking-tight text-slate-200 sm:mt-7 sm:text-3xl xl:text-4xl">
+            <p className="mt-6 max-w-2xl text-2xl font-semibold leading-tight tracking-tight text-slate-800 sm:mt-7 sm:text-3xl xl:text-4xl dark:text-slate-200">
               Building{" "}
-              <span className="bg-gradient-to-r from-sky-300 via-slate-100 to-violet-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-600 via-slate-900 to-violet-600 bg-clip-text text-transparent dark:from-sky-300 dark:via-slate-100 dark:to-violet-300">
                 Beyond Boundaries.
               </span>
             </p>
@@ -287,7 +274,7 @@ export default function Hero({ onOpenResume }) {
 
           {/* Description */}
           <StaggerItem>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-slate-400 sm:mt-5 sm:text-lg">
+            <p className="mt-4 max-w-md text-base leading-relaxed text-slate-600 sm:mt-5 sm:text-lg dark:text-slate-400">
               I turn creative ideas into powerful digital experiences through
               modern web technologies and thoughtful engineering.
             </p>
@@ -299,7 +286,7 @@ export default function Hero({ onOpenResume }) {
               <button
                 type="button"
                 onClick={() => scrollTo("projects")}
-                className="group inline-flex cursor-pointer items-center gap-2.5 rounded-none border border-slate-100/90 bg-gradient-to-b from-white to-slate-300 px-7 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-slate-950 shadow-[0_10px_40px_-12px_rgba(226,232,240,0.35)] transition-all duration-300 hover:from-white hover:to-sky-200 hover:shadow-[0_10px_44px_-10px_rgba(125,211,252,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 active:translate-y-0"
+                className="group inline-flex cursor-pointer items-center gap-2.5 rounded-none border border-slate-900/10 bg-gradient-to-b from-slate-900 to-slate-800 px-7 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-[0_14px_40px_-16px_rgba(15,23,42,0.55)] transition-all duration-300 hover:from-slate-900 hover:to-sky-700 hover:shadow-[0_14px_44px_-14px_rgba(2,132,199,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 active:translate-y-0 dark:border-slate-100/90 dark:from-white dark:to-slate-300 dark:text-slate-950 dark:shadow-[0_10px_40px_-12px_rgba(226,232,240,0.35)] dark:hover:from-white dark:hover:to-sky-200 dark:hover:shadow-[0_10px_44px_-10px_rgba(125,211,252,0.45)] dark:focus-visible:outline-sky-400"
               >
                 <span>Explore My Work</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -308,7 +295,7 @@ export default function Hero({ onOpenResume }) {
               <button
                 type="button"
                 onClick={() => scrollTo("contact")}
-                className="group inline-flex cursor-pointer items-center gap-2.5 border border-white/15 bg-white/[0.03] px-7 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-slate-100 backdrop-blur-sm transition-all duration-300 hover:border-sky-400/50 hover:bg-sky-400/[0.06] hover:text-sky-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+                className="group inline-flex cursor-pointer items-center gap-2.5 border border-slate-300 bg-white/70 px-7 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-sky-50 hover:text-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 dark:border-white/15 dark:bg-white/[0.03] dark:text-slate-100 dark:hover:border-sky-400/50 dark:hover:bg-sky-400/[0.06] dark:hover:text-sky-300 dark:focus-visible:outline-sky-400"
               >
                 <span>Let&apos;s Talk</span>
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -319,7 +306,7 @@ export default function Hero({ onOpenResume }) {
                   type="button"
                   onClick={onOpenResume}
                   aria-label="Open resume preview"
-                  className="inline-flex cursor-pointer items-center gap-2 px-3 py-4 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500 transition-colors duration-300 hover:text-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+                  className="inline-flex cursor-pointer items-center gap-2 px-3 py-4 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500 transition-colors duration-300 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
                 >
                   <FileText className="h-4 w-4" />
                   <span className="hidden min-[420px]:inline">Resume</span>
@@ -330,14 +317,14 @@ export default function Hero({ onOpenResume }) {
 
           {/* Bottom meta row: socials + live project */}
           <StaggerItem>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/[0.07] pt-6 sm:mt-10">
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 pt-6 sm:mt-10 dark:border-white/[0.07]">
               {personalInfo.socials.github && (
                 <a
                   href={personalInfo.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub profile"
-                  className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-200 hover:text-slate-100"
+                  className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-200 hover:text-slate-900 dark:text-slate-500 dark:hover:text-slate-100"
                 >
                   <GithubIcon className="h-4 w-4" />
                   GitHub
@@ -349,7 +336,7 @@ export default function Hero({ onOpenResume }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile"
-                  className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-200 hover:text-sky-300"
+                  className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-200 hover:text-sky-600 dark:text-slate-500 dark:hover:text-sky-300"
                 >
                   <LinkedinIcon className="h-4 w-4" />
                   LinkedIn
@@ -360,10 +347,10 @@ export default function Hero({ onOpenResume }) {
                   href={latestProject.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-violet-300/90 transition-colors duration-200 hover:text-violet-200"
+                  className="group flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-violet-700 transition-colors duration-200 hover:text-violet-900 dark:text-violet-300/90 dark:hover:text-violet-200"
                 >
-                  <span className="text-slate-600">Live:</span>
-                  <span className="underline decoration-violet-400/40 underline-offset-4 group-hover:decoration-violet-300">
+                  <span className="text-slate-400 dark:text-slate-600">Live:</span>
+                  <span className="underline decoration-violet-400/40 underline-offset-4 group-hover:decoration-violet-600 dark:group-hover:decoration-violet-300">
                     {latestProject.title}
                   </span>
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -376,35 +363,41 @@ export default function Hero({ onOpenResume }) {
         {/* ---- RIGHT: chrome sculpture stage ---- */}
         <div className="relative flex min-w-0 items-center justify-center lg:col-span-5">
           <div className="relative h-[185px] w-full max-w-md sm:h-[245px] sm:max-w-lg lg:h-[370px] lg:max-w-none xl:h-[415px]">
+            {/* Soft stage light so the glass cube reads on the light theme */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-3 rounded-full bg-[radial-gradient(circle_at_50%_45%,rgba(99,102,241,0.16),rgba(56,189,248,0.08)_45%,transparent_70%)] blur-2xl dark:bg-[radial-gradient(circle_at_50%_45%,rgba(99,102,241,0.22),rgba(56,189,248,0.08)_45%,transparent_70%)]"
+            />
+
             {/* Technical corner ticks */}
-            <span aria-hidden="true" className="absolute left-0 top-0 z-10 h-6 w-6 border-l border-t border-slate-600/70" />
-            <span aria-hidden="true" className="absolute right-0 top-0 z-10 h-6 w-6 border-r border-t border-slate-600/70" />
-            <span aria-hidden="true" className="absolute bottom-0 left-0 z-10 h-6 w-6 border-b border-l border-slate-600/70" />
-            <span aria-hidden="true" className="absolute bottom-0 right-0 z-10 h-6 w-6 border-b border-r border-slate-600/70" />
+            <span aria-hidden="true" className="absolute left-0 top-0 z-10 h-6 w-6 border-l border-t border-slate-400/70 dark:border-slate-600/70" />
+            <span aria-hidden="true" className="absolute right-0 top-0 z-10 h-6 w-6 border-r border-t border-slate-400/70 dark:border-slate-600/70" />
+            <span aria-hidden="true" className="absolute bottom-0 left-0 z-10 h-6 w-6 border-b border-l border-slate-400/70 dark:border-slate-600/70" />
+            <span aria-hidden="true" className="absolute bottom-0 right-0 z-10 h-6 w-6 border-b border-r border-slate-400/70 dark:border-slate-600/70" />
 
             {/* Micro-labels framing the artwork */}
             <span
               aria-hidden="true"
-              className="absolute left-3 top-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-600 sm:text-[9px]"
+              className="absolute left-3 top-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
             >
               Scene.Cube_01
             </span>
             <span
               aria-hidden="true"
-              className="absolute right-3 top-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-600 sm:text-[9px]"
+              className="absolute right-3 top-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
             >
               WebGL
             </span>
             <span
               aria-hidden="true"
-              className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-600 sm:text-[9px]"
+              className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
             >
-              <MapPin className="h-3 w-3 text-violet-400/70" />
+              <MapPin className="h-3 w-3 text-violet-500/80 dark:text-violet-400/70" />
               {personalInfo.location}
             </span>
             <span
               aria-hidden="true"
-              className="absolute bottom-3 right-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-600 sm:text-[9px]"
+              className="absolute bottom-3 right-3 z-10 font-mono text-[8px] uppercase tracking-[0.35em] text-slate-500 sm:text-[9px] dark:text-slate-600"
             >
               Render 60fps
             </span>
@@ -419,9 +412,9 @@ export default function Hero({ onOpenResume }) {
       </div>
 
       {/* ===== Signature ticker ===== */}
-      <div className="relative z-10 border-t border-white/[0.06] bg-black/40 backdrop-blur-md">
+      <div className="relative z-10 border-t border-slate-200 bg-white/60 backdrop-blur-md transition-colors duration-500 dark:border-white/[0.06] dark:bg-black/40">
         <div className="overflow-hidden py-3">
-          <div className="hero-marquee-track flex items-center whitespace-nowrap font-mono text-[10px] font-semibold tracking-[0.4em] text-slate-500 sm:text-[11px]">
+          <div className="hero-marquee-track flex items-center whitespace-nowrap font-mono text-[10px] font-semibold tracking-[0.4em] text-slate-500 sm:text-[11px] dark:text-slate-500">
             <TickerHalf />
             <TickerHalf />
           </div>

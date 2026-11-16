@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { personalInfo } from "@/data/portfolioData";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 export default function Footer() {
   const currentYear = 2026;
@@ -29,15 +30,7 @@ export default function Footer() {
 
   const handleLinkClick = (e, href) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      if (typeof window !== "undefined" && window.__lenis) {
-        window.__lenis.scrollTo(target, { offset: -70 });
-      } else {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-      window.history.pushState(null, "", href);
-    }
+    scrollToSection(href);
   };
 
   const githubUrl = personalInfo.socials?.github;
@@ -60,7 +53,10 @@ export default function Footer() {
     "group flex w-fit items-center gap-2 text-sm text-slate-600 transition-colors duration-200 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-slate-400 dark:hover:text-blue-400";
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-slate-200/80 bg-slate-50/80 text-slate-600 transition-colors duration-300 dark:border-slate-800/80 dark:bg-[#030712] dark:text-slate-400">
+    <footer
+      id="footer"
+      className="relative isolate overflow-hidden border-t border-slate-200/80 bg-slate-50/80 text-slate-600 transition-colors duration-500 dark:border-slate-800/80 dark:bg-[#030712] dark:text-slate-400"
+    >
       {/* Decorative Background */}
       <div
         aria-hidden="true"

@@ -1,5 +1,6 @@
 import "./globals.css";
 import { personalInfo } from "@/data/portfolioData";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata = {
   title: `${personalInfo.name} | ${personalInfo.role}`,
@@ -47,8 +48,8 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-slate-900 transition-colors duration-300 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
-        {children}
+      <body className="min-h-full flex flex-col bg-white text-slate-900 transition-colors duration-500 dark:bg-[#030712] dark:text-slate-100 selection:bg-blue-500/30 selection:text-blue-200">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

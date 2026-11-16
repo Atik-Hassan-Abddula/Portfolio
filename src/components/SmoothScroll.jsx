@@ -2,17 +2,17 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
     // Respect prefers-reduced-motion for accessibility
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
-      return;
+      return undefined;
     }
 
-    // Initialize Lenis with optimized settings for wheel, trackpad, and touch.
-    // Tuned for a fluid, weighty-but-responsive feel — no long inertia.
+    // One instance, tuned for a fluid, weighty-but-responsive feel.
     const lenis = new Lenis({
       duration: 1.05,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -33,24 +33,42 @@ export default function SmoothScroll({ children }) {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     };
-
     rafId = requestAnimationFrame(raf);
 
-    // Handle initial hash on page load if present
-    if (window.location.hash) {
-      const targetEl = document.querySelector(window.location.hash);
-      if (targetEl) {
-        setTimeout(() => {
-          lenis.scrollTo(targetEl, { offset: -70, immediate: false });
-        }, 100);
-      }
-    }
+    // Direct URL hash navigation. Force lets the destination settle while
+    // the preloader still has Lenis stopped; the preloader-done listener
+    // below then re-aligns the section once the page is revealed.
+    const restoreHash = ({ immediate = false } = {}) => {
+      if (!window.location.hash) return;
+      scrollToSection(window.location.hash, {
+        updateHash: false,
+        force: true,
+        immediate,
+      });
+    };
+
+    restoreHash({ immediate: true });
+    const readyTimer = window.setTimeout(() => restoreHash(), 120);
+    document.fonts?.ready
+      ?.then(() => window.setTimeout(() => restoreHash(), 60))
+      .catch(() => {});
+
+    const onPreloaderDone = () => restoreHash();
+    window.addEventListener("portfolio:preloader-done", onPreloaderDone);
+
+    // Browser back/forward — re-align to the hash target smoothly.
+    const onPopState = () => {
+      const hash = window.location.hash;
+      if (hash && scrollToSection(hash, { updateHash: false })) return;
+      lenis.scrollTo(0, { duration: 1.05 });
+    };
+    window.addEventListener("popstate", onPopState);
 
     // Listen to reduced-motion preference changes dynamically
-    const handleMotionChange = (e) => {
-      if (e.matches) {
+    const handleMotionChange = (event) => {
+      if (event.matches) {
         lenis.destroy();
-        window.__lenis = null;
+        if (window.__lenis === lenis) window.__lenis = null;
         if (rafId) cancelAnimationFrame(rafId);
       }
     };
@@ -61,19 +79,20 @@ export default function SmoothScroll({ children }) {
       mediaQuery.addListener(handleMotionChange);
     }
 
-    // Cleanup animation loop and destroy instance on unmount
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
+      window.clearTimeout(readyTimer);
+      window.removeEventListener("portfolio:preloader-done", onPreloaderDone);
+      window.removeEventListener("popstate", onPopState);
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener("change", handleMotionChange);
       } else {
         mediaQuery.removeListener(handleMotionChange);
       }
       lenis.destroy();
-      window.__lenis = null;
+      if (window.__lenis === lenis) window.__lenis = null;
     };
   }, []);
 
   return <>{children}</>;
 }
-

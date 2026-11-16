@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import {
   FileText,
   Sun,
@@ -9,27 +9,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { personalInfo } from "@/data/portfolioData";
-
-// Theme store: read once from localStorage, sync across tabs and same-tab
-// toggles via custom event — no effect-setState, no hydration mismatch.
-const THEME_EVENT = "portfolio-theme-change";
-
-function subscribeTheme(callback) {
-  window.addEventListener("storage", callback);
-  window.addEventListener(THEME_EVENT, callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(THEME_EVENT, callback);
-  };
-}
-
-function getThemeSnapshot() {
-  return localStorage.getItem("portfolio-theme") === "light"
-    ? "light"
-    : "dark";
-}
-
-const getServerThemeSnapshot = () => "dark";
+import { useTheme } from "@/components/ThemeProvider";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 const navLinks = [
   { name: "Home", href: "#hero", id: "hero" },
@@ -46,30 +27,11 @@ export default function Navbar({ onOpenResume }) {
   const [activeSection, setActiveSection] = useState("hero");
   const reducedMotion = useReducedMotion() === true;
 
-  const theme = useSyncExternalStore(
-    subscribeTheme,
-    getThemeSnapshot,
-    getServerThemeSnapshot
-  );
-
-  // Sync the <html> dark class with the resolved theme (DOM = external system)
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-    try {
-      localStorage.setItem("portfolio-theme", nextTheme);
-    } catch {
-      // Storage unavailable (private mode) — classList still toggles
-    }
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
-    window.dispatchEvent(new Event(THEME_EVENT));
-  };
+  // One shared theme store — no second provider, no local duplication.
+  const { theme, toggleTheme, mounted } = useTheme();
 
   // Scroll listener: pill density + active-section spy.
-  // Layout reads are cached (resize-only) and work happens inside one
+  // Layout reads are cached (resize/load only) and work happens inside one
   // rAF per frame — no forced layouts, no state churn on hot pixels.
   useEffect(() => {
     const SECTION_IDS = ["hero", "about", "skills", "projects", "education", "contact"];
@@ -79,17 +41,32 @@ export default function Navbar({ onOpenResume }) {
     const measure = () => {
       offsets = SECTION_IDS.map((id) => {
         const el = document.getElementById(id);
-        return el ? { id, top: el.offsetTop, height: el.offsetHeight } : null;
+        if (!el) return null;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        return { id, top, height: el.offsetHeight };
       }).filter(Boolean);
     };
 
     const update = () => {
       setScrolled(window.scrollY > 24);
+
+      // At the very bottom the last section should own the highlight.
+      const atBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 4;
+      if (atBottom) {
+        setActiveSection("contact");
+        return;
+      }
+
       const scrollPosition = window.scrollY + 180;
       for (const section of offsets) {
-        if (scrollPosition >= section.top && scrollPosition < section.top + section.height) {
+        if (
+          scrollPosition >= section.top &&
+          scrollPosition < section.top + section.height
+        ) {
           setActiveSection(section.id);
-          break;
+          return;
         }
       }
     };
@@ -105,22 +82,30 @@ export default function Navbar({ onOpenResume }) {
     measure();
     window.addEventListener("resize", measure);
     window.addEventListener("load", measure);
+    window.addEventListener("portfolio:preloader-done", measure);
     window.addEventListener("scroll", handleScroll, { passive: true });
     update();
     return () => {
       window.removeEventListener("resize", measure);
       window.removeEventListener("load", measure);
+      window.removeEventListener("portfolio:preloader-done", measure);
       window.removeEventListener("scroll", handleScroll);
       if (rafId !== null) window.cancelAnimationFrame(rafId);
     };
   }, []);
 
-  // Lock background scroll while the mobile menu is open (+ Escape to close)
+  // Lock scrolling while the mobile menu is open. Lenis owns the scroll,
+  // so stop it rather than fighting it with body overflow (which used to
+  // cancel the scroll the moment a menu link closed the panel).
   useEffect(() => {
     if (!isOpen) return undefined;
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const lenis = window.__lenis;
+    if (lenis) {
+      lenis.stop();
+    } else {
+      document.body.style.overflow = "hidden";
+    }
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") setIsOpen(false);
@@ -128,24 +113,25 @@ export default function Navbar({ onOpenResume }) {
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      if (lenis) {
+        lenis.start();
+      } else {
+        document.body.style.overflow = "";
+      }
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen]);
 
   const handleLinkClick = (e, href) => {
     e.preventDefault();
+    const wasOpen = isOpen;
     setIsOpen(false);
+    setActiveSection(href.replace(/^#/, ""));
 
-    const target = document.querySelector(href);
-    if (target) {
-      if (typeof window !== "undefined" && window.__lenis) {
-        window.__lenis.scrollTo(target, { offset: -70 });
-      } else {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-      window.history.pushState(null, "", href);
-    }
+    // Closing the panel unlocks Lenis in an effect; release it now so this
+    // scroll request is never dropped by the stopped instance.
+    if (wasOpen && window.__lenis) window.__lenis.start();
+    scrollToSection(href, { force: wasOpen });
   };
 
   return (
@@ -157,7 +143,7 @@ export default function Navbar({ onOpenResume }) {
       />
 
       <div
-        className={`pointer-events-auto relative mt-3 flex h-14 w-[min(68rem,100%)] items-center justify-between gap-2 rounded-full border px-2.5 pl-3 backdrop-blur-xl transition-all duration-300 sm:px-4 sm:pl-4 ${
+        className={`pointer-events-auto relative mt-3 flex h-14 w-[min(68rem,100%)] items-center justify-between gap-2 rounded-full border px-2.5 pl-3 backdrop-blur-xl transition-all duration-500 sm:px-4 sm:pl-4 ${
           scrolled
             ? "border-slate-200/70 bg-white/75 shadow-[0_16px_44px_-18px_rgba(15,23,42,0.45)] dark:border-white/[0.09] dark:bg-[#0b1120]/80 dark:shadow-[0_18px_48px_-18px_rgba(2,6,23,0.85)]"
             : "border-slate-200/60 bg-white/60 shadow-[0_10px_32px_-18px_rgba(15,23,42,0.3)] dark:border-white/[0.07] dark:bg-[#0b1120]/60 dark:shadow-[0_12px_36px_-18px_rgba(2,6,23,0.6)]"
@@ -246,7 +232,7 @@ export default function Navbar({ onOpenResume }) {
             <FileText className="h-4 w-4" />
           </button>
 
-          {/* Theme toggle — animated icon swap */}
+          {/* Theme toggle — premium icon cross-rotate with blue/violet glow */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -256,12 +242,41 @@ export default function Navbar({ onOpenResume }) {
               theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
             }
             title={theme === "dark" ? "Light mode" : "Dark mode"}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-slate-200/80 bg-white/60 text-slate-600 backdrop-blur transition-all duration-300 hover:rotate-12 hover:border-amber-300/60 hover:text-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400 dark:border-white/[0.09] dark:bg-white/[0.04] dark:text-slate-300 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300 dark:hover:rotate-12"
+            className="group relative flex h-9 w-9 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-slate-200/80 bg-white/60 text-slate-600 backdrop-blur transition-all duration-500 hover:border-violet-400/60 hover:shadow-[0_0_20px_-4px_rgba(139,92,246,0.55)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400 active:scale-90 dark:border-white/[0.09] dark:bg-white/[0.04] dark:text-slate-300 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300 dark:hover:shadow-[0_0_20px_-4px_rgba(129,140,248,0.55)]"
           >
-            {theme === "dark" ? (
-              <Sun className="h-[18px] w-[18px] transition-transform duration-300" />
+            {mounted ? (
+              <AnimatePresence initial={false} mode="wait">
+                <motion.span
+                  key={theme}
+                  initial={
+                    reducedMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, rotate: -100, scale: 0.4, y: -4 }
+                  }
+                  animate={{ opacity: 1, rotate: 0, scale: 1, y: 0 }}
+                  exit={
+                    reducedMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, rotate: 100, scale: 0.4, y: 4 }
+                  }
+                  transition={{ duration: reducedMotion ? 0.15 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative flex items-center justify-center"
+                >
+                  {theme === "dark" ? (
+                    <Moon
+                      className="h-[18px] w-[18px] text-indigo-300 drop-shadow-[0_0_6px_rgba(129,140,248,0.7)]"
+                      strokeWidth={1.75}
+                    />
+                  ) : (
+                    <Sun
+                      className="h-[18px] w-[18px] text-amber-500 drop-shadow-[0_0_6px_rgba(251,191,36,0.55)]"
+                      strokeWidth={1.75}
+                    />
+                  )}
+                </motion.span>
+              </AnimatePresence>
             ) : (
-              <Moon className="h-[18px] w-[18px] text-indigo-500 transition-transform duration-300 dark:text-indigo-300" />
+              <span aria-hidden="true" className="h-[18px] w-[18px]" />
             )}
           </button>
 
@@ -269,7 +284,7 @@ export default function Navbar({ onOpenResume }) {
           <a
             href="#contact"
             onClick={(e) => handleLinkClick(e, "#contact")}
-            className="group relative hidden shrink-0 rounded-full p-[1.5px] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 md:inline-flex"
+            className="group relative hidden shrink-0 rounded-full p-[1.5px] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 lg:inline-flex"
             style={{
               background:
                 "linear-gradient(120deg, rgba(96,165,250,0.9), rgba(129,140,248,0.9) 35%, rgba(167,139,250,0.9))",

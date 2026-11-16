@@ -53,10 +53,8 @@ function OrbitChip({ icon, size = "md" }) {
   return (
     <span
       title={icon.label}
-      className={`flex items-center justify-center rounded-2xl border border-white/15 bg-gradient-to-br from-white/[0.22] via-white/[0.07] to-transparent backdrop-blur-md ${box}`}
-      style={{
-        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -6px 12px rgba(2,6,23,0.45), 0 0 22px -6px ${icon.color}55, 0 10px 26px -12px rgba(0,0,0,0.8)`,
-      }}
+      className={`orbit-chip-glass flex items-center justify-center rounded-2xl border border-slate-300/70 bg-gradient-to-br from-white/90 via-white/50 to-slate-100/40 backdrop-blur-md dark:border-white/15 dark:from-white/[0.22] dark:via-white/[0.07] dark:to-transparent ${box}`}
+      style={{ ["--chip-glow"]: `${icon.color}55` }}
     >
       <TechGlyph icon={icon} className={glyph} />
     </span>

@@ -97,7 +97,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-20 overflow-hidden bg-white py-20 transition-colors duration-300 dark:bg-slate-950 sm:py-24 lg:py-28"
+      className="relative scroll-mt-20 overflow-hidden bg-white py-20 transition-colors duration-500 dark:bg-slate-950 sm:py-24 lg:py-28"
     >
       {/* Decorative Gradient Glow */}
       <div className="pointer-events-none absolute bottom-0 right-10 -z-0 h-96 w-96 rounded-full bg-blue-500/10 blur-[120px] dark:bg-blue-600/15" />

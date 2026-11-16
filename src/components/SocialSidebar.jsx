@@ -18,12 +18,13 @@ const socials = personalInfo.socials ?? {};
 
 /**
  * SocialSidebar — fixed vertical rail on the LEFT edge of the viewport,
- * perfectly vertically centered.
+ * centered slightly below the vertical midpoint.
  *
  * - `fixed` positioning: never moves while scrolling or during Lenis
  *   smooth-scroll transitions; it is out of the page flow.
- * - Hidden below `md` (mobile) so content and the mobile navbar never
- *   overlap; compact on tablet (`md`), full size on desktop (`lg+`).
+ * - Hidden below `md` (mobile). From 768px up it is compact and sits in
+ *   the section gutter (24px at tablet, 32px at laptop), so it never
+ *   overlaps content. From 1280px it returns to its full original size.
  * - Brand icons with electric-blue / soft-violet hover glow; tooltips
  *   reveal on hover AND keyboard focus; links open in a new tab.
  */
@@ -47,28 +48,28 @@ export default function SocialSidebar() {
       id: "github",
       name: "GitHub",
       href: socials.github,
-      icon: <GithubIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      icon: <GithubIcon className="h-3 w-3 lg:h-3.5 lg:w-3.5 xl:h-4 xl:w-4" />,
       accentClass: accent.github,
     },
     socials.linkedin && {
       id: "linkedin",
       name: "LinkedIn",
       href: socials.linkedin,
-      icon: <LinkedinIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      icon: <LinkedinIcon className="h-3 w-3 lg:h-3.5 lg:w-3.5 xl:h-4 xl:w-4" />,
       accentClass: accent.linkedin,
     },
     socials.facebook && {
       id: "facebook",
       name: "Facebook",
       href: socials.facebook,
-      icon: <FacebookIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      icon: <FacebookIcon className="h-3 w-3 lg:h-3.5 lg:w-3.5 xl:h-4 xl:w-4" />,
       accentClass: accent.facebook,
     },
     socials.whatsapp && {
       id: "whatsapp",
       name: "WhatsApp",
       href: socials.whatsapp,
-      icon: <WhatsAppIcon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />,
+      icon: <WhatsAppIcon className="h-3 w-3 lg:h-3.5 lg:w-3.5 xl:h-4 xl:w-4" />,
       accentClass: accent.whatsapp,
     },
   ].filter(Boolean);
@@ -78,10 +79,10 @@ export default function SocialSidebar() {
   return (
     <aside
       aria-label="Social media links"
-      className="fixed left-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center md:flex lg:left-6"
+      className="fixed left-0 top-[56%] z-40 hidden -translate-y-1/2 flex-col items-center md:flex xl:left-6"
     >
       {/* Vertical stack of glass orb buttons */}
-      <div className="flex flex-col items-center gap-2.5 lg:gap-4">
+      <div className="flex flex-col items-center gap-2 lg:gap-2.5 xl:gap-4">
         {items.map((item) => (
           <a
             key={item.id}
@@ -89,7 +90,7 @@ export default function SocialSidebar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${item.name} (opens in new tab)`}
-            className={`group relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-200/90 bg-white/80 text-slate-500 shadow-sm backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 lg:h-10 lg:w-10 dark:border-white/[0.08] dark:bg-slate-900/70 dark:text-slate-400 ${item.accentClass}`}
+            className={`group relative flex h-6 w-6 items-center justify-center rounded-full border border-slate-200/90 bg-white/85 text-slate-600 shadow-sm backdrop-blur-md transition-all duration-300 ease-out motion-safe:hover:-translate-y-1 motion-safe:hover:scale-110 focus-visible:outline-none focus-visible:ring-2 lg:h-7 lg:w-7 xl:h-10 xl:w-10 dark:border-white/[0.08] dark:bg-slate-900/70 dark:text-slate-300 ${item.accentClass}`}
           >
             {/* Hairline gradient rim, revealed on hover */}
             <span
@@ -103,7 +104,7 @@ export default function SocialSidebar() {
             {/* Floating tooltip — reveals on hover and keyboard focus */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-full top-1/2 ml-3 -translate-y-1/2 translate-x-1.5 whitespace-nowrap rounded-lg border border-white/10 bg-[#0a1128]/95 px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.14em] text-sky-200/90 opacity-0 shadow-[0_8px_24px_-8px_rgba(2,6,23,0.9),0_0_16px_-6px_rgba(99,102,241,0.45)] backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+              className="pointer-events-none absolute left-full top-1/2 ml-2.5 -translate-y-1/2 translate-x-1.5 whitespace-nowrap rounded-lg border border-white/10 bg-[#0a1128]/95 px-2.5 py-1 font-mono text-[9px] font-semibold tracking-[0.14em] text-sky-200/90 opacity-0 shadow-[0_8px_24px_-8px_rgba(2,6,23,0.9),0_0_16px_-6px_rgba(99,102,241,0.45)] backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 xl:text-[10px]"
             >
               {item.name}
             </span>
@@ -114,7 +115,7 @@ export default function SocialSidebar() {
       {/* Thin vertical decorative line + glowing terminus dot */}
       <span
         aria-hidden="true"
-        className="mt-4 h-14 w-px bg-gradient-to-b from-sky-400/60 via-violet-400/40 to-transparent lg:mt-5 lg:h-20"
+        className="mt-3 h-10 w-px bg-gradient-to-b from-sky-400/60 via-violet-400/40 to-transparent lg:mt-4 lg:h-12 xl:mt-5 xl:h-20"
       />
       <span
         aria-hidden="true"

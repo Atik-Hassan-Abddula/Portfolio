@@ -122,70 +122,72 @@ const PATHWAYS = [
   { id: "digital-marketing", d: "M 500 285 C 380 315 235 395 125 462", mid: [309, 360], dur: "6.4s" },
 ];
 
+// Tones carry both themes: deeper inks on the light holographic chamber,
+// luminous accents in the dark one.
 const TONE = {
   sky: {
     ring: "from-sky-400/80 to-blue-500/80",
-    icon: "text-sky-300",
-    chip: "border-sky-400/30 bg-sky-400/10 text-sky-300",
-    dot: "bg-sky-400",
+    icon: "text-sky-600 dark:text-sky-300",
+    chip: "border-sky-500/35 bg-sky-500/10 text-sky-700 dark:border-sky-400/30 dark:bg-sky-400/10 dark:text-sky-300",
+    dot: "bg-sky-500 dark:bg-sky-400",
     aura: "rgba(56,189,248,0.4)",
-    disc: "border-sky-400/35 bg-sky-400/10",
-    discText: "text-sky-300",
+    disc: "border-sky-500/40 bg-sky-500/10 dark:border-sky-400/35 dark:bg-sky-400/10",
+    discText: "text-sky-600 dark:text-sky-300",
     discGlow:
       "shadow-[0_0_18px_-4px_rgba(56,189,248,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(56,189,248,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(56,189,248,0.75)]",
     glass:
-      "from-sky-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(56,189,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
-    glassEdge: "from-sky-300/70 via-sky-400/25 to-indigo-400/10",
-    num: "text-sky-400/90",
-    crystalAccent: "#38bdf8",
+      "from-sky-400/[0.22] via-white/55 to-white/20 shadow-[0_18px_40px_-22px_rgba(15,23,42,0.35),0_0_30px_-12px_rgba(56,189,248,0.35),inset_0_1px_0_rgba(255,255,255,0.75)] dark:from-sky-400/[0.16] dark:via-white/[0.05] dark:to-white/[0.015] dark:shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(56,189,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-sky-500/70 via-sky-400/30 to-indigo-400/20 dark:from-sky-300/70 dark:via-sky-400/25 dark:to-indigo-400/10",
+    num: "text-sky-600 dark:text-sky-400/90",
+    crystalAccent: "#0284c7",
   },
   emerald: {
     ring: "from-emerald-400/80 to-teal-500/80",
-    icon: "text-emerald-300",
-    chip: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-    dot: "bg-emerald-400",
+    icon: "text-emerald-600 dark:text-emerald-300",
+    chip: "border-emerald-500/35 bg-emerald-500/10 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-300",
+    dot: "bg-emerald-500 dark:bg-emerald-400",
     aura: "rgba(52,211,153,0.4)",
-    disc: "border-emerald-400/35 bg-emerald-400/10",
-    discText: "text-emerald-300",
+    disc: "border-emerald-500/40 bg-emerald-500/10 dark:border-emerald-400/35 dark:bg-emerald-400/10",
+    discText: "text-emerald-600 dark:text-emerald-300",
     discGlow:
       "shadow-[0_0_18px_-4px_rgba(52,211,153,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(52,211,153,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(52,211,153,0.75)]",
     glass:
-      "from-emerald-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(52,211,153,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
-    glassEdge: "from-emerald-300/70 via-emerald-400/25 to-teal-400/10",
-    num: "text-emerald-400/90",
-    crystalAccent: "#34d399",
+      "from-emerald-400/[0.22] via-white/55 to-white/20 shadow-[0_18px_40px_-22px_rgba(15,23,42,0.35),0_0_30px_-12px_rgba(52,211,153,0.35),inset_0_1px_0_rgba(255,255,255,0.75)] dark:from-emerald-400/[0.16] dark:via-white/[0.05] dark:to-white/[0.015] dark:shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(52,211,153,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-emerald-500/70 via-emerald-400/30 to-teal-400/20 dark:from-emerald-300/70 dark:via-emerald-400/25 dark:to-teal-400/10",
+    num: "text-emerald-600 dark:text-emerald-400/90",
+    crystalAccent: "#059669",
   },
   violet: {
     ring: "from-violet-400/70 to-purple-500/70",
-    icon: "text-violet-300",
-    chip: "border-violet-400/30 bg-violet-400/10 text-violet-300",
-    dot: "bg-violet-400",
+    icon: "text-violet-600 dark:text-violet-300",
+    chip: "border-violet-500/35 bg-violet-500/10 text-violet-700 dark:border-violet-400/30 dark:bg-violet-400/10 dark:text-violet-300",
+    dot: "bg-violet-500 dark:bg-violet-400",
     aura: "rgba(167,139,250,0.4)",
-    disc: "border-violet-400/35 bg-violet-400/10",
-    discText: "text-violet-300",
+    disc: "border-violet-500/40 bg-violet-500/10 dark:border-violet-400/35 dark:bg-violet-400/10",
+    discText: "text-violet-600 dark:text-violet-300",
     discGlow:
       "shadow-[0_0_18px_-4px_rgba(167,139,250,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(167,139,250,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(167,139,250,0.75)]",
     glass:
-      "from-violet-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(167,139,250,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
-    glassEdge: "from-violet-300/70 via-violet-400/25 to-purple-400/10",
-    num: "text-violet-400/90",
-    crystalAccent: "#a78bfa",
+      "from-violet-400/[0.22] via-white/55 to-white/20 shadow-[0_18px_40px_-22px_rgba(15,23,42,0.35),0_0_30px_-12px_rgba(167,139,250,0.35),inset_0_1px_0_rgba(255,255,255,0.75)] dark:from-violet-400/[0.16] dark:via-white/[0.05] dark:to-white/[0.015] dark:shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(167,139,250,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-violet-500/70 via-violet-400/30 to-purple-400/20 dark:from-violet-300/70 dark:via-violet-400/25 dark:to-purple-400/10",
+    num: "text-violet-600 dark:text-violet-400/90",
+    crystalAccent: "#7c3aed",
   },
   indigo: {
     ring: "from-indigo-400/70 to-blue-500/70",
-    icon: "text-indigo-300",
-    chip: "border-indigo-400/30 bg-indigo-400/10 text-indigo-300",
-    dot: "bg-indigo-400",
+    icon: "text-indigo-600 dark:text-indigo-300",
+    chip: "border-indigo-500/35 bg-indigo-500/10 text-indigo-700 dark:border-indigo-400/30 dark:bg-indigo-400/10 dark:text-indigo-300",
+    dot: "bg-indigo-500 dark:bg-indigo-400",
     aura: "rgba(129,140,248,0.4)",
-    disc: "border-indigo-400/35 bg-indigo-400/10",
-    discText: "text-indigo-300",
+    disc: "border-indigo-500/40 bg-indigo-500/10 dark:border-indigo-400/35 dark:bg-indigo-400/10",
+    discText: "text-indigo-600 dark:text-indigo-300",
     discGlow:
       "shadow-[0_0_18px_-4px_rgba(129,140,248,0.55)] group-hover/shard:shadow-[0_0_26px_-2px_rgba(129,140,248,0.75)] group-focus-visible/shard:shadow-[0_0_26px_-2px_rgba(129,140,248,0.75)]",
     glass:
-      "from-indigo-400/[0.16] via-white/[0.05] to-white/[0.015] shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(129,140,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
-    glassEdge: "from-indigo-300/70 via-indigo-400/25 to-blue-400/10",
-    num: "text-indigo-400/90",
-    crystalAccent: "#818cf8",
+      "from-indigo-400/[0.22] via-white/55 to-white/20 shadow-[0_18px_40px_-22px_rgba(15,23,42,0.35),0_0_30px_-12px_rgba(129,140,248,0.35),inset_0_1px_0_rgba(255,255,255,0.75)] dark:from-indigo-400/[0.16] dark:via-white/[0.05] dark:to-white/[0.015] dark:shadow-[0_20px_44px_-20px_rgba(2,6,23,0.95),0_0_34px_-10px_rgba(129,140,248,0.35),inset_0_1px_0_rgba(255,255,255,0.16)]",
+    glassEdge: "from-indigo-500/70 via-indigo-400/30 to-blue-400/20 dark:from-indigo-300/70 dark:via-indigo-400/25 dark:to-blue-400/10",
+    num: "text-indigo-600 dark:text-indigo-400/90",
+    crystalAccent: "#4f46e5",
   },
 };
 
@@ -402,23 +404,23 @@ function NeuralStage() {
       ref={stageRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative hidden h-[32rem] select-none md:block lg:h-[37rem] xl:h-[39rem]"
+      className="neural-vault relative hidden h-[32rem] select-none md:block lg:h-[37rem] xl:h-[39rem]"
     >
       {/* ===== Cosmic environment ===== */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 overflow-hidden rounded-3xl border border-white/[0.08] bg-[#04081a] shadow-[0_36px_80px_-32px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.06)]"
+        className="absolute inset-0 overflow-hidden rounded-3xl border border-slate-200 bg-[#f4f7ff] shadow-[0_30px_70px_-34px_rgba(15,23,42,0.35),inset_0_1px_0_rgba(255,255,255,0.8)] transition-colors duration-500 dark:border-white/[0.08] dark:bg-[#04081a] dark:shadow-[0_36px_80px_-32px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.06)]"
       >
         {/* Nebula washes — electric blue / soft violet */}
-        <div className="absolute -left-32 top-[-20%] h-[26rem] w-[26rem] rounded-full bg-sky-600/[0.16] blur-[130px]" />
-        <div className="absolute -right-32 bottom-[-22%] h-[26rem] w-[26rem] rounded-full bg-violet-600/[0.18] blur-[130px]" />
-        <div className="absolute left-1/3 top-1/3 h-72 w-72 rounded-full bg-indigo-700/[0.16] blur-[120px]" />
+        <div className="absolute -left-32 top-[-20%] h-[26rem] w-[26rem] rounded-full bg-sky-400/25 blur-[130px] dark:bg-sky-600/[0.16]" />
+        <div className="absolute -right-32 bottom-[-22%] h-[26rem] w-[26rem] rounded-full bg-violet-400/25 blur-[130px] dark:bg-violet-600/[0.18]" />
+        <div className="absolute left-1/3 top-1/3 h-72 w-72 rounded-full bg-indigo-400/20 blur-[120px] dark:bg-indigo-700/[0.16]" />
         {/* Volumetric light beams from above */}
-        <div className="absolute -top-16 left-[27%] h-[125%] w-40 -skew-x-12 bg-gradient-to-b from-sky-400/[0.13] via-indigo-400/[0.05] to-transparent blur-md" />
-        <div className="absolute -top-16 right-[27%] h-[125%] w-40 skew-x-12 bg-gradient-to-b from-violet-400/[0.13] via-indigo-400/[0.05] to-transparent blur-md" />
-        <div className="absolute -top-16 left-1/2 h-[125%] w-28 -translate-x-1/2 bg-gradient-to-b from-indigo-200/[0.12] via-indigo-400/[0.04] to-transparent blur-md" />
+        <div className="absolute -top-16 left-[27%] h-[125%] w-40 -skew-x-12 bg-gradient-to-b from-sky-400/25 via-indigo-400/10 to-transparent blur-md dark:from-sky-400/[0.13] dark:via-indigo-400/[0.05]" />
+        <div className="absolute -top-16 right-[27%] h-[125%] w-40 skew-x-12 bg-gradient-to-b from-violet-400/25 via-indigo-400/10 to-transparent blur-md dark:from-violet-400/[0.13] dark:via-indigo-400/[0.05]" />
+        <div className="absolute -top-16 left-1/2 h-[125%] w-28 -translate-x-1/2 bg-gradient-to-b from-indigo-300/30 via-indigo-400/[0.08] to-transparent blur-md dark:from-indigo-200/[0.12] dark:via-indigo-400/[0.04]" />
         {/* Spotlight behind the core */}
-        <div className="absolute left-1/2 top-[46%] h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.16] blur-[100px]" />
+        <div className="absolute left-1/2 top-[46%] h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400/20 blur-[100px] dark:bg-indigo-500/[0.16]" />
         {/* Perspective synapse grid receding into the dimension */}
         <div className="neural-floor absolute bottom-0 left-0 right-0 h-44 opacity-70" />
         {/* Scanline texture + one sweeping holographic band */}
@@ -426,13 +428,13 @@ function NeuralStage() {
         {!reducedMotion && (
           <div className="neural-scan absolute left-0 h-24 w-full bg-gradient-to-b from-transparent via-sky-300/[0.13] to-transparent blur-[6px]" />
         )}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_42%,rgba(2,6,23,0.62)_100%)]" />
+        <div className="neural-vignette absolute inset-0" />
         <StarDust count={34} />
         {/* Corner brackets — dimension framing */}
-        <span className="absolute left-3 top-3 h-5 w-5 border-l-2 border-t-2 border-indigo-300/30" />
-        <span className="absolute right-3 top-3 h-5 w-5 border-r-2 border-t-2 border-indigo-300/30" />
-        <span className="absolute bottom-3 left-3 h-5 w-5 border-b-2 border-l-2 border-indigo-300/30" />
-        <span className="absolute bottom-3 right-3 h-5 w-5 border-b-2 border-r-2 border-indigo-300/30" />
+        <span className="absolute left-3 top-3 h-5 w-5 border-l-2 border-t-2 border-indigo-500/40 dark:border-indigo-300/30" />
+        <span className="absolute right-3 top-3 h-5 w-5 border-r-2 border-t-2 border-indigo-500/40 dark:border-indigo-300/30" />
+        <span className="absolute bottom-3 left-3 h-5 w-5 border-b-2 border-l-2 border-indigo-500/40 dark:border-indigo-300/30" />
+        <span className="absolute bottom-3 right-3 h-5 w-5 border-b-2 border-r-2 border-indigo-500/40 dark:border-indigo-300/30" />
       </div>
 
       {/* ===== Tilted dimension plane ===== */}
@@ -609,10 +611,7 @@ function NeuralStage() {
             </div>
           </div>
           {/* Core readout */}
-          <p
-            className="mt-3 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.34em] text-indigo-200 lg:text-[9px]"
-            style={{ textShadow: "0 0 22px rgba(129,140,248,0.75)" }}
-          >
+          <p className="neural-core-label mt-3 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.34em] text-indigo-700 dark:text-indigo-200 lg:text-[9px]">
             Neural Core<br />My Learning Journey
           </p>
         </div>
@@ -654,14 +653,14 @@ function NeuralStage() {
                     {/* Glass facets */}
                     <div className={`absolute inset-[1.5px] bg-gradient-to-br ${tone.glass}`} style={{ clipPath: shard.crystal }} />
                     <div
-                      className="absolute inset-[1.5px] bg-[radial-gradient(circle_at_50%_32%,rgba(224,242,254,0.22),rgba(99,102,241,0.1)_46%,rgba(4,8,26,0.9)_88%)]"
-                      style={{ clipPath: shard.crystal }}
+                      className="absolute inset-[1.5px]"
+                      style={{ clipPath: shard.crystal, background: "var(--vault-shard-face)" }}
                     />
                     {/* Facet cut lines */}
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-[1.5px] h-[calc(100%-3px)] w-[calc(100%-3px)]" aria-hidden="true">
                       {shard.facets.map((pair, i) => {
                         const [x1, y1, x2, y2] = pair.split(/[ ,]/).map(Number);
-                        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#e0f2fe" strokeOpacity="0.14" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />;
+                        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} className="shard-facet-line" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />;
                       })}
                     </svg>
                     {/* Holographic scan band — only while hovered/focused */}
@@ -679,7 +678,7 @@ function NeuralStage() {
                     <span className={`font-mono text-[6px] font-bold uppercase leading-none tracking-[0.3em] lg:text-[6.5px] ${tone.num}`}>
                       {shard.num} · {shard.tag}
                     </span>
-                    <span className="text-[8px] font-bold leading-[1.25] tracking-tight text-slate-100 lg:text-[9.5px]">
+                    <span className="text-[8px] font-bold leading-[1.25] tracking-tight text-slate-900 dark:text-slate-100 lg:text-[9.5px]">
                       {shard.short}
                     </span>
                     <StatusChip shard={shard} />
@@ -687,19 +686,19 @@ function NeuralStage() {
                   {/* Hover readout — holographic data overlay */}
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-[11.5rem] -translate-x-1/2 -translate-y-1/2 scale-90 flex-col items-center gap-1.5 rounded-2xl border border-sky-300/25 bg-[#060c22]/85 px-3 py-2.5 opacity-0 blur-[3px] backdrop-blur-md transition-all duration-500 ease-out group-hover/shard:scale-100 group-hover/shard:opacity-100 group-hover/shard:blur-none group-focus-visible/shard:scale-100 group-focus-visible/shard:opacity-100 group-focus-visible/shard:blur-none lg:w-48"
+                    className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-[11.5rem] -translate-x-1/2 -translate-y-1/2 scale-90 flex-col items-center gap-1.5 rounded-2xl border border-sky-400/40 bg-white/90 px-3 py-2.5 opacity-0 blur-[3px] backdrop-blur-md transition-all duration-500 ease-out group-hover/shard:scale-100 group-hover/shard:opacity-100 group-hover/shard:blur-none group-focus-visible/shard:scale-100 group-focus-visible/shard:opacity-100 group-focus-visible/shard:blur-none dark:border-sky-300/25 dark:bg-[#060c22]/85 lg:w-48"
                   >
                     <span className={`font-mono text-[6px] font-bold uppercase tracking-[0.35em] ${tone.num}`}>
                       Memory Shard {shard.num}
                     </span>
-                    <span className="text-[9px] font-bold leading-snug text-white lg:text-[10px]">
+                    <span className="text-[9px] font-bold leading-snug text-slate-900 dark:text-white lg:text-[10px]">
                       {shard.record}
                     </span>
-                    <span className="flex items-center gap-1.5 font-mono text-[7px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                    <span className="flex items-center gap-1.5 font-mono text-[7px] font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-300">
                       <CheckCircle2 className="h-3 w-3" />
                       {shard.statusLine}
                     </span>
-                    <span className="mt-0.5 border-t border-white/10 pt-1.5 font-mono text-[5.5px] uppercase tracking-[0.3em] text-slate-500">
+                    <span className="mt-0.5 border-t border-slate-200 pt-1.5 font-mono text-[5.5px] uppercase tracking-[0.3em] text-slate-500 dark:border-white/10 dark:text-slate-500">
                       Click — open shard file
                     </span>
                   </span>
@@ -726,23 +725,23 @@ function NeuralStage() {
             aria-modal="true"
             aria-labelledby="neural-panel-title"
             tabIndex={-1}
-            className="neural-panel relative max-h-full w-[min(25rem,calc(100%-2.5rem))] overflow-y-auto rounded-2xl border border-indigo-300/25 bg-[#070d22]/95 p-5 shadow-[0_36px_80px_-24px_rgba(2,6,23,1),0_0_60px_-18px_rgba(129,140,248,0.45),inset_0_1px_0_rgba(255,255,255,0.09)] outline-none backdrop-blur-xl lg:p-6"
+            className="neural-panel relative max-h-full w-[min(25rem,calc(100%-2.5rem))] overflow-y-auto rounded-2xl border border-indigo-400/30 bg-white/95 p-5 shadow-[0_30px_70px_-30px_rgba(15,23,42,0.4),0_0_50px_-20px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.9)] outline-none backdrop-blur-xl dark:border-indigo-300/25 dark:bg-[#070d22]/95 dark:shadow-[0_36px_80px_-24px_rgba(2,6,23,1),0_0_60px_-18px_rgba(129,140,248,0.45),inset_0_1px_0_rgba(255,255,255,0.09)] lg:p-6"
           >
             {/* Top energy filament */}
             <span aria-hidden="true" className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-sky-300/70 to-transparent" />
             {/* Scanline texture + corner brackets */}
             <span aria-hidden="true" className="neural-scanlines pointer-events-none absolute inset-0 rounded-2xl" />
-            <span aria-hidden="true" className="pointer-events-none absolute left-2 top-2 h-4 w-4 border-l border-t border-indigo-300/45" />
-            <span aria-hidden="true" className="pointer-events-none absolute right-2 top-2 h-4 w-4 border-r border-t border-indigo-300/45" />
-            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-2 h-4 w-4 border-b border-l border-indigo-300/45" />
-            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute left-2 top-2 h-4 w-4 border-l border-t border-indigo-500/50 dark:border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute right-2 top-2 h-4 w-4 border-r border-t border-indigo-500/50 dark:border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-2 h-4 w-4 border-b border-l border-indigo-500/50 dark:border-indigo-300/45" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-indigo-500/50 dark:border-indigo-300/45" />
 
             {/* Close */}
             <button
               type="button"
               onClick={() => setPanelId(null)}
               aria-label="Close details panel"
-              className="absolute right-3 top-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] text-slate-400 outline-none transition-all duration-200 hover:border-sky-400/40 hover:text-sky-300 focus-visible:ring-2 focus-visible:ring-sky-400"
+              className="absolute right-3 top-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 outline-none transition-all duration-200 hover:border-sky-500/50 hover:text-sky-600 focus-visible:ring-2 focus-visible:ring-sky-500 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-400 dark:hover:border-sky-400/40 dark:hover:text-sky-300 dark:focus-visible:ring-sky-400"
             >
               <X className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -750,7 +749,7 @@ function NeuralStage() {
             {/* Kicker */}
             <p className={`flex items-center justify-between gap-3 pr-9 font-mono text-[7px] font-bold uppercase tracking-[0.3em] ${panelTone.num}`}>
               Shard {panelShard.num} · {panelShard.tag}
-              <span className="text-slate-600">{panelShard.meta}</span>
+              <span className="text-slate-500 dark:text-slate-600">{panelShard.meta}</span>
             </p>
 
             {/* Icon + record title */}
@@ -758,24 +757,24 @@ function NeuralStage() {
               <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${panelTone.disc} ${panelTone.discGlow}`}>
                 <PanelIcon className={`h-6 w-6 ${panelTone.discText}`} strokeWidth={1.75} />
               </span>
-              <h3 id="neural-panel-title" className="text-[15px] font-extrabold leading-snug text-white lg:text-base">
+              <h3 id="neural-panel-title" className="text-[15px] font-extrabold leading-snug text-slate-900 dark:text-white lg:text-base">
                 {panelShard.record}
               </h3>
             </div>
 
             {/* Status line */}
             <div className="mt-3.5 flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
-              <span className="text-[11px] font-semibold text-slate-200">{panelShard.statusLine}</span>
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+              <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-200">{panelShard.statusLine}</span>
             </div>
 
             {/* Record description — verbatim from portfolioData.js */}
-            <p className="mt-3 border-t border-white/[0.07] pt-3 text-[10.5px] leading-relaxed text-slate-400">
+            <p className="mt-3 border-t border-slate-200 pt-3 text-[10.5px] leading-relaxed text-slate-600 dark:border-white/[0.07] dark:text-slate-400">
               {panelShard.desc}
             </p>
 
             {/* Footer */}
-            <p className="mt-3 border-t border-white/[0.07] pt-2.5 font-mono text-[6.5px] uppercase tracking-[0.35em] text-slate-600">
+            <p className="mt-3 border-t border-slate-200 pt-2.5 font-mono text-[6.5px] uppercase tracking-[0.35em] text-slate-500 dark:border-white/[0.07] dark:text-slate-600">
               Neural Learning Dimension · Shard {panelShard.num}/04
             </p>
           </div>
@@ -819,10 +818,7 @@ function MobileNeural() {
             <GraduationCap className="h-5 w-5 text-indigo-50 drop-shadow-[0_0_5px_rgba(224,242,254,0.9)]" strokeWidth={1.75} />
           </div>
         </div>
-        <p
-          className="mt-2.5 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.32em] text-indigo-200"
-          style={{ textShadow: "0 0 18px rgba(129,140,248,0.55)" }}
-        >
+        <p className="neural-core-label mt-2.5 font-mono text-[8px] font-bold uppercase leading-relaxed tracking-[0.32em] text-indigo-700 dark:text-indigo-200">
           Neural Core<br />My Learning Journey
         </p>
       </div>
@@ -834,7 +830,7 @@ function MobileNeural() {
           className="absolute bottom-6 left-7 top-2 w-px bg-gradient-to-b from-sky-400/70 via-indigo-400/70 to-violet-400/70 shadow-[0_0_8px_0_rgba(129,140,248,0.45)]"
         />
         {!reducedMotionMobile && (
-          <span aria-hidden="true" className="spine-dot absolute left-7 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-indigo-200 shadow-[0_0_8px_2px_rgba(199,210,254,0.8)]" />
+          <span aria-hidden="true" className="spine-dot absolute left-7 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-indigo-500 shadow-[0_0_8px_2px_rgba(99,102,241,0.5)] dark:bg-indigo-200 dark:shadow-[0_0_8px_2px_rgba(199,210,254,0.8)]" />
         )}
 
         {SHARDS.map((shard, shardIndex) => {
@@ -855,7 +851,7 @@ function MobileNeural() {
                   style={{ ["--aura-delay"]: shard.floatDelay, ["--aura-duration"]: "4.8s", background: `radial-gradient(circle, ${tone.aura} 0%, transparent 68%)`, filter: "blur(8px)", clipPath: shard.crystal }}
                 />
                 <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-sky-400/70 via-indigo-400/60 to-violet-500/70" style={{ clipPath: shard.crystal }} />
-                <span aria-hidden="true" className="absolute inset-[1.5px] bg-[#080e26]" style={{ clipPath: shard.crystal }} />
+                <span aria-hidden="true" className="absolute inset-[1.5px] bg-white dark:bg-[#080e26]" style={{ clipPath: shard.crystal }} />
                 <Icon className={`relative h-5 w-5 ${tone.icon}`} strokeWidth={1.75} />
               </span>
 
@@ -866,13 +862,13 @@ function MobileNeural() {
                   onClick={() => setOpenId(open ? null : shard.id)}
                   aria-expanded={open}
                   aria-controls={`shard-${shard.id}`}
-                  className="flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] px-4 py-3 text-left outline-none transition-all duration-300 hover:border-indigo-300/25 hover:bg-white/[0.055] focus-visible:ring-2 focus-visible:ring-sky-400"
+                  className="flex min-h-[44px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-left outline-none transition-all duration-300 hover:border-indigo-400/40 hover:bg-white focus-visible:ring-2 focus-visible:ring-sky-500 dark:border-white/[0.08] dark:bg-white/[0.035] dark:hover:border-indigo-300/25 dark:hover:bg-white/[0.055] dark:focus-visible:ring-sky-400"
                 >
                   <span className="min-w-0">
                     <span className={`block font-mono text-[6px] font-bold uppercase tracking-[0.3em] ${tone.num}`}>
                       {shard.num} · {shard.tag}
                     </span>
-                    <span className="mt-1 block text-[12px] font-bold leading-snug text-slate-100">
+                    <span className="mt-1 block text-[12px] font-bold leading-snug text-slate-900 dark:text-slate-100">
                       {shard.short}
                     </span>
                     <span className="mt-1.5 block">
@@ -880,24 +876,24 @@ function MobileNeural() {
                     </span>
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-300 ${open ? "rotate-180 text-indigo-300" : ""}`}
+                    className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-300 ${open ? "rotate-180 text-indigo-600 dark:text-indigo-300" : ""}`}
                     aria-hidden="true"
                   />
                 </button>
 
                 {open && (
-                  <div id={`shard-${shard.id}`} className="mobile-detail mt-2 rounded-2xl border border-white/[0.07] bg-white/[0.04] px-4 py-3">
-                    <p className="text-[12px] font-semibold leading-snug text-white">
+                  <div id={`shard-${shard.id}`} className="mobile-detail mt-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-white/[0.07] dark:bg-white/[0.04]">
+                    <p className="text-[12px] font-semibold leading-snug text-slate-900 dark:text-white">
                       {shard.record}
                     </p>
-                    <p className="mt-1.5 flex items-center gap-2 text-[10px] font-semibold text-slate-400">
-                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
+                    <p className="mt-1.5 flex items-center gap-2 text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                       {shard.statusLine}
                     </p>
-                    <p className="mt-2 text-[11px] leading-relaxed text-slate-400">
+                    <p className="mt-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
                       {shard.desc}
                     </p>
-                    <p className="mt-2 font-mono text-[6px] uppercase tracking-[0.3em] text-slate-600">
+                    <p className="mt-2 font-mono text-[6px] uppercase tracking-[0.3em] text-slate-500 dark:text-slate-600">
                       {shard.meta}
                     </p>
                   </div>
@@ -916,7 +912,7 @@ export default function Education() {
     <section
       id="education"
       aria-labelledby="education-heading"
-      className="relative scroll-mt-20 overflow-hidden bg-slate-50 py-16 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white sm:py-20 lg:py-24"
+      className="relative scroll-mt-20 overflow-hidden bg-slate-50 py-16 text-slate-900 transition-colors duration-500 dark:bg-slate-950 dark:text-white sm:py-20 lg:py-24"
     >
       {/* Ambient backdrop */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
@@ -956,7 +952,7 @@ export default function Education() {
 
         {/* ===== Mobile dimension (vertical shard sequence) ===== */}
         <Reveal y={24} delay={0.08} duration={0.85} className="md:hidden">
-          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#04081a] p-5 shadow-[0_28px_60px_-28px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6">
+            <div className="neural-vault relative overflow-hidden rounded-3xl border border-slate-200 bg-[#f4f7ff] p-5 shadow-[0_28px_60px_-28px_rgba(15,23,42,0.35),inset_0_1px_0_rgba(255,255,255,0.8)] dark:border-white/[0.08] dark:bg-[#04081a] dark:shadow-[0_28px_60px_-28px_rgba(2,6,23,0.9),inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6">
             <StarDust count={16} />
             <MobileNeural />
           </div>

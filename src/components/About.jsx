@@ -72,7 +72,7 @@ export default function About() {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="relative scroll-mt-20 overflow-hidden bg-[#f4f6fc] py-16 text-slate-900 transition-colors duration-300 dark:bg-[#060b1a] dark:text-slate-100 sm:py-20 lg:py-24"
+      className="relative scroll-mt-20 overflow-hidden bg-[#f4f6fc] py-16 text-slate-900 transition-colors duration-500 dark:bg-[#060b1a] dark:text-slate-100 sm:py-20 lg:py-24"
     >
       {/* ===== Ambient backdrop — faint nebula + blueprint grid ===== */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">

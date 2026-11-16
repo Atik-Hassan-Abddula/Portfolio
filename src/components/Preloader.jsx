@@ -157,6 +157,8 @@ export default function Preloader() {
       // Release the page as the curtain lifts
       html.style.overflow = previousOverflow;
       if (window.__lenis) window.__lenis.start();
+      // Let hash restore / scroll observers re-align once the page is live
+      window.dispatchEvent(new Event("portfolio:preloader-done"));
       window.setTimeout(() => setGone(true), EXIT_MS);
     };
 
