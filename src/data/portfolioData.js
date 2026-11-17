@@ -23,9 +23,9 @@ export const personalInfo = {
     github: "https://github.com/Atik-Hassan-Abddula",
     linkedin: "https://www.linkedin.com/in/atik-hassan-687022440/",
     // TODO: replace with your real Facebook profile URL
-    facebook: "https://www.facebook.com/YOUR_FACEBOOK_USERNAME",
+    facebook: "https://atikhasan-portfolio.vercel.app/",
     // TODO: replace with your real WhatsApp link, e.g. https://wa.me/8801XXXXXXXXX
-    whatsapp: "https://wa.me/8801XXXXXXXXX",
+    whatsapp: "https://wa.me/8801600176795",
     twitter: null,
   },
 
