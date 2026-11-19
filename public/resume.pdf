@@ -1,0 +1,610 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 4427
+>>
+stream
+0.5670000000000001 w
+0 G
+0.06 0.09 0.16 rg
+0. 841.8899999999999864 595.2799999999999727 -136.0629921259842661 re
+f
+BT
+/F2 22 Tf
+25.2999999999999972 TL
+1. g
+51.0236220472441033 785.1970866141732586 Td
+(Atik Hassan) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0.749 0.859 0.996 rg
+51.0236220472441033 756.8506299212598378 Td
+(Full Stack Developer) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.886 0.91 0.941 rg
+51.0236220472441033 734.1734645669291695 Td
+(atik508030@gmail.com) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 668.9766141732283131 Td
+(CONTACT INFORMATION) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 657.6380314960629221 m
+544.2563779527558836 657.6380314960629221 l
+S
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+51.0236220472441033 637.7955118110235162 Td
+(Location: Gazipur, Kalakair, Bangladesh) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+51.0236220472441033 612.2837007874015853 Td
+(GitHub: https://github.com/Atik-Hassan-Abddula) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+51.0236220472441033 586.7718897637794271 Td
+(LinkedIn: https://www.linkedin.com/in/atik-hassan-687022440/) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 549.9214960629921052 Td
+(PROFESSIONAL OVERVIEW) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 538.5829133858267141 m
+544.2563779527558836 538.5829133858267141 l
+S
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+51.0236220472441033 518.7403937007873083 Td
+(Full Stack Developer specializing in building high-performance, accessible, and responsive web applications) Tj
+T* (with Next.js, React, JavaScript, and Tailwind CSS.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 464.8821259842518998 Td
+(TECHNICAL EXPERTISE) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 453.5435433070865656 m
+544.2563779527558836 453.5435433070865656 l
+S
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+56.6929133858267775 433.7010236220471597 Td
+(- Frontend: HTML5, CSS3, JavaScript ES6+, TypeScript) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+56.6929133858267775 408.1892125984251152 Td
+(- Frameworks & Runtime: React, Next.js \(App Router, RSC\), Node.js, Express.js) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+56.6929133858267775 382.6774015748030706 Td
+(- Styling & UI: Tailwind CSS, DaisyUI, Hero UI, shadcn/ui) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+56.6929133858267775 357.1655905511810261 Td
+(- Tools & Version Control: Git, GitHub, Visual Studio Code, npm) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 320.3151968503935905 Td
+(FEATURED PROJECTS) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 308.9766141732282563 m
+544.2563779527558836 308.9766141732282563 l
+S
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 289.1340944881889072 Td
+(1. Bangla News 24 \(Next.js, React, Tailwind CSS, MongoDB, Better Auth, REST API\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 263.6222834645668627 Td
+(A modern Bengali news platform built with Next.js, featuring category filtering, breaking news ticker, most-read) Tj
+T* (articles, dynamic article pages, and authentication.) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.145 0.388 0.922 rg
+59.5275590551181182 221.1025984251967884 Td
+(Live Demo: https://bangla-news-24-rho-six.vercel.app/) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 196.8663779527557836 Td
+(2. Fit-Logs \(Next.js, React, Tailwind CSS, JavaScript, REST API\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 171.354566929133739 Td
+(A comprehensive fitness tracking web application built with Next.js for exploring targeted exercises,) Tj
+T* (structuring workout routines, and monitoring progress.) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.145 0.388 0.922 rg
+59.5275590551181182 128.8348818897636647 Td
+(Live Demo: https://book-vibe-resources.vercel.app/) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 104.5986614173226599 Td
+(3. Bazar-Dor \(Next.js, React, JavaScript, Tailwind CSS\)) Tj
+ET
+0.89 0.91 0.94 RG
+51.0236220472441033 39.6850393700787407 m
+544.2563779527558836 39.6850393700787407 l
+S
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.392 0.455 0.545 rg
+51.0236220472441033 22.6771653543306684 Td
+(Atik Hassan | Resume) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.392 0.455 0.545 rg
+503.6163779527558404 22.6771653543306684 Td
+(Page 1 of 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 3861
+>>
+stream
+0.5670000000000001 w
+0.8 0.84 0.88 RG
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 785.1970866141732586 Td
+(An interactive web platform focused on real-time market insights and dynamic price tracking, continuously) Tj
+T* (refined to sharpen full-stack development skills.) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.145 0.388 0.922 rg
+59.5275590551181182 742.6774015748030706 Td
+(Live Demo: https://bazar-dor-five-neon.vercel.app/) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 718.4411811023621794 Td
+(4. BookNook \(Next.js, React, Tailwind CSS, Lucide Icons\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 692.9293700787401349 Td
+(An online library where users can browse and explore books, add new books, borrow titles, view borrowed) Tj
+T* (books, and return them once finished reading.) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.145 0.388 0.922 rg
+59.5275590551181182 650.4096850393700606 Td
+(Live Demo: https://book-libary-client.vercel.app/) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 614.8348818897637784 Td
+(EDUCATION) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 603.4962992125983874 m
+544.2563779527558836 603.4962992125983874 l
+S
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 583.6537795275589815 Td
+(Diploma in Computer Science & Engineering \(CSE\) — Computer Science & Engineering) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 558.1419685039370506 Td
+(Status: Currently Studying | Period: Present) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 532.6301574803148924 Td
+(Acquiring strong computer science foundations including algorithms, data structures, software engineering) Tj
+T* (methodologies, web development, and database architecture.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 490.110472440944875 Td
+(Secondary School Certificate \(SSC\) — Secondary Education) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 464.5986614173227736 Td
+(Status: Passed | Period: Completed) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 439.086850393700729 Td
+(Completed secondary education with focused studies in sciences, analytical reasoning, and mathematics.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.145 0.388 0.922 rg
+51.0236220472441033 402.2364566929133503 Td
+(PROFESSIONAL TRAINING & CERTIFICATIONS) Tj
+ET
+0.8 0.84 0.88 RG
+51.0236220472441033 390.8978740157479592 m
+544.2563779527558836 390.8978740157479592 l
+S
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 371.0553543307086102 Td
+(Computer Operation — Level 3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 345.5435433070865656 Td
+(Level: National Skill Standard Level 3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 320.0317322834645211 Td
+(Certified competency in advanced computer operation, system utilities, digital workflows, and information) Tj
+T* (management.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.122 0.161 0.216 rg
+51.0236220472441033 277.5120472440944468 Td
+(Digital Marketing — Level 3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 252.0002362204724022 Td
+(Level: National Skill Standard Level 3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.216 0.255 0.318 rg
+59.5275590551181182 226.4884251968503577 Td
+(Certified knowledge in digital brand positioning, online engagement, web analytics, and content distribution) Tj
+T* (strategies.) Tj
+ET
+0.89 0.91 0.94 RG
+51.0236220472441033 39.6850393700787407 m
+544.2563779527558836 39.6850393700787407 l
+S
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.392 0.455 0.545 rg
+51.0236220472441033 22.6771653543306684 Td
+(Atik Hassan | Resume) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.392 0.455 0.545 rg
+503.6163779527558404 22.6771653543306684 Td
+(Page 2 of 2) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R ]
+/Count 2
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+9 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 7 0 R
+/F2 8 0 R
+/F3 9 0 R
+/F4 10 0 R
+/F5 11 0 R
+/F6 12 0 R
+/F7 13 0 R
+/F8 14 0 R
+/F9 15 0 R
+/F10 16 0 R
+/F11 17 0 R
+/F12 18 0 R
+/F13 19 0 R
+/F14 20 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+21 0 obj
+<<
+/Producer (jsPDF 4.2.1)
+/CreationDate (D:20261119234940+06'00')
+>>
+endobj
+22 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 23
+0000000000 65535 f 
+0000008681 00000 n 
+0000010506 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000004631 00000 n 
+0000004768 00000 n 
+0000008744 00000 n 
+0000008869 00000 n 
+0000008999 00000 n 
+0000009132 00000 n 
+0000009270 00000 n 
+0000009394 00000 n 
+0000009523 00000 n 
+0000009655 00000 n 
+0000009791 00000 n 
+0000009919 00000 n 
+0000010046 00000 n 
+0000010175 00000 n 
+0000010308 00000 n 
+0000010410 00000 n 
+0000010756 00000 n 
+0000010842 00000 n 
+trailer
+<<
+/Size 23
+/Root 22 0 R
+/Info 21 0 R
+/ID [ <9BCA495FC2FF883E7DE7B0282A25B38C> <9BCA495FC2FF883E7DE7B0282A25B38C> ]
+>>
+startxref
+10946
+%%EOF
