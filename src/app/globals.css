@@ -1,4 +1,4 @@
-
+﻿
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -120,7 +120,7 @@ body {
 }
 
 /* ============================================
-   Hero — "Beyond the Code" futuristic layer
+   Hero â€” "Beyond the Code" futuristic layer
    (decorative only; disabled under reduced motion)
    ============================================ */
 
@@ -201,7 +201,7 @@ html.dark .hero-grid {
 }
 
 /* ============================================
-   Hero v2 — "Digital Dimension" editorial layer
+   Hero v2 â€” "Digital Dimension" editorial layer
    (decorative only; disabled under reduced motion)
    ============================================ */
 
@@ -310,10 +310,10 @@ html.dark .hero-ghost-word {
 }
 
 /* ============================================
-   Hero — cinematic swinging entrance for ATIK HASSAN
+   Hero â€” cinematic swinging entrance for ATIK HASSAN
    (plays once on mount/page load; never on ordinary re-renders)
    ============================================ */
-/* Each letter carries its own Electric Blue → Indigo → Soft Violet gradient.
+/* Each letter carries its own Electric Blue â†’ Indigo â†’ Soft Violet gradient.
    The shine sweep uses a per-letter delay (--sweep-delay) so the streak
    travels across the word like a wave. --drop-delay drives the entrance. */
 .hero-letter {
@@ -398,12 +398,12 @@ html.dark .hero-letter {
 }
 
 /* ============================================
-   Hero — "Diamond Typography" heading effects
+   Hero â€” "Diamond Typography" heading effects
    Twinkle + diamond glitter + star sparkles + shine sweep
    ============================================ */
 
 .hero-diamond-line {
-  /* Unused legacy wrapper — kept for backwards compatibility */
+  /* Unused legacy wrapper â€” kept for backwards compatibility */
   display: block;
 }
 
@@ -419,7 +419,7 @@ html.dark .hero-letter {
   }
 }
 
-/* HASSAN letter outline — engraved rim over the gradient */
+/* HASSAN letter outline â€” engraved rim over the gradient */
 .hero-letter-outline {
   -webkit-text-stroke: 1.5px rgb(79 70 229 / 0.45);
 }
@@ -439,7 +439,7 @@ html.dark .hero-letter-outline {
 }
 
 /* ============================================
-   Hero — hover shatter / reassemble for ATIK HASSAN
+   Hero â€” hover shatter / reassemble for ATIK HASSAN
    The live, animated heading is never replaced. This is an overlay of
    clip-path shards cloned from that heading, shown only while hovering.
    ============================================ */
@@ -616,7 +616,7 @@ html.dark .hero-star-sparkle {
 
 
 /* ============================================
-   Hero — orbiting technology rings (TechOrbit)
+   Hero â€” orbiting technology rings (TechOrbit)
    ============================================ */
 @keyframes orbit-spin {
   from {
@@ -652,7 +652,7 @@ html.dark .hero-star-sparkle {
   animation: orbit-spin var(--orbit-duration, 75s) linear infinite;
 }
 
-/* Education — knowledge constellation: gentle node bobbing */
+/* Education â€” knowledge constellation: gentle node bobbing */
 @keyframes node-float {
   0%,
   100% {
@@ -692,7 +692,7 @@ html.dark .hero-star-sparkle {
 }
 
 /* ============================================
-   Education — Knowledge Constellation polish
+   Education â€” Knowledge Constellation polish
    (decorative only; disabled under reduced motion)
    ============================================ */
 
@@ -714,7 +714,7 @@ html.dark .hero-star-sparkle {
   animation: constellation-enter 0.95s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
-/* Natural, subtle star dust — slow drift while twinkling */
+/* Natural, subtle star dust â€” slow drift while twinkling */
 .constellation-star {
   position: absolute;
   border-radius: 9999px;
@@ -748,7 +748,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Education node — breathing aura behind each orb */
+/* Education node â€” breathing aura behind each orb */
 .node-aura {
   animation: node-aura var(--aura-duration, 5.2s) ease-in-out
     var(--aura-delay, 0s) infinite;
@@ -766,7 +766,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Hub — ambient nebula glow behind the core */
+/* Hub â€” ambient nebula glow behind the core */
 .hub-glow {
   animation: hub-glow 6.5s ease-in-out infinite;
 }
@@ -783,7 +783,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Hub — slow breathing of the glowing core */
+/* Hub â€” slow breathing of the glowing core */
 .hub-core {
   animation: hub-core 6.5s ease-in-out infinite;
 }
@@ -798,7 +798,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Hub — radar-style sonar pulse ring */
+/* Hub â€” radar-style sonar pulse ring */
 .hub-pulse {
   animation: hub-pulse 3.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
@@ -815,7 +815,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Mobile constellation — glowing pulse traveling down the spine */
+/* Mobile constellation â€” glowing pulse traveling down the spine */
 .spine-dot {
   top: 0.5rem;
   animation: spine-travel 7.5s cubic-bezier(0.45, 0, 0.25, 1) infinite;
@@ -838,7 +838,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Mobile constellation — expanding detail panel */
+/* Mobile constellation â€” expanding detail panel */
 .mobile-detail {
   animation: mobile-detail-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   transform-origin: top center;
@@ -856,7 +856,7 @@ html.dark .hero-star-sparkle {
 }
 
 /* ============================================
-   Education — Neural Learning Dimension
+   Education â€” Neural Learning Dimension
    (decorative only; disabled under reduced motion)
    ============================================ */
 
@@ -915,7 +915,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Memory shard — holographic light band sweeping the facets on hover/focus */
+/* Memory shard â€” holographic light band sweeping the facets on hover/focus */
 .shard-scan {
   animation: shard-scan 1.7s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
@@ -935,7 +935,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Neural core — synapse nodes blinking in sequence */
+/* Neural core â€” synapse nodes blinking in sequence */
 .synapse-node {
   animation: synapse-node 2.8s ease-in-out var(--synapse-delay, 0s) infinite;
 }
@@ -950,7 +950,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Neural core — conic energy shimmer rotating behind the sphere */
+/* Neural core â€” conic energy shimmer rotating behind the sphere */
 .core-shimmer {
   animation: core-shimmer 8s linear infinite;
 }
@@ -964,7 +964,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Floating information panel — scale + deblur entrance */
+/* Floating information panel â€” scale + deblur entrance */
 .neural-panel {
   animation: neural-panel-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
@@ -1038,7 +1038,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Scene entrance — fade the backdrop in */
+/* Scene entrance â€” fade the backdrop in */
 .preloader-fade-in {
   animation: preloader-fade-in 0.28s ease backwards;
 }
@@ -1052,7 +1052,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Cube entrance — scale up + deblur */
+/* Cube entrance â€” scale up + deblur */
 .preloader-cube-in {
   animation: preloader-cube-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
 }
@@ -1070,7 +1070,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Name entrance — rise + deblur */
+/* Name entrance â€” rise + deblur */
 .preloader-name-in {
   animation: preloader-name-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.16s backwards;
 }
@@ -1088,7 +1088,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Cube bob — gentle vertical float */
+/* Cube bob â€” gentle vertical float */
 .preloader-cube-bob {
   animation: preloader-cube-bob 5.2s ease-in-out infinite;
 }
@@ -1103,7 +1103,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Cube X-axis — continuous slow tilt oscillation */
+/* Cube X-axis â€” continuous slow tilt oscillation */
 .preloader-cube-x {
   animation: preloader-cube-x 6.4s ease-in-out infinite alternate;
   transform-style: preserve-3d;
@@ -1118,7 +1118,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Cube Y-axis — continuous full rotation */
+/* Cube Y-axis â€” continuous full rotation */
 .preloader-cube-y {
   animation: preloader-cube-y 9.5s linear infinite;
   transform-style: preserve-3d;
@@ -1147,7 +1147,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Glass cube faces — electric blue / soft violet edges */
+/* Glass cube faces â€” electric blue / soft violet edges */
 .preloader-face {
   position: absolute;
   inset: 0;
@@ -1212,7 +1212,7 @@ html.dark .hero-star-sparkle {
   pointer-events: none;
 }
 
-/* Progress bar sheen — light sweep travelling along the fill */
+/* Progress bar sheen â€” light sweep travelling along the fill */
 .preloader-bar-fill {
   position: relative;
   overflow: hidden;
@@ -1237,7 +1237,7 @@ html.dark .hero-star-sparkle {
   }
 }
 
-/* Content exit — scale down + deblur on reveal */
+/* Content exit â€” scale down + deblur on reveal */
 .preloader-content {
   transition:
     opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1251,7 +1251,7 @@ html.dark .hero-star-sparkle {
   filter: blur(6px);
 }
 
-/* Overlay exit — fade + gentle zoom-through */
+/* Overlay exit â€” fade + gentle zoom-through */
 .preloader-overlay {
   transition:
     opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1299,7 +1299,7 @@ html.dark .hero-star-sparkle {
    Theme-aware surfaces
    ============================================ */
 
-/* Orbital tech chips (hero) — light glass on the light theme */
+/* Orbital tech chips (hero) â€” light glass on the light theme */
 .orbit-chip-glass {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
@@ -1316,7 +1316,7 @@ html.dark .orbit-chip-glass {
     0 10px 26px -12px rgba(0, 0, 0, 0.8);
 }
 
-/* Neural vault — the same chamber, lit for both themes.
+/* Neural vault â€” the same chamber, lit for both themes.
    Variables flip with the html.dark class, so the stage keeps its
    holographic identity in dark mode and becomes a bright glass
    laboratory in light mode without duplicating markup. */
@@ -1399,7 +1399,7 @@ html.dark .neural-core-label {
 }
 
 /* ============================================
-   Projects — split entrance (image from left,
+   Projects â€” split entrance (image from left,
    details from right). One stagger per card.
    Fires once via IntersectionObserver; the only
    animation properties are opacity/transform/filter
@@ -1444,13 +1444,13 @@ html.dark .neural-core-label {
 }
 
 /* ============================================
-   Selected Projects — overlapping sticky stack
+   Selected Projects â€” overlapping sticky stack
    ============================================
    Active from tablet up only. Each card is a direct child of the one
    tall `.project-stack`, so sticky is constrained by the whole list:
    a card stays pinned while the following opaque card scrolls over it,
    leaving the slightly deeper top offset visible as a layered edge.
-   The bottom margin is scroll runway, not spacing — it keeps each card
+   The bottom margin is scroll runway, not spacing â€” it keeps each card
    readable before the next one covers it. Mobile (<768px) keeps the
    normal vertical flow. No JS, scroll listeners, or transforms. */
 
@@ -1591,4 +1591,394 @@ html.dark .neural-core-label {
   .footer-reveal {
     animation: none;
   }
+}
+
+/* =====================================================================
+   SKILLS â€” six identically sized technology cards
+   ===================================================================== */
+.skills-section {
+  --skills-surface: #ffffff;
+  --skills-ink: #0f172a;
+  --skills-muted: #64748b;
+  --skills-line: rgba(15, 23, 42, 0.12);
+  --skills-accent: #4f46e5;
+  --skills-shadow: 0 22px 48px -32px rgb(15 23 42 / 0.45);
+}
+
+html.dark .skills-section {
+  --skills-surface: #0a1020;
+  --skills-ink: #e9eefb;
+  --skills-muted: #8494ad;
+  --skills-line: rgba(148, 163, 184, 0.16);
+  --skills-accent: #818cf8;
+  --skills-shadow: 0 26px 56px -32px rgb(0 0 0 / 0.75);
+}
+
+/* --- atmosphere: faint blueprint grid + one architectural arc --------- */
+.skills-atmosphere__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(100 116 139 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(100 116 139 / 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 20%, transparent 100%);
+}
+
+html.dark .skills-atmosphere__grid {
+  background-image:
+    linear-gradient(to right, rgb(148 163 184 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.045) 1px, transparent 1px);
+}
+
+.skills-atmosphere__arc {
+  position: absolute;
+  top: -26%;
+  right: -9%;
+  width: min(56vw, 760px);
+  aspect-ratio: 1;
+  border: 1px solid var(--skills-line);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.skills-atmosphere__arc::after {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  border: 1px solid var(--skills-line);
+  border-radius: 50%;
+}
+
+/* --- masthead ---------------------------------------------------------- */
+.skills-masthead {
+  margin-bottom: clamp(20px, 2.4vw, 32px);
+  text-align: center;
+}
+
+.skills-overline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font: 600 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--skills-muted);
+}
+
+.skills-overline__index {
+  color: var(--skills-accent);
+  letter-spacing: 0.1em;
+}
+
+.skills-overline__rule {
+  width: clamp(28px, 4vw, 54px);
+  height: 1px;
+  background: var(--skills-line);
+}
+
+.skills-overline__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.skills-masthead__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 16px);
+  margin-top: clamp(8px, 1vw, 14px);
+}
+
+.skills-title {
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+  color: var(--skills-ink);
+}
+
+.skills-title__line {
+  display: block;
+}
+
+.skills-title__line--second {
+  margin-top: 0.12em;
+  font-size: 0.53em;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: var(--skills-muted);
+}
+
+.skills-title__line--second em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--skills-accent);
+}
+
+.skills-lede {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.skills-lede__marker {
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin: 0 0 10px;
+  background: var(--skills-accent);
+  opacity: 0.75;
+}
+
+.skills-lede p {
+  max-width: 56ch;
+  margin: 0 auto;
+  font-size: clamp(12px, 1vw, 14px);
+  line-height: 1.7;
+  color: var(--skills-muted);
+}
+
+.skills-lede__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 430px;
+  margin-top: clamp(8px, 0.8vw, 12px);
+  padding-top: 8px;
+  border-top: 1px solid var(--skills-line);
+  font: 600 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.16em;
+  color: var(--skills-muted);
+}
+
+.skills-lede__meta span + span {
+  padding-left: 18px;
+  border-left: 1px solid var(--skills-line);
+}
+
+/* --- grid: three equal columns, two equal rows, one shared gap --------- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: clamp(12px, 1.4vw, 20px);
+}
+
+.skills-grid__item {
+  display: flex;
+  min-width: 0;
+}
+
+/* --- card shell -------------------------------------------------------- */
+.skills-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --lift: 0px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 250px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  border-radius: 18px;
+  background: var(--card-bg);
+  box-shadow:
+    var(--skills-shadow),
+    inset 0 1px 0 color-mix(in srgb, var(--accent) 16%, transparent);
+  transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry))
+    translate3d(0, var(--lift), 0);
+  transition:
+    transform 0.18s ease-out,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.skills-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(16px, 1.5vw, 20px);
+}
+
+/* --- top: category glyph + number/title/description -------------------- */
+.skills-card__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.skills-card__glyph {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skills-card__glyph svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.skills-card__heading {
+  min-width: 0;
+}
+
+.skills-card__number {
+  display: block;
+  font: 700 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+
+.skills-card__title {
+  margin: 5px 0 0;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--card-text);
+}
+
+.skills-card__desc {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--card-muted);
+}
+
+/* --- middle: thin divider with equal space on both sides --------------- */
+.skills-card__divider {
+  height: 1px;
+  flex: none;
+  margin: clamp(14px, 1.4vw, 20px) 0;
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+/* --- bottom: centered technology icon group ---------------------------- */
+.skills-card__techs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+}
+
+/* Card 05 holds eight icons â€” four per row, two balanced rows. */
+.skills-card__techs--dense {
+  max-width: 216px;
+}
+
+.skills-card__tech {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.skills-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+}
+
+.skills-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- hover: gentle lift and accent glow -------------------------------- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .skills-card:hover {
+    --lift: -5px;
+    border-color: color-mix(in srgb, var(--accent) 68%, transparent);
+    box-shadow:
+      var(--skills-shadow),
+      0 30px 60px -34px color-mix(in srgb, var(--accent) 65%, transparent);
+  }
+
+  .skills-card:hover .skills-card__glyph {
+    transform: rotate(-4deg) scale(1.04);
+  }
+
+  .skills-card:hover .skills-card__tech {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 48%, transparent);
+  }
+}
+
+/* --- tablet: two equal columns ----------------------------------------- */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- mobile: one full-width column ------------------------------------- */
+@media (max-width: 639px) {
+  .skills-masthead { margin-bottom: 24px; }
+
+  .skills-overline {
+    gap: 10px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  .skills-title { font-size: clamp(2.4rem, 11vw, 3.6rem); }
+  .skills-title__line--second { font-size: 0.5em; }
+
+  .skills-grid { grid-template-columns: 1fr; }
+
+  .skills-card { min-height: 240px; }
+  .skills-card__content { padding: 16px; }
+  .skills-card__glyph { width: 46px; height: 46px; border-radius: 12px; }
+  .skills-card__glyph svg { width: 24px; height: 24px; }
+  .skills-card__title { font-size: 1.05rem; }
+  .skills-card__techs { gap: 8px; }
+  .skills-card__techs--dense { max-width: 216px; }
+}
+
+/* Reduced motion: no transitions, no pointer tilt. */
+@media (prefers-reduced-motion: reduce) {
+  .skills-section,
+  .skills-section * { transition: none !important; }
+
+  .skills-card { transform: none !important; }
 }
