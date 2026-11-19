@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {
   Sparkles,
+  Download,
   MapPin,
   Route,
   Smile,
@@ -106,6 +107,19 @@ export default function About() {
           <p className="mx-auto mt-5 max-w-md font-mono text-[10px] uppercase leading-relaxed tracking-[0.25em] text-slate-500 dark:text-slate-500 sm:text-[11px]">
             The person · the path · the principles
           </p>
+
+          {/* Download Resume — direct PDF download */}
+          <a
+            href="/resume.pdf"
+            download="Atik-Hasan-CV.pdf"
+            className="group mt-7 inline-flex min-h-11 cursor-pointer items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-violet-600 px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-[0_16px_40px_-16px_rgba(99,102,241,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:from-sky-400 hover:via-indigo-400 hover:to-violet-500 hover:shadow-[0_20px_46px_-16px_rgba(99,102,241,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 active:translate-y-0 dark:from-sky-400 dark:via-indigo-400 dark:to-violet-500"
+          >
+            <Download
+              className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-y-0.5"
+              aria-hidden="true"
+            />
+            <span>Download Resume</span>
+          </a>
         </Reveal>
 
         {/* ===== Bento grid ===== */}
