@@ -10,8 +10,7 @@ import {
   Briefcase,
   Award,
 } from "lucide-react";
-import jsPDF from "jspdf";
-import { personalInfo, educationData, certificationsData, projectsData } from "@/data/portfolioData";
+import { personalInfo, educationData, certificationsData } from "@/data/portfolioData";
 
 export default function ResumeModal({ isOpen, onClose }) {
   useEffect(() => {
@@ -37,188 +36,12 @@ export default function ResumeModal({ isOpen, onClose }) {
   const displayName = personalInfo.name || "Atik Hassan";
 
   const handleDownload = () => {
-    const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 18;
-    const contentWidth = pageWidth - margin * 2;
-    const bottomMargin = 20;
-    let y = 20;
-
-    const addPageIfNeeded = (requiredHeight = 10) => {
-      if (y + requiredHeight > pageHeight - bottomMargin) {
-        doc.addPage();
-        y = 20;
-      }
-    };
-
-    const addSectionTitle = (title) => {
-      addPageIfNeeded(18);
-      y += 4;
-
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(12);
-      doc.setTextColor(37, 99, 235);
-      doc.text(title, margin, y);
-
-      y += 2;
-      doc.setDrawColor(203, 213, 225);
-      doc.line(margin, y + 2, pageWidth - margin, y + 2);
-      y += 9;
-    };
-
-    const addText = (text, options = {}) => {
-      const {
-        fontSize = 10,
-        bold = false,
-        color = [55, 65, 81],
-        indent = 0,
-      } = options;
-
-      doc.setFont("helvetica", bold ? "bold" : "normal");
-      doc.setFontSize(fontSize);
-      doc.setTextColor(...color);
-
-      const lines = doc.splitTextToSize(
-        String(text || ""),
-        contentWidth - indent
-      );
-
-      const lineHeight = fontSize * 0.45 + 1.5;
-
-      addPageIfNeeded(lines.length * lineHeight + 2);
-
-      doc.text(lines, margin + indent, y);
-      y += lines.length * lineHeight + 3;
-    };
-
-    // Header Banner
-    doc.setFillColor(15, 23, 42);
-    doc.rect(0, 0, pageWidth, 48, "F");
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor(255, 255, 255);
-
-    doc.text(
-      doc.splitTextToSize(displayName, contentWidth),
-      margin,
-      20
-    );
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(11);
-    doc.setTextColor(191, 219, 254);
-    doc.text(String(personalInfo.role || "Full Stack Developer"), margin, 30);
-
-    doc.setFontSize(9);
-    doc.setTextColor(226, 232, 240);
-    doc.text(
-      doc.splitTextToSize(
-        String(personalInfo.email || ""),
-        contentWidth
-      ),
-      margin,
-      38
-    );
-
-    y = 57;
-
-    // Contact information
-    addSectionTitle("CONTACT INFORMATION");
-    addText(`Location: ${personalInfo.location || ""}`);
-    addText(`GitHub: ${personalInfo.socials?.github || ""}`);
-    addText(`LinkedIn: ${personalInfo.socials?.linkedin || ""}`);
-
-    // Professional overview
-    addSectionTitle("PROFESSIONAL OVERVIEW");
-    addText(personalInfo.shortBio || "");
-
-    // Technical expertise
-    addSectionTitle("TECHNICAL EXPERTISE");
-
-    [
-      "Frontend: HTML5, CSS3, JavaScript ES6+, TypeScript",
-      "Frameworks & Runtime: React, Next.js (App Router, RSC), Node.js, Express.js",
-      "Styling & UI: Tailwind CSS, DaisyUI, Hero UI, shadcn/ui",
-      "Tools & Version Control: Git, GitHub, Visual Studio Code, npm",
-    ].forEach((skill) => {
-      addText(`- ${skill}`, { indent: 2 });
-    });
-
-    // Projects
-    addSectionTitle("FEATURED PROJECTS");
-
-    projectsData.forEach((project, idx) => {
-      addText(
-        `${idx + 1}. ${project.title} (${project.technologies.join(", ")})`,
-        { bold: true, color: [31, 41, 55] }
-      );
-      addText(project.description, { indent: 3 });
-      if (project.liveUrl) {
-        addText(`Live Demo: ${project.liveUrl}`, { indent: 3, fontSize: 9, color: [37, 99, 235] });
-      }
-    });
-
-    // Education
-    addSectionTitle("EDUCATION");
-
-    educationData.forEach((edu) => {
-      addText(`${edu.degree} — ${edu.institution}`, {
-        bold: true,
-        color: [31, 41, 55],
-      });
-      addText(`Status: ${edu.status} | Period: ${edu.period}`, { indent: 3 });
-      addText(edu.description, { indent: 3 });
-    });
-
-    // Professional Training & Certifications
-    addSectionTitle("PROFESSIONAL TRAINING & CERTIFICATIONS");
-
-    certificationsData.forEach((cert) => {
-      addText(cert.title, {
-        bold: true,
-        color: [31, 41, 55],
-      });
-      addText(`Level: ${cert.level}`, { indent: 3 });
-      addText(cert.description, { indent: 3 });
-    });
-
-    // Page numbers
-    const pageCount = doc.getNumberOfPages();
-
-    for (let page = 1; page <= pageCount; page++) {
-      doc.setPage(page);
-
-      doc.setDrawColor(226, 232, 240);
-      doc.line(
-        margin,
-        pageHeight - 14,
-        pageWidth - margin,
-        pageHeight - 14
-      );
-
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.setTextColor(100, 116, 139);
-
-      doc.text(`${displayName} | Resume`, margin, pageHeight - 8);
-
-      doc.text(
-        `Page ${page} of ${pageCount}`,
-        pageWidth - margin,
-        pageHeight - 8,
-        { align: "right" }
-      );
-    }
-
-    const fileName = `${displayName.replace(/\s+/g, "_")}_Resume.pdf`;
-    doc.save(fileName);
+    const link = document.createElement("a");
+    link.href = "/resume.pdf";
+    link.download = "Atik-Hasan-CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
