@@ -113,7 +113,7 @@ export const projectsData = [
       "Track and monitor fitness progress",
       "Responsive design for on-the-go use",
     ],
-    liveUrl: "https://book-vibe-resources.vercel.app/",
+    liveUrl: "https://fit-logs-atik-hasan.netlify.app/Card",
     githubUrl: "https://github.com/Atik-Hassan-Abddula/Fit-Logs",
     gradient: "from-emerald-500 via-teal-600 to-cyan-600",
     badge: "Fitness Tracker",
